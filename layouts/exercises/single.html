@@ -1,44 +1,237 @@
 {{ define "main" }}
-    <article class="prose lg:prose-xl max-w-none mb-12">
-        <h1>{{ .Title }}</h1>
-        <div class="content">
-            {{ .Content }}
-        </div>
-    </article>
+<div class="max-w-none mb-12">
 
-    <hr class="my-8 border-gray-200">
+    <div class="flex flex-col items-center justify-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ .Title }}</h1>
 
-    <section class="leaderboard">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">Leaderboard</h2>
+        <div class="bg-gray-100 p-1.5 rounded-lg inline-flex shadow-inner">
+            <div>
+                <button id="btn-description" onclick="switchTab('description')"
+                    class="tab-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-md text-sm font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 ring-blue-400 whitespace-nowrap text-gray-500 hover:text-gray-900">
 
-        {{ $folderName := path.Base (path.Dir .File.Path) }}
-        {{ $data := index .Site.Data.leaderboard $folderName }}
-
-        {{ if $data }}
-            <div class="overflow-hidden border rounded-lg shadow-sm">
-                <table class="min-w-full bg-white">
-                    <thead class="bg-gray-100 border-b">
-                        <tr>
-                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                            <th class="py-3 px-6 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        {{ range $index, $entry := sort $data "score" "desc" }}
-                        <tr class="hover:bg-gray-50">
-                            <td class="py-4 px-6 text-gray-500 font-mono">{{ add $index 1 }}</td>
-                            <td class="py-4 px-6 font-medium text-gray-900">{{ $entry.user }}</td>
-                            <td class="py-4 px-6 text-right text-blue-600 font-bold">{{ $entry.score }}</td>
-                        </tr>
-                        {{ end }}
-                    </tbody>
-                </table>
+                    <i class="fa-solid fa-file"></i>
+                    <span>Description</span>
+                </button>
             </div>
-        {{ else }}
-            <p class="text-gray-500 italic bg-yellow-50 p-4 rounded border border-yellow-100">
-                No leaderboard data found for "{{ $folderName }}".
-            </p>
-        {{ end }}
-    </section>
+
+            <div>
+                <button id="btn-leaderboard" onclick="switchTab('leaderboard')"
+                    class="tab-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-md text-sm font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 ring-blue-400 whitespace-nowrap text-gray-500 hover:text-gray-900">
+
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="relative min-h-[400px]">
+
+        <div id="content-description" class="tab-content transition-opacity duration-300">
+            <article class="prose lg:prose-xl max-w-none">
+                <div class="content">
+                    {{ .Content }}
+                </div>
+            </article>
+        </div>
+
+        <div id="content-leaderboard" class="tab-content hidden transition-opacity duration-300">
+            <section class="leaderboard max-w-4xl mx-auto">
+                {{ $folderName := path.Base (path.Dir .File.Path) }}
+                {{ $data := index .Site.Data.leaderboard $folderName }}
+
+                {{ if $data }}
+                <div class="overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+                    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
+                        <span class="text-xs font-mono text-gray-500 bg-white border px-2 py-1 rounded">Project: {{
+                            $folderName }}</span>
+                    </div>
+                    <table class="min-w-full">
+                        <thead class="bg-white border-b border-gray-100">
+                            <tr>
+                                <th
+                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Rank</th>
+                                <th
+                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Student</th>
+                                <th
+                                    class="py-3 px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Avg. Runtime</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {{ $ok := sort (where $data "status" "!=" "error") "avg_runtime" "asc" }}
+                            {{ $errs := sort (where $data "status" "==" "error") "avg_runtime" "asc" }}
+                            {{ $ordered := $ok | append $errs }}
+                            {{ range $index, $entry := $ordered }}
+                            {{ $stdout := default "" $entry.stdout }}
+                            {{ $stderr := default "" $entry.error }}
+                            <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                                onclick="showLog({{ $stdout | jsonify }}, {{ $stderr | jsonify }})">
+                                <td class="py-4 px-6">
+                                    {{ if ne $entry.status "error" }}
+                                    <div class="bg-green-100 text-green-600 rounded-full p-1 w-fit">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    {{ else }}
+                                    <div class="bg-red-200 text-red-600 rounded-full p-1 w-fit">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </div>
+                                    {{ end }}
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span
+                                        class="font-mono text-sm text-gray-500 group-hover:text-blue-600 font-bold">#{{
+                                        add $index 1 }}</span>
+                                </td>
+                                <td class="py-4 px-6 font-medium text-gray-900">{{ $entry.name }}</td>
+                                <td class="py-4 px-6 text-right">
+                                    <span
+                                        class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
+                                        {{ printf "%.2f" $entry.avg_runtime }} ms
+                                    </span>
+                                </td>
+                            </tr>
+                            {{ end }}
+                        </tbody>
+                    </table>
+                    <div id="log-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+                        <div class="bg-white rounded-lg shadow-xl w-[85vw] max-h-[1000px] max-w-[1200px] p-6 space-y-6"
+                            onclick="event.stopPropagation();">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-lg font-semibold text-gray-800">Run Output</h4>
+                                <button class="text-gray-500 hover:text-gray-800" onclick="closeLog()">✕</button>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">stdout</label>
+                                <textarea id="log-stdout"
+                                    class="w-full h-64 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10"
+                                    readonly></textarea>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700">stderr</label>
+                                <textarea id="log-stderr"
+                                    class="w-full h-48 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10"
+                                    readonly></textarea>
+                            </div>
+
+                            <div class="flex justify-end">
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                                    onclick="closeLog()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ else }}
+                <div
+                    class="flex flex-col items-center justify-center p-12 bg-white rounded-lg border border-dashed border-gray-300 text-center">
+                    <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                        </path>
+                    </svg>
+                    <p class="text-gray-500 text-lg">No leaderboard data found.</p>
+                    <p class="text-gray-400 text-sm mt-1">Data for "{{ $folderName }}" is missing.</p>
+                </div>
+                {{ end }}
+            </section>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // 1. Function to handle tab switching
+    function switchTab(tabName) {
+        // Hide all content
+        document.querySelectorAll('.tab-content').forEach(el => {
+            el.classList.add('hidden');
+        });
+
+        // Reset button styles (Inactive State)
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            btn.classList.add('text-gray-500', 'hover:text-gray-900');
+        });
+
+        // Show selected content
+        document.getElementById('content-' + tabName).classList.remove('hidden');
+
+        // Style selected button (Active State)
+        const activeBtn = document.getElementById('btn-' + tabName);
+        activeBtn.classList.remove('text-gray-500', 'hover:text-gray-900');
+        activeBtn.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+
+        // Update URL hash without jumping
+        if (history.pushState) {
+            history.pushState(null, null, '#' + tabName);
+        } else {
+            location.hash = '#' + tabName;
+        }
+    }
+
+    // 2. Initialize on Page Load
+    document.addEventListener("DOMContentLoaded", () => {
+        // Check if URL has a hash (e.g., #leaderboard)
+        const hash = window.location.hash.replace('#', '');
+
+        if (hash === 'leaderboard') {
+            switchTab('leaderboard');
+        } else {
+            // Default to description
+            switchTab('description');
+        }
+    });
+
+    // 3. Handle Browser Back/Forward buttons
+    window.addEventListener('popstate', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'leaderboard') {
+            switchTab('leaderboard');
+        } else {
+            switchTab('description');
+        }
+    });
+
+    // 4. Log modal handlers
+    const modal = document.getElementById('log-modal');
+    const stdoutEl = document.getElementById('log-stdout');
+    const stderrEl = document.getElementById('log-stderr');
+
+    const prettyPrint = (text) => {
+        if (!text) return '';
+        // 1. If the string is wrapped in quotes (JSON stringified), try parsing it first
+        if (text.startsWith('"') && text.endsWith('"')) {
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                // If parsing fails, fall through to manual regex
+            }
+        }
+
+        // 2. Manual replace: turns literal "\n" into an actual new line
+        return text.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+    };
+
+    window.showLog = (stdout, stderr) => {
+        stdoutEl.value = prettyPrint(stdout) || '';
+        stderrEl.value = prettyPrint(stderr) || '';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    };
+
+    window.closeLog = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    };
+
+    modal?.addEventListener('click', closeLog);
+</script>
 {{ end }}

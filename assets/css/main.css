@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mobile-sidebar-panel {
+	transform: translateX(-100%);
+	will-change: transform;
+}
+
+.mobile-sidebar-panel.is-open {
+	transform: translateX(0);
+}

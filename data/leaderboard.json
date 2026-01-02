@@ -1,10 +1,145 @@
 {
-  "exercises-1": [
-    {"user": "Alice", "score": 98},
-    {"user": "Bob", "score": 85}
-  ],
-  "exercise-2": [
-    {"user": "Charlie", "score": 100},
-    {"user": "Alice", "score": 92}
-  ]
+  "exercises-2": [
+        {
+            "name": "AngeloMeridiani",
+            "status": "error",
+            "error": "nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\nnvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\n/usr/bin/ld: /tmp/tmpxft_000fbc7d_00000000-18_student.o: in function `main':\ntmpxft_000fbc7d_00000000-10_student.cudafe1.cpp:(.text+0x55): multiple definition of `main'; /tmp/tmpxft_000fbc7d_00000000-15_vectorsum-cuda.o:tmpxft_000fbc7d_00000000-6_vectorsum-cuda.cudafe1.cpp:(.text+0x55): first defined here\ncollect2: error: ld returned 1 exit status\nmake: *** [Makefile:24: vectorsum-cuda.out] Error 1\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n/tmp/grader/mcp-25_cuda-vector-sum-AngeloMeridiani/test_vectorsum.sh: riga 51: ./vectorsum-cuda.out: File o directory non esistente\n",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nTest failed for input size 100000000\nFailed to parse execution time for input size 100000000\nProcessing Index 1: Size 150000000...\nTest failed for input size 150000000\nFailed to parse execution time for input size 150000000\nProcessing Index 2: Size 200000000...\nTest failed for input size 200000000\nFailed to parse execution time for input size 200000000\nProcessing Index 3: Size 80000000...\nTest failed for input size 80000000\nFailed to parse execution time for input size 80000000\nProcessing Index 4: Size 100000000...\nTest failed for input size 100000000\nFailed to parse execution time for input size 100000000\nProcessing Index 5: Size 150000000...\nTest failed for input size 150000000\nFailed to parse execution time for input size 150000000\nProcessing Index 6: Size 200000000...\nTest failed for input size 200000000\nFailed to parse execution time for input size 200000000\nProcessing Index 7: Size 80000000...\nTest failed for input size 80000000\nFailed to parse execution time for input size 80000000\nProcessing Index 8: Size 100000000...\nTest failed for input size 100000000\nFailed to parse execution time for input size 100000000\nProcessing Index 9: Size 150000000...\nTest failed for input size 150000000\nFailed to parse execution time for input size 150000000\nProcessing Index 10: Size 200000000...\nTest failed for input size 200000000\nFailed to parse execution time for input size 200000000\nProcessing Index 11: Size 80000000...\nTest failed for input size 80000000\nFailed to parse execution time for input size 80000000\nPassed tests: 0\nTotal tests: 12\nExecution times (ms): null, null, null, null, null, null, null, null, null, null, null, null\nTest script completed successfully.\n{\"passed\":0,\"total\":12,\"times\":[null, null, null, null, null, null, null, null, null, null, null, null]}\n",
+            "avg_runtime": 0.0,
+            "data": null
+        },
+        {
+            "name": "M4322uni",
+            "status": "graded",
+            "error": "",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nExecution time (ms) for size 100000000: 442.730499\nProcessing Index 1: Size 150000000...\nExecution time (ms) for size 150000000: 662.804504\nProcessing Index 2: Size 200000000...\nExecution time (ms) for size 200000000: 884.012024\nProcessing Index 3: Size 80000000...\nExecution time (ms) for size 80000000: 354.005005\nProcessing Index 4: Size 100000000...\nExecution time (ms) for size 100000000: 442.403809\nProcessing Index 5: Size 150000000...\nExecution time (ms) for size 150000000: 662.992920\nProcessing Index 6: Size 200000000...\nExecution time (ms) for size 200000000: 885.944336\nProcessing Index 7: Size 80000000...\nExecution time (ms) for size 80000000: 354.010254\nProcessing Index 8: Size 100000000...\nExecution time (ms) for size 100000000: 443.427826\nProcessing Index 9: Size 150000000...\nExecution time (ms) for size 150000000: 663.663452\nProcessing Index 10: Size 200000000...\nExecution time (ms) for size 200000000: 885.217285\nProcessing Index 11: Size 80000000...\nExecution time (ms) for size 80000000: 355.211273\nPassed tests: 12\nTotal tests: 12\nExecution times (ms): 442.730499, 662.804504, 884.012024, 354.005005, 442.403809, 662.992920, 885.944336, 354.010254, 443.427826, 663.663452, 885.217285, 355.211273\nTest script completed successfully.\n{\"passed\":12,\"total\":12,\"times\":[442.730499, 662.804504, 884.012024, 354.005005, 442.403809, 662.992920, 885.944336, 354.010254, 443.427826, 663.663452, 885.217285, 355.211273]}",
+            "avg_runtime": 586.3685989166667,
+            "data": {
+                "passed": 12,
+                "total": 12,
+                "times": [
+                    442.730499,
+                    662.804504,
+                    884.012024,
+                    354.005005,
+                    442.403809,
+                    662.99292,
+                    885.944336,
+                    354.010254,
+                    443.427826,
+                    663.663452,
+                    885.217285,
+                    355.211273
+                ]
+            }
+        },
+        {
+            "name": "Andrii04",
+            "status": "graded",
+            "error": "",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nExecution time (ms) for size 100000000: 442.118134\nProcessing Index 1: Size 150000000...\nExecution time (ms) for size 150000000: 663.936829\nProcessing Index 2: Size 200000000...\nExecution time (ms) for size 200000000: 886.128662\nProcessing Index 3: Size 80000000...\nExecution time (ms) for size 80000000: 355.026947\nProcessing Index 4: Size 100000000...\nExecution time (ms) for size 100000000: 443.302917\nProcessing Index 5: Size 150000000...\nExecution time (ms) for size 150000000: 664.523804\nProcessing Index 6: Size 200000000...\nExecution time (ms) for size 200000000: 885.494812\nProcessing Index 7: Size 80000000...\nExecution time (ms) for size 80000000: 355.395569\nProcessing Index 8: Size 100000000...\nExecution time (ms) for size 100000000: 442.611725\nProcessing Index 9: Size 150000000...\nExecution time (ms) for size 150000000: 663.296997\nProcessing Index 10: Size 200000000...\nExecution time (ms) for size 200000000: 886.375427\nProcessing Index 11: Size 80000000...\nExecution time (ms) for size 80000000: 355.204102\nPassed tests: 12\nTotal tests: 12\nExecution times (ms): 442.118134, 663.936829, 886.128662, 355.026947, 443.302917, 664.523804, 885.494812, 355.395569, 442.611725, 663.296997, 886.375427, 355.204102\nTest script completed successfully.\n{\"passed\":12,\"total\":12,\"times\":[442.118134, 663.936829, 886.128662, 355.026947, 443.302917, 664.523804, 885.494812, 355.395569, 442.611725, 663.296997, 886.375427, 355.204102]}",
+            "avg_runtime": 586.9513270833334,
+            "data": {
+                "passed": 12,
+                "total": 12,
+                "times": [
+                    442.118134,
+                    663.936829,
+                    886.128662,
+                    355.026947,
+                    443.302917,
+                    664.523804,
+                    885.494812,
+                    355.395569,
+                    442.611725,
+                    663.296997,
+                    886.375427,
+                    355.204102
+                ]
+            }
+        },
+        {
+            "name": "uniquadev",
+            "status": "graded",
+            "error": "",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nExecution time (ms) for size 100000000: 442.854401\nProcessing Index 1: Size 150000000...\nExecution time (ms) for size 150000000: 662.656006\nProcessing Index 2: Size 200000000...\nExecution time (ms) for size 200000000: 885.018616\nProcessing Index 3: Size 80000000...\nExecution time (ms) for size 80000000: 353.724487\nProcessing Index 4: Size 100000000...\nExecution time (ms) for size 100000000: 443.268890\nProcessing Index 5: Size 150000000...\nExecution time (ms) for size 150000000: 663.692261\nProcessing Index 6: Size 200000000...\nExecution time (ms) for size 200000000: 884.831238\nProcessing Index 7: Size 80000000...\nExecution time (ms) for size 80000000: 354.308105\nProcessing Index 8: Size 100000000...\nExecution time (ms) for size 100000000: 442.953735\nProcessing Index 9: Size 150000000...\nExecution time (ms) for size 150000000: 663.319580\nProcessing Index 10: Size 200000000...\nExecution time (ms) for size 200000000: 886.028137\nProcessing Index 11: Size 80000000...\nExecution time (ms) for size 80000000: 354.738098\nPassed tests: 12\nTotal tests: 12\nExecution times (ms): 442.854401, 662.656006, 885.018616, 353.724487, 443.268890, 663.692261, 884.831238, 354.308105, 442.953735, 663.319580, 886.028137, 354.738098\nTest script completed successfully.\n{\"passed\":12,\"total\":12,\"times\":[442.854401, 662.656006, 885.018616, 353.724487, 443.268890, 663.692261, 884.831238, 354.308105, 442.953735, 663.319580, 886.028137, 354.738098]}",
+            "avg_runtime": 586.4494628333333,
+            "data": {
+                "passed": 12,
+                "total": 12,
+                "times": [
+                    442.854401,
+                    662.656006,
+                    885.018616,
+                    353.724487,
+                    443.26889,
+                    663.692261,
+                    884.831238,
+                    354.308105,
+                    442.953735,
+                    663.31958,
+                    886.028137,
+                    354.738098
+                ]
+            }
+        },
+        {
+            "name": "wizread",
+            "status": "graded",
+            "error": "",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nExecution time (ms) for size 100000000: 443.726654\nProcessing Index 1: Size 150000000...\nExecution time (ms) for size 150000000: 663.501587\nProcessing Index 2: Size 200000000...\nExecution time (ms) for size 200000000: 884.866028\nProcessing Index 3: Size 80000000...\nExecution time (ms) for size 80000000: 354.715546\nProcessing Index 4: Size 100000000...\nExecution time (ms) for size 100000000: 443.368439\nProcessing Index 5: Size 150000000...\nExecution time (ms) for size 150000000: 661.134338\nProcessing Index 6: Size 200000000...\nExecution time (ms) for size 200000000: 886.012939\nProcessing Index 7: Size 80000000...\nExecution time (ms) for size 80000000: 354.125824\nProcessing Index 8: Size 100000000...\nExecution time (ms) for size 100000000: 442.260468\nProcessing Index 9: Size 150000000...\nExecution time (ms) for size 150000000: 664.793091\nProcessing Index 10: Size 200000000...\nExecution time (ms) for size 200000000: 886.414307\nProcessing Index 11: Size 80000000...\nExecution time (ms) for size 80000000: 354.524170\nPassed tests: 12\nTotal tests: 12\nExecution times (ms): 443.726654, 663.501587, 884.866028, 354.715546, 443.368439, 661.134338, 886.012939, 354.125824, 442.260468, 664.793091, 886.414307, 354.524170\nTest script completed successfully.\n{\"passed\":12,\"total\":12,\"times\":[443.726654, 663.501587, 884.866028, 354.715546, 443.368439, 661.134338, 886.012939, 354.125824, 442.260468, 664.793091, 886.414307, 354.524170]}",
+            "avg_runtime": 586.6202825833333,
+            "data": {
+                "passed": 12,
+                "total": 12,
+                "times": [
+                    443.726654,
+                    663.501587,
+                    884.866028,
+                    354.715546,
+                    443.368439,
+                    661.134338,
+                    886.012939,
+                    354.125824,
+                    442.260468,
+                    664.793091,
+                    886.414307,
+                    354.52417
+                ]
+            }
+        },
+        {
+            "name": "MarcoWeng0206",
+            "status": "error",
+            "error": "nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\nnvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\nCUDA Unchecked Error: __global__ function call is not configured\n",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nTest failed for input size 100000000\nExecution time (ms) for size 100000000: 0.002048\nProcessing Index 1: Size 150000000...\nTest failed for input size 150000000\nExecution time (ms) for size 150000000: 0.002048\nProcessing Index 2: Size 200000000...\nTest failed for input size 200000000\nExecution time (ms) for size 200000000: 0.002048\nProcessing Index 3: Size 80000000...\nTest failed for input size 80000000\nExecution time (ms) for size 80000000: 0.002048\nProcessing Index 4: Size 100000000...\nTest failed for input size 100000000\nExecution time (ms) for size 100000000: 0.002048\nProcessing Index 5: Size 150000000...\nTest failed for input size 150000000\nExecution time (ms) for size 150000000: 0.002016\nProcessing Index 6: Size 200000000...\nTest failed for input size 200000000\nExecution time (ms) for size 200000000: 0.002048\nProcessing Index 7: Size 80000000...\nTest failed for input size 80000000\nExecution time (ms) for size 80000000: 0.002048\nProcessing Index 8: Size 100000000...\nTest failed for input size 100000000\nExecution time (ms) for size 100000000: 0.002048\nProcessing Index 9: Size 150000000...\nTest failed for input size 150000000\nExecution time (ms) for size 150000000: 0.002048\nProcessing Index 10: Size 200000000...\nTest failed for input size 200000000\nExecution time (ms) for size 200000000: 0.002048\nProcessing Index 11: Size 80000000...\nTest failed for input size 80000000\nExecution time (ms) for size 80000000: 0.002048\nPassed tests: 0\nTotal tests: 12\nExecution times (ms): 0.002048, 0.002048, 0.002048, 0.002048, 0.002048, 0.002016, 0.002048, 0.002048, 0.002048, 0.002048, 0.002048, 0.002048\nTest script completed successfully.\n{\"passed\":0,\"total\":12,\"times\":[0.002048, 0.002048, 0.002048, 0.002048, 0.002048, 0.002016, 0.002048, 0.002048, 0.002048, 0.002048, 0.002048, 0.002048]}\n",
+            "avg_runtime": 0.0,
+            "data": null
+        },
+        {
+            "name": "diego-ciciani01",
+            "status": "graded",
+            "error": "",
+            "stdout": "nvcc   -o vectorsum.out vectorsum.cu -lm\nnvcc   -o vectorsum-cuda.out vectorsum-cuda.cu student.cu -lm\nVerified Makefile: OK\nVerified vectorsum-cuda.cu: OK\nProcessing Index 0: Size 100000000...\nExecution time (ms) for size 100000000: 443.563019\nProcessing Index 1: Size 150000000...\nExecution time (ms) for size 150000000: 664.143860\nProcessing Index 2: Size 200000000...\nExecution time (ms) for size 200000000: 884.959229\nProcessing Index 3: Size 80000000...\nExecution time (ms) for size 80000000: 354.840576\nProcessing Index 4: Size 100000000...\nExecution time (ms) for size 100000000: 442.913788\nProcessing Index 5: Size 150000000...\nExecution time (ms) for size 150000000: 663.222107\nProcessing Index 6: Size 200000000...\nExecution time (ms) for size 200000000: 887.259094\nProcessing Index 7: Size 80000000...\nExecution time (ms) for size 80000000: 354.585602\nProcessing Index 8: Size 100000000...\nExecution time (ms) for size 100000000: 443.585541\nProcessing Index 9: Size 150000000...\nExecution time (ms) for size 150000000: 662.712341\nProcessing Index 10: Size 200000000...\nExecution time (ms) for size 200000000: 884.147217\nProcessing Index 11: Size 80000000...\nExecution time (ms) for size 80000000: 355.040192\nPassed tests: 12\nTotal tests: 12\nExecution times (ms): 443.563019, 664.143860, 884.959229, 354.840576, 442.913788, 663.222107, 887.259094, 354.585602, 443.585541, 662.712341, 884.147217, 355.040192\nTest script completed successfully.\n{\"passed\":12,\"total\":12,\"times\":[443.563019, 664.143860, 884.959229, 354.840576, 442.913788, 663.222107, 887.259094, 354.585602, 443.585541, 662.712341, 884.147217, 355.040192]}",
+            "avg_runtime": 586.7477138333334,
+            "data": {
+                "passed": 12,
+                "total": 12,
+                "times": [
+                    443.563019,
+                    664.14386,
+                    884.959229,
+                    354.840576,
+                    442.913788,
+                    663.222107,
+                    887.259094,
+                    354.585602,
+                    443.585541,
+                    662.712341,
+                    884.147217,
+                    355.040192
+                ]
+            }
+        }
+    ]
 }

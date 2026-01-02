@@ -6,13 +6,39 @@
     <title>{{ .Title }} | {{ .Site.Title }}</title>
     {{ $style := resources.Get "css/main.css" | css.PostCSS }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
     {{ partial "navbar.html" . }}
 
-    <div class="flex flex-1 container mx-auto p-4 gap-6">
-        <aside class="w-1/4 hidden md:block border-r border-gray-200 pr-4">
+    <div class="md:hidden" id="mobileSidebar" aria-hidden="true">
+        <div class="fixed inset-0 z-40 hidden" data-sidebar-overlay>
+            <div class="absolute inset-0 bg-black/40" data-sidebar-close></div>
+                 <aside id="mobileSidebarPanel"
+                     role="dialog"
+                     aria-modal="true"
+                     aria-label="Exercises sidebar"
+                     class="relative h-full w-72 max-w-full bg-white shadow-xl mobile-sidebar-panel transition-transform duration-300 ease-in-out">
+                <div class="flex items-center justify-between p-4 border-b">
+                    <p class="text-sm font-semibold text-gray-600 uppercase tracking-widest">Exercises</p>
+                    <button type="button" class="p-2 text-gray-500 hover:text-gray-700" data-sidebar-close>
+                        <span class="sr-only">Close sidebar</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto h-full">
+                    {{ partial "sidebar.html" . }}
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="flex flex-1 container mx-auto p-4 gap-6 flex-col md:flex-row">
+        <aside class="w-full md:w-1/4 hidden md:block border-r border-gray-200 pr-4">
             {{ partial "sidebar.html" . }}
         </aside>
 
@@ -20,6 +46,54 @@
             {{ block "main" . }}{{ end }}
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarRoot = document.getElementById('mobileSidebar');
+            const sidebarOverlay = document.querySelector('[data-sidebar-overlay]');
+            const sidebarPanel = document.getElementById('mobileSidebarPanel');
+            const openButtons = document.querySelectorAll('[data-sidebar-toggle]');
+            const closeButtons = document.querySelectorAll('[data-sidebar-close]');
+            if (!sidebarRoot || !sidebarOverlay || !sidebarPanel || !openButtons.length) return;
+
+            const openSidebar = () => {
+                sidebarOverlay.classList.remove('hidden');
+                sidebarRoot.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('overflow-hidden');
+                openButtons.forEach(btn => btn.setAttribute('aria-expanded', 'true'));
+                requestAnimationFrame(() => {
+                    sidebarPanel.classList.add('is-open');
+                });
+            };
+
+            const closeSidebar = () => {
+                sidebarPanel.classList.remove('is-open');
+                const handleTransitionEnd = () => {
+                    if (sidebarPanel.classList.contains('is-open')) {
+                        return;
+                    }
+                    sidebarOverlay.classList.add('hidden');
+                    sidebarRoot.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('overflow-hidden');
+                };
+                sidebarPanel.addEventListener('transitionend', handleTransitionEnd, { once: true });
+                openButtons.forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+            };
+
+            openButtons.forEach(button => button.addEventListener('click', openSidebar));
+            closeButtons.forEach(button => button.addEventListener('click', closeSidebar));
+            sidebarOverlay.addEventListener('click', (event) => {
+                if (event.target === sidebarOverlay) {
+                    closeSidebar();
+                }
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !sidebarOverlay.classList.contains('hidden')) {
+                    closeSidebar();
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

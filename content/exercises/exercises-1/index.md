@@ -1,5 +1,5 @@
 ---
-title: "[OMP] Laplace"
+title: "[CUDA] Vector Sum"
 date: 2023-10-27T10:00:00+00:00
 draft: false
 ---
