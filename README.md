@@ -192,7 +192,7 @@ Create the exercise folder and file manually:
 
 2. **Create `index.md`** with this template:
 
-```markdown
+````markdown
 ---
 title: "Matrix Multiplication"
 date: 2026-01-03T00:00:00Z
@@ -232,7 +232,7 @@ Only modify the code between the guard comments:
 - Correctness: All tests must pass
 - Performance: Ranked by average execution time
 - Code quality: Follows guidelines
-```
+````
 
 **Exercise Frontmatter Fields:**
 
