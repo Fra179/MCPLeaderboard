@@ -42,25 +42,29 @@
 
                 {{ if $data }}
                 <div class="overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
-                    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
-                        <span class="text-xs font-mono text-gray-500 bg-white border px-2 py-1 rounded">Project: {{
-                            $folderName }}</span>
+                        <!-- <span class="text-xs font-mono text-gray-500 bg-white border px-2 py-1 rounded">Project: {{
+                            $folderName }}</span> -->
                     </div>
+                    <div class="overflow-x-auto">
                     <table class="min-w-full">
                         <thead class="bg-white border-b border-gray-100">
                             <tr>
                                 <th
-                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    class="py-1 px-3 md:py-3 md:px-6 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                     Status</th>
                                 <th
-                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                     Rank</th>
                                 <th
-                                    class="py-3 px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                     Student</th>
                                 <th
-                                    class="py-3 px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Commit</th>
+                                <th
+                                    class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                     Avg. Runtime</th>
                             </tr>
                         </thead>
@@ -73,13 +77,13 @@
                             {{ $stderr := default "" $entry.error }}
                             <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
                                 onclick="showLog({{ $stdout | jsonify }}, {{ $stderr | jsonify }})">
-                                <td class="py-4 px-6">
+                                <td class="py-2 px-3 md:py-4 md:px-6 text-center">
                                     {{ if ne $entry.status "error" }}
-                                    <div class="bg-green-100 text-green-600 rounded-full p-1 w-fit">
+                                    <div class="bg-green-100 text-green-600 rounded-full p-1 w-fit mx-auto">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
                                     {{ else }}
-                                    <div class="bg-red-200 text-red-600 rounded-full p-1 w-fit">
+                                    <div class="bg-red-200 text-red-600 rounded-full p-1 w-fit mx-auto">
                                         <i class="fa-solid fa-xmark"></i>
                                     </div>
                                     {{ end }}
@@ -89,8 +93,12 @@
                                         class="font-mono text-sm text-gray-500 group-hover:text-blue-600 font-bold">#{{
                                         add $index 1 }}</span>
                                 </td>
-                                <td class="py-4 px-6 font-medium text-gray-900">{{ $entry.name }}</td>
-                                <td class="py-4 px-6 text-right">
+                                <td class="py-2 px-3 md:py-4 md:px-6 font-medium text-gray-900">{{ $entry.name }}</td>
+                                <td class="py-2 px-3 md:py-4 md:px-6 text-right">
+                                    <span
+                                        class="font-mono text-sm text-gray-500 group-hover:text-blue-600">{{ $entry.commit_hash }}</span>
+                                </td>
+                                <td class="py-2 px-3 md:py-4 md:px-6 text-right">
                                     <span
                                         class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
                                         {{ printf "%.2f" $entry.avg_runtime }} ms
@@ -100,6 +108,7 @@
                             {{ end }}
                         </tbody>
                     </table>
+                    </div>
                     <div id="log-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
                         <div class="bg-white rounded-lg shadow-xl w-[85vw] max-h-[1000px] max-w-[1200px] p-6 space-y-6"
                             onclick="event.stopPropagation();">

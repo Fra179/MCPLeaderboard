@@ -69,4 +69,8 @@ The final grade is calculated as the average of two components:
 1.  **Project:** Practical implementation of parallel systems.
 2.  **Oral Exam:** Theoretical assessment.
 
+## Excercises
+
+From this website it will be possible to see the leaderboard for each published exercixe: Please have a look either at the sidebar on the left or at the [Excercises Page](/exercises)
+
 *Note: Possibility of extra points for intermediate evaluations (TBD).*
