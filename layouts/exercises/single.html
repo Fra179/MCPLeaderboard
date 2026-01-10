@@ -73,16 +73,41 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            {{ $ok := sort (where $data "status" "!=" "error") "avg_runtime" "asc" }}
-                            {{ $errs := sort (where $data "status" "==" "error") "avg_runtime" "asc" }}
+                            {{ $allEntries := slice }}
+                            {{ range $entry := $data }}
+                                {{ $overallStatus := "graded" }}
+                                {{ $totalRuntime := 0.0 }}
+                                {{ $taskCount := 0 }}
+                                
+                                {{ if $entry.tasks }}
+                                    {{ range $task := $entry.tasks }}
+                                        {{ $taskStatus := index $entry.status $task }}
+                                        {{ if eq $taskStatus "error" }}
+                                            {{ $overallStatus = "error" }}
+                                        {{ end }}
+                                        {{ $taskRuntime := index $entry.avg_runtime $task }}
+                                        {{ $totalRuntime = add $totalRuntime $taskRuntime }}
+                                        {{ $taskCount = add $taskCount 1 }}
+                                    {{ end }}
+                                    {{ $avgRuntime := div $totalRuntime (float $taskCount) }}
+                                    {{ $allEntries = $allEntries | append (dict "entry" $entry "overallStatus" $overallStatus "avgRuntime" $avgRuntime) }}
+                                {{ else }}
+                                    {{ $allEntries = $allEntries | append (dict "entry" $entry "overallStatus" $entry.status "avgRuntime" $entry.avg_runtime) }}
+                                {{ end }}
+                            {{ end }}
+                            
+                            {{ $ok := sort (where $allEntries "overallStatus" "!=" "error") "avgRuntime" "asc" }}
+                            {{ $errs := sort (where $allEntries "overallStatus" "==" "error") "avgRuntime" "asc" }}
                             {{ $ordered := $ok | append $errs }}
-                            {{ range $index, $entry := $ordered }}
-                            {{ $stdout := default "" $entry.stdout }}
-                            {{ $stderr := default "" $entry.error }}
-                            <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
-                                onclick="showLog({{ $stdout | jsonify }}, {{ $stderr | jsonify }})">
+                            
+                            {{ range $index, $item := $ordered }}
+                            {{ $entry := $item.entry }}
+                            {{ $overallStatus := $item.overallStatus }}
+                            {{ $avgRuntime := $item.avgRuntime }}
+                            <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer leaderboard-row"
+                                data-entry='{{ $entry | jsonify }}'>
                                 <td class="py-2 px-3 md:py-4 md:px-6 text-center">
-                                    {{ if ne $entry.status "error" }}
+                                    {{ if ne $overallStatus "error" }}
                                     <div class="bg-green-100 text-green-600 rounded-full p-1 w-fit mx-auto">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
@@ -100,12 +125,12 @@
                                 <td class="py-2 px-3 md:py-4 md:px-6 font-medium text-gray-900">{{ $entry.name }}</td>
                                 <td class="py-2 px-3 md:py-4 md:px-6 text-right">
                                     <span
-                                        class="font-mono text-sm text-gray-500 group-hover:text-blue-600">{{ $entry.commit_hash }}</span>
+                                        class="font-mono text-sm text-gray-500 group-hover:text-blue-600">{{ substr $entry.commit_hash 0 7 }}</span>
                                 </td>
                                 <td class="py-2 px-3 md:py-4 md:px-6 text-right">
                                     <span
                                         class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
-                                        {{ printf "%.2f" $entry.avg_runtime }} ms
+                                        {{ printf "%.2f" $avgRuntime }} ms
                                     </span>
                                 </td>
                             </tr>
@@ -121,18 +146,12 @@
                                 <button class="text-gray-500 hover:text-gray-800" onclick="closeLog()">✕</button>
                             </div>
 
-                            <div class="space-y-3">
-                                <label class="block text-sm font-medium text-gray-700">stdout</label>
-                                <textarea id="log-stdout"
-                                    class="w-full h-64 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10"
-                                    readonly></textarea>
+                            <div id="task-tabs-container" class="bg-gray-100 p-1.5 rounded-lg inline-flex shadow-inner gap-1">
+                                <!-- Task tabs will be dynamically inserted here -->
                             </div>
 
-                            <div class="space-y-3">
-                                <label class="block text-sm font-medium text-gray-700">stderr</label>
-                                <textarea id="log-stderr"
-                                    class="w-full h-48 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10"
-                                    readonly></textarea>
+                            <div id="task-content-container" class="space-y-4">
+                                <!-- Task content will be dynamically inserted here -->
                             </div>
 
                             <div class="flex justify-end">
@@ -215,8 +234,9 @@
 
     // 4. Log modal handlers
     const modal = document.getElementById('log-modal');
-    const stdoutEl = document.getElementById('log-stdout');
-    const stderrEl = document.getElementById('log-stderr');
+    const taskTabsContainer = document.getElementById('task-tabs-container');
+    const taskContentContainer = document.getElementById('task-content-container');
+    let currentTaskData = null;
 
     const prettyPrint = (text) => {
         if (!text) return '';
@@ -233,9 +253,112 @@
         return text.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
     };
 
-    window.showLog = (stdout, stderr) => {
-        stdoutEl.value = prettyPrint(stdout) || '';
-        stderrEl.value = prettyPrint(stderr) || '';
+    const switchTaskTab = (taskName) => {
+        // Hide all task content
+        document.querySelectorAll('.task-content').forEach(el => {
+            el.classList.add('hidden');
+        });
+
+        // Reset all task tab styles
+        document.querySelectorAll('.task-tab-btn').forEach(btn => {
+            btn.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+            btn.classList.add('text-gray-500', 'hover:text-gray-900');
+        });
+
+        // Show selected task content
+        const selectedContent = document.getElementById('task-content-' + taskName);
+        if (selectedContent) {
+            selectedContent.classList.remove('hidden');
+        }
+
+        // Style selected task tab
+        const activeBtn = document.getElementById('task-tab-' + taskName);
+        if (activeBtn) {
+            activeBtn.classList.remove('text-gray-500', 'hover:text-gray-900');
+            activeBtn.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+        }
+    };
+
+    window.showLog = (entry) => {
+        // Clear previous content
+        taskTabsContainer.innerHTML = '';
+        taskContentContainer.innerHTML = '';
+        
+        // Check if entry has multiple tasks
+        if (entry.tasks && entry.tasks.length > 0) {
+            // Create tabs for each task
+            entry.tasks.forEach((task, index) => {
+                const taskStatus = entry.status[task];
+                const isError = taskStatus === 'error';
+                
+                // Create tab button
+                const tabBtn = document.createElement('button');
+                tabBtn.id = 'task-tab-' + task;
+                tabBtn.className = 'task-tab-btn flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 ring-blue-400 whitespace-nowrap text-gray-500 hover:text-gray-900';
+                tabBtn.onclick = () => switchTaskTab(task);
+                
+                // Add status icon
+                const statusIcon = document.createElement('span');
+                if (isError) {
+                    statusIcon.className = 'text-red-600';
+                    statusIcon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+                } else {
+                    statusIcon.className = 'text-green-600';
+                    statusIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                }
+                
+                const taskLabel = document.createElement('span');
+                taskLabel.textContent = task;
+                
+                tabBtn.appendChild(statusIcon);
+                tabBtn.appendChild(taskLabel);
+                taskTabsContainer.appendChild(tabBtn);
+                
+                // Create content for this task
+                const taskContent = document.createElement('div');
+                taskContent.id = 'task-content-' + task;
+                taskContent.className = 'task-content space-y-4 hidden';
+                
+                const stdout = entry.stdout && entry.stdout[task] ? entry.stdout[task] : '';
+                const stderr = entry.error && entry.error[task] ? entry.error[task] : '';
+                
+                taskContent.innerHTML = `
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">stdout</label>
+                        <textarea class="w-full h-64 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly>${prettyPrint(stdout)}</textarea>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">stderr</label>
+                        <textarea class="w-full h-48 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly>${prettyPrint(stderr)}</textarea>
+                    </div>
+                `;
+                
+                taskContentContainer.appendChild(taskContent);
+            });
+            
+            // Switch to first task by default
+            if (entry.tasks.length > 0) {
+                switchTaskTab(entry.tasks[0]);
+            }
+        } else {
+            // Legacy single task format
+            taskTabsContainer.style.display = 'none';
+            
+            const stdout = typeof entry.stdout === 'string' ? entry.stdout : '';
+            const stderr = typeof entry.error === 'string' ? entry.error : '';
+            
+            taskContentContainer.innerHTML = `
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-gray-700">stdout</label>
+                    <textarea class="w-full h-64 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly>${prettyPrint(stdout)}</textarea>
+                </div>
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-gray-700">stderr</label>
+                    <textarea class="w-full h-48 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly>${prettyPrint(stderr)}</textarea>
+                </div>
+            `;
+        }
+        
         modal.classList.remove('hidden');
         modal.classList.add('flex');
     };
@@ -243,8 +366,26 @@
     window.closeLog = () => {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
+        taskTabsContainer.style.display = '';
     };
 
     modal?.addEventListener('click', closeLog);
+
+    // Add click handlers to leaderboard rows
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.leaderboard-row').forEach(row => {
+            row.addEventListener('click', () => {
+                const entryData = row.getAttribute('data-entry');
+                if (entryData) {
+                    try {
+                        const entry = JSON.parse(entryData);
+                        showLog(entry);
+                    } catch (e) {
+                        console.error('Error parsing entry data:', e);
+                    }
+                }
+            });
+        });
+    });
 </script>
 {{ end }}
