@@ -21,4 +21,11 @@
             class="block px-3 py-2 rounded transition-colors hover:bg-gray-100 text-gray-700">
             View All
         </a>
+        {{ with site.GetPage "page" "faq" }}
+        <a href='{{ relURL "faq" }}'
+            class="block px-3 py-2 rounded transition-colors hover:bg-gray-100 text-gray-700">
+            Get Help
+        </a>
+        {{ end }}
+    </li>
 </ul>

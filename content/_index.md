@@ -5,6 +5,7 @@ date: 2025-09-23
 author: "Daniele De Sensi"
 draft: false
 ---
+{{< faqlink >}}
 
 ## Course Overview
 

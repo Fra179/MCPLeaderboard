@@ -7,6 +7,8 @@ technology: "exam"
 
 # High-Energy Particle Storm Simulation
 
+{{< faqlink >}}
+
 ## 1. Introduction
 The purpose of this project is to perform a simplified simulation of high-energy particle storms bombarding a surface, such as the hull of a space vessel. The simulation analyzes the energy accumulated on a cross-section of the material, represented by a discrete array of control points.
 
