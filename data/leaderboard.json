@@ -1,6 +1,236 @@
 {
     "final-exam": [
         {
+            "name": "SepeFr",
+            "commit_hash": "0da3653904c5fad9bb0611d47fc4dba2108658bc",
+            "tasks": [
+                "test-mpi-openmp",
+                "test-cuda"
+            ],
+            "status": {
+                "test-mpi-openmp": "graded",
+                "test-cuda": "graded"
+            },
+            "error": {
+                "test-mpi-openmp": "",
+                "test-cuda": ""
+            },
+            "stdout": {
+                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.028746\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [28.746000000000002, 29.413, 29.608, 27.237000000000002, 26.933]}",
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 51.926915\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [51926.915, 52157.152, 51969.037, 52185.457, 52400.112]}"
+            },
+            "avg_runtime": {
+                "test-mpi-openmp": 28.387400000000003,
+                "test-cuda": 52127.7346
+            },
+            "data": {
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        28.746000000000002,
+                        29.413,
+                        29.608,
+                        27.237000000000002,
+                        26.933
+                    ]
+                },
+                "test-cuda": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        51926.915,
+                        52157.152,
+                        51969.037,
+                        52185.457,
+                        52400.112
+                    ]
+                }
+            }
+        },
+        {
+            "name": "PatatineFritte0",
+            "commit_hash": "ba3f75c037ea9f3801507e83155913d828ef0757",
+            "tasks": [
+                "test-mpi-openmp",
+                "test-cuda"
+            ],
+            "status": {
+                "test-mpi-openmp": "graded",
+                "test-cuda": "graded"
+            },
+            "error": {
+                "test-mpi-openmp": "",
+                "test-cuda": ""
+            },
+            "stdout": {
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --map-by node:PE=32 --bind-to core ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nRank 5: Communication time for storm 0: 0.000052 seconds\nRank 0: Communication time for storm 0: 0.000003 seconds\nRank 1: Communication time for storm 0: 0.000043 seconds\nRank 2: Communication time for storm 0: 0.000004 seconds\nRank 3: Communication time for storm 0: 0.000556 seconds\nRank 4: Communication time for storm 0: 0.000991 seconds\nRank 6: Communication time for storm 0: 0.003428 seconds\nRank 13: Communication time for storm 0: 0.000526 seconds\nRank 14: Communication time for storm 0: 0.001580 seconds\nRank 15: Communication time for storm 0: 0.000009 seconds\nRank 9: Communication time for storm 0: 0.000013 seconds\nRank 10: Communication time for storm 0: 0.000182 seconds\nRank 11: Communication time for storm 0: 0.000988 seconds\nRank 12: Communication time for storm 0: 0.001673 seconds\nRank 0: Allreduce time for storm 0: 0.009143 seconds\nRank 0: Communication time for storm 1: 0.000003 seconds\nRank 1: Allreduce time for storm 0: 0.009124 seconds\nRank 1: Communication time for storm 1: 0.000002 seconds\nRank 2: Allreduce time for storm 0: 0.009112 seconds\nRank 2: Communication time for storm 1: 0.000002 seconds\nRank 3: Allreduce time for storm 0: 0.009097 seconds\nRank 3: Communication time for storm 1: 0.000003 seconds\nRank 8: Communication time for storm 0: 0.000760 seconds\nRank 7: Communication time for storm 0: 0.007625 seconds\nRank 5: Allreduce time for storm 0: 0.011160 seconds\nRank 11: Allreduce time for storm 0: 0.001100 seconds\nRank 15: Allreduce time for storm 0: 0.001975 seconds\nRank 9: Allreduce time for storm 0: 0.001561 seconds\nRank 4: Allreduce time for storm 0: 0.009142 seconds\nRank 13: Allreduce time for storm 0: 0.003551 seconds\nRank 10: Allreduce time for storm 0: 0.001582 seconds\nRank 6: Allreduce time for storm 0: 0.007689 seconds\nRank 14: Allreduce time for storm 0: 0.001961 seconds\nRank 8: Allreduce time for storm 0: 0.000084 seconds\nRank 7: Allreduce time for storm 0: 0.000054 seconds\nRank 12: Allreduce time for storm 0: 0.001094 seconds\nRank 5: Communication time for storm 1: 0.000002 seconds\nRank 4: Communication time for storm 1: 0.000020 seconds\nRank 6: Communication time for storm 1: 0.000750 seconds\nRank 14: Communication time for storm 1: 0.000002 seconds\nRank 15: Communication time for storm 1: 0.000221 seconds\nRank 10: Communication time for storm 1: 0.000436 seconds\nRank 12: Communication time for storm 1: 0.000002 seconds\nRank 11: Communication time for storm 1: 0.000106 seconds\nRank 13: Communication time for storm 1: 0.002790 seconds\nRank 2: Allreduce time for storm 1: 0.007744 seconds\nRank 0: Allreduce time for storm 1: 0.007746 seconds\nRank 1: Allreduce time for storm 1: 0.007744 seconds\nRank 3: Allreduce time for storm 1: 0.007746 seconds\nRank 1: Communication time for storm 2: 0.000009 seconds\nRank 2: Communication time for storm 2: 0.000002 seconds\nRank 0: Communication time for storm 2: 0.000001 seconds\nRank 3: Communication time for storm 2: 0.000001 seconds\nRank 8: Communication time for storm 1: 0.000002 seconds\nRank 7: Communication time for storm 1: 0.006978 seconds\nRank 4: Allreduce time for storm 1: 0.007746 seconds\nRank 15: Allreduce time for storm 1: 0.002107 seconds\nRank 9: Communication time for storm 1: 0.001616 seconds\nRank 6: Allreduce time for storm 1: 0.006989 seconds\nRank 14: Allreduce time for storm 1: 0.002104 seconds\nRank 11: Allreduce time for storm 1: 0.001043 seconds\nRank 5: Allreduce time for storm 1: 0.007758 seconds\nRank 12: Allreduce time for storm 1: 0.001045 seconds\nRank 10: Allreduce time for storm 1: 0.001130 seconds\nRank 7: Allreduce time for storm 1: 0.000010 seconds\nRank 13: Allreduce time for storm 1: 0.001021 seconds\nRank 8: Allreduce time for storm 1: 0.000030 seconds\nRank 5: Communication time for storm 2: 0.000001 seconds\nRank 9: Allreduce time for storm 1: 0.000009 seconds\nRank 4: Communication time for storm 2: 0.000002 seconds\nRank 6: Communication time for storm 2: 0.000395 seconds\nRank 15: Communication time for storm 2: 0.000075 seconds\nRank 13: Communication time for storm 2: 0.000002 seconds\nRank 14: Communication time for storm 2: 0.000883 seconds\nRank 11: Communication time for storm 2: 0.000002 seconds\nRank 12: Communication time for storm 2: 0.000468 seconds\nRank 0: Allreduce time for storm 2: 0.007787 seconds\nRank 0: Communication time for storm 3: 0.000004 seconds\nRank 1: Allreduce time for storm 2: 0.007786 seconds\nRank 1: Communication time for storm 3: 0.000001 seconds\nRank 2: Allreduce time for storm 2: 0.007785 seconds\nRank 2: Communication time for storm 3: 0.000002 seconds\nRank 3: Allreduce time for storm 2: 0.007784 seconds\nRank 3: Communication time for storm 3: 0.000007 seconds\nRank 7: Communication time for storm 2: 0.007316 seconds\nRank 8: Communication time for storm 2: 0.000047 seconds\nRank 8: Allreduce time for storm 2: 0.000026 seconds\nRank 6: Allreduce time for storm 2: 0.007380 seconds\nRank 14: Allreduce time for storm 2: 0.001389 seconds\nRank 15: Allreduce time for storm 2: 0.002291 seconds\nRank 9: Communication time for storm 2: 0.000005 seconds\nRank 9: Allreduce time for storm 2: 0.000022 seconds\nRank 5: Allreduce time for storm 2: 0.007789 seconds\nRank 13: Allreduce time for storm 2: 0.001405 seconds\nRank 10: Communication time for storm 2: 0.001157 seconds\nRank 10: Allreduce time for storm 2: 0.000005 seconds\nRank 4: Allreduce time for storm 2: 0.007787 seconds\nRank 4: Communication time for storm 3: 0.000005 seconds\nRank 12: Allreduce time for storm 2: 0.000978 seconds\nRank 11: Allreduce time for storm 2: 0.001015 seconds\nRank 7: Allreduce time for storm 2: 0.000055 seconds\nRank 5: Communication time for storm 3: 0.000007 seconds\nRank 6: Communication time for storm 3: 0.001304 seconds\nRank 15: Communication time for storm 3: 0.001126 seconds\nRank 14: Communication time for storm 3: 0.000272 seconds\nRank 13: Communication time for storm 3: 0.000344 seconds\nRank 12: Communication time for storm 3: 0.000002 seconds\nRank 10: Communication time for storm 3: 0.000002 seconds\nRank 11: Communication time for storm 3: 0.000961 seconds\nRank 2: Allreduce time for storm 3: 0.007899 seconds\nRank 0: Allreduce time for storm 3: 0.007903 seconds\nRank 1: Allreduce time for storm 3: 0.007902 seconds\nRank 3: Allreduce time for storm 3: 0.007900 seconds\nRank 0: Communication time for storm 4: 0.000001 seconds\nRank 3: Communication time for storm 4: 0.000001 seconds\nRank 8: Communication time for storm 3: 0.000002 seconds\nRank 7: Communication time for storm 3: 0.006493 seconds\nRank 1: Communication time for storm 4: 0.000008 seconds\nRank 2: Communication time for storm 4: 0.000001 seconds\nRank 9: Communication time for storm 3: 0.000280 seconds\nRank 4: Allreduce time for storm 3: 0.007896 seconds\nRank 14: Allreduce time for storm 3: 0.001477 seconds\nRank 5: Allreduce time for storm 3: 0.007886 seconds\nRank 15: Allreduce time for storm 3: 0.001727 seconds\nRank 11: Allreduce time for storm 3: 0.000312 seconds\nRank 13: Allreduce time for storm 3: 0.001115 seconds\nRank 8: Allreduce time for storm 3: 0.000093 seconds\nRank 9: Allreduce time for storm 3: 0.000094 seconds\nRank 6: Allreduce time for storm 3: 0.006564 seconds\nRank 12: Allreduce time for storm 3: 0.001134 seconds\nRank 10: Allreduce time for storm 3: 0.000330 seconds\nRank 7: Allreduce time for storm 3: 0.000004 seconds\nRank 4: Communication time for storm 4: 0.000008 seconds\nRank 5: Communication time for storm 4: 0.000002 seconds\nRank 6: Communication time for storm 4: 0.001314 seconds\nRank 13: Communication time for storm 4: 0.000090 seconds\nRank 14: Communication time for storm 4: 0.000002 seconds\nRank 15: Communication time for storm 4: 0.000623 seconds\nRank 11: Communication time for storm 4: 0.000001 seconds\nRank 12: Communication time for storm 4: 0.001293 seconds\nRank 7: Communication time for storm 4: 0.006270 seconds\nRank 3: Allreduce time for storm 4: 0.007701 seconds\nRank 1: Allreduce time for storm 4: 0.007698 seconds\nRank 1: Communication time for storm 5: 0.000004 seconds\nRank 0: Allreduce time for storm 4: 0.007702 seconds\nRank 0: Communication time for storm 5: 0.000005 seconds\nRank 2: Allreduce time for storm 4: 0.007698 seconds\nRank 2: Communication time for storm 5: 0.000002 seconds\nRank 3: Communication time for storm 5: 0.000003 seconds\nRank 9: Communication time for storm 4: 0.000002 seconds\nRank 9: Allreduce time for storm 4: 0.000006 seconds\nRank 5: Allreduce time for storm 4: 0.007707 seconds\nRank 15: Allreduce time for storm 4: 0.001321 seconds\nRank 8: Communication time for storm 4: 0.000113 seconds\nRank 8: Allreduce time for storm 4: 0.000006 seconds\nRank 6: Allreduce time for storm 4: 0.006371 seconds\nRank 13: Allreduce time for storm 4: 0.001337 seconds\nRank 10: Communication time for storm 4: 0.000247 seconds\nRank 10: Allreduce time for storm 4: 0.000008 seconds\nRank 4: Allreduce time for storm 4: 0.007699 seconds\nRank 4: Communication time for storm 5: 0.000001 seconds\nRank 14: Allreduce time for storm 4: 0.001336 seconds\nRank 11: Allreduce time for storm 4: 0.000177 seconds\nRank 7: Allreduce time for storm 4: 0.000099 seconds\nRank 12: Allreduce time for storm 4: 0.000145 seconds\nRank 5: Communication time for storm 5: 0.000002 seconds\nRank 6: Communication time for storm 5: 0.000445 seconds\nRank 15: Communication time for storm 5: 0.000158 seconds\nRank 14: Communication time for storm 5: 0.000366 seconds\nRank 10: Communication time for storm 5: 0.000002 seconds\nRank 12: Communication time for storm 5: 0.000002 seconds\nRank 11: Communication time for storm 5: 0.000111 seconds\nRank 13: Communication time for storm 5: 0.001044 seconds\nRank 2: Allreduce time for storm 5: 0.007878 seconds\nRank 0: Allreduce time for storm 5: 0.007884 seconds\nRank 1: Allreduce time for storm 5: 0.007879 seconds\nRank 3: Allreduce time for storm 5: 0.007880 seconds\nRank 9: Communication time for storm 5: 0.000407 seconds\nRank 7: Communication time for storm 5: 0.007408 seconds\nRank 15: Allreduce time for storm 5: 0.001728 seconds\nRank 4: Allreduce time for storm 5: 0.007881 seconds\nRank 8: Communication time for storm 5: 0.000002 seconds\nRank 6: Allreduce time for storm 5: 0.007418 seconds\nRank 14: Allreduce time for storm 5: 0.001337 seconds\nRank 10: Allreduce time for storm 5: 0.000372 seconds\nRank 12: Allreduce time for storm 5: 0.000313 seconds\nRank 11: Allreduce time for storm 5: 0.000312 seconds\nRank 5: Allreduce time for storm 5: 0.007878 seconds\nRank 13: Allreduce time for storm 5: 0.000293 seconds\nRank 9: Allreduce time for storm 5: 0.000011 seconds\nRank 7: Allreduce time for storm 5: 0.000006 seconds\nRank 8: Allreduce time for storm 5: 0.000031 seconds\n\nTime: 0.050654\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [50.653999999999996, 53.017, 55.341, 53.335, 50.03]}",
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.028720\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [28.72, 28.673000000000002, 28.645, 28.765, 28.545]}"
+            },
+            "avg_runtime": {
+                "test-mpi-openmp": 52.4754,
+                "test-cuda": 28.669600000000003
+            },
+            "data": {
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        50.653999999999996,
+                        53.017,
+                        55.341,
+                        53.335,
+                        50.03
+                    ]
+                },
+                "test-cuda": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        28.72,
+                        28.673000000000002,
+                        28.645,
+                        28.765,
+                        28.545
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Valerio02",
+            "commit_hash": "b2b719f2c9074cbc0b66541bad6e85bb840e5cfd",
+            "tasks": [
+                "test-mpi-openmp",
+                "test-cuda"
+            ],
+            "status": {
+                "test-mpi-openmp": "error",
+                "test-cuda": "graded"
+            },
+            "error": {
+                "test-mpi-openmp": "\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Valerio02_test-mpi-openmp/test-exam-mpi-openmp.py\", line 112, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Valerio02_test-mpi-openmp/test-exam-mpi-openmp.py\", line 104, in test_program\n    assert expected.approx_eq(actual), f\"Expected {expected} (+- 1e-4), got {actual} for wave {wave_idx}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Expected Result(bucket_num=17197, energy=1654.755371) (+- 1e-4), got Result(bucket_num=17, energy=91791294464.0) for wave 0\n",
+                "test-cuda": ""
+            },
+            "stdout": {
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.075907\nResult: 17 91791294464.000000 17223 3274.642578 17 61194194944.000000 17 54394843136.000000 17 50995167232.000000 17 47595487232.000000\n\n",
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.026078\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [26.078, 25.27, 25.858, 25.898, 25.114]}"
+            },
+            "avg_runtime": {
+                "test-mpi-openmp": 0.0,
+                "test-cuda": 25.6436
+            },
+            "data": {
+                "test-mpi-openmp": null,
+                "test-cuda": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        26.078,
+                        25.27,
+                        25.858,
+                        25.898,
+                        25.114
+                    ]
+                }
+            }
+        },
+        {
+            "name": "alem1105",
+            "commit_hash": "ab86c66dfc3a169032f97be47cc91eba9aac1f96",
+            "tasks": [
+                "test-mpi-openmp",
+                "test-cuda"
+            ],
+            "status": {
+                "test-mpi-openmp": "graded",
+                "test-cuda": "graded"
+            },
+            "error": {
+                "test-mpi-openmp": "",
+                "test-cuda": ""
+            },
+            "stdout": {
+                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.041091\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [41.091, 41.276, 38.529, 41.423, 41.914]}",
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 52.162307\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [52162.307, 51976.363999999994, 52079.735, 52214.663, 51949.304]}"
+            },
+            "avg_runtime": {
+                "test-mpi-openmp": 40.8466,
+                "test-cuda": 52076.4746
+            },
+            "data": {
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        41.091,
+                        41.276,
+                        38.529,
+                        41.423,
+                        41.914
+                    ]
+                },
+                "test-cuda": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        52162.307,
+                        51976.363999999994,
+                        52079.735,
+                        52214.663,
+                        51949.304
+                    ]
+                }
+            }
+        },
+        {
+            "name": "MatteoCollica",
+            "commit_hash": "67579d74342d721e371223a2b0bfd03994383321",
+            "tasks": [
+                "test-mpi-openmp",
+                "test-cuda"
+            ],
+            "status": {
+                "test-mpi-openmp": "graded",
+                "test-cuda": "graded"
+            },
+            "error": {
+                "test-mpi-openmp": "",
+                "test-cuda": ""
+            },
+            "stdout": {
+                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.147217\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [147.21699999999998, 126.45100000000001, 119.926, 169.746, 138.962]}",
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.034573\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [34.573, 33.883, 33.038, 34.213, 33.788]}"
+            },
+            "avg_runtime": {
+                "test-mpi-openmp": 140.4604,
+                "test-cuda": 33.899
+            },
+            "data": {
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        147.21699999999998,
+                        126.45100000000001,
+                        119.926,
+                        169.746,
+                        138.962
+                    ]
+                },
+                "test-cuda": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        34.573,
+                        33.883,
+                        33.038,
+                        34.213,
+                        33.788
+                    ]
+                }
+            }
+        },
+        {
             "name": "AglaiaNorza",
             "commit_hash": "7dfea2fca3ccf5c4a4a869f79969a85692787233",
             "tasks": [
@@ -44,54 +274,6 @@
                         51954.352999999996,
                         52396.862,
                         51973.09
-                    ]
-                }
-            }
-        },
-        {
-            "name": "SepeFr",
-            "commit_hash": "daa7c57dba8eddd742b3f56f0f1ddb52bad522e0",
-            "tasks": [
-                "test-mpi-openmp",
-                "test-cuda"
-            ],
-            "status": {
-                "test-mpi-openmp": "graded",
-                "test-cuda": "graded"
-            },
-            "error": {
-                "test-mpi-openmp": "",
-                "test-cuda": ""
-            },
-            "stdout": {
-                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 3.132029\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [3132.029, 644.4250000000001, 650.984, 777.0350000000001, 736.97]}",
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 51.894622\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [51894.621999999996, 51869.622, 51919.456, 51909.818999999996, 51890.337]}"
-            },
-            "avg_runtime": {
-                "test-mpi-openmp": 1188.2886,
-                "test-cuda": 51896.7712
-            },
-            "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        3132.029,
-                        644.4250000000001,
-                        650.984,
-                        777.0350000000001,
-                        736.97
-                    ]
-                },
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        51894.621999999996,
-                        51869.622,
-                        51919.456,
-                        51909.818999999996,
-                        51890.337
                     ]
                 }
             }
@@ -254,150 +436,6 @@
                         31.093,
                         32.302,
                         31.079
-                    ]
-                }
-            }
-        },
-        {
-            "name": "PatatineFritte0",
-            "commit_hash": "56c5070fa8f0bc9ec146b13e64ee22b3ad0cbccb",
-            "tasks": [
-                "test-mpi-openmp",
-                "test-cuda"
-            ],
-            "status": {
-                "test-mpi-openmp": "graded",
-                "test-cuda": "graded"
-            },
-            "error": {
-                "test-mpi-openmp": "",
-                "test-cuda": ""
-            },
-            "stdout": {
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --map-by node:PE=32 --bind-to core ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nRank 2: total time halo exchange = 0.003017 seconds | saved time = 0.000027 seconds\nRank 6: total time halo exchange = 0.004241 seconds | saved time = 0.000036 seconds\nRank 13: total time halo exchange = 0.000023 seconds | saved time = 0.000020 seconds\nRank 14: total time halo exchange = 0.000089 seconds | saved time = 0.000018 seconds\nRank 15: total time halo exchange = 0.000016 seconds | saved time = 0.000012 seconds\nRank 10: total time halo exchange = 0.003909 seconds | saved time = 0.000028 seconds\nRank 12: total time halo exchange = 0.011912 seconds | saved time = 0.008936 seconds\nRank 11: total time halo exchange = 0.012150 seconds | saved time = 0.004192 seconds\nRank 0: total time halo exchange = 0.000010 seconds | saved time = 0.000008 seconds\nRank 1: total time halo exchange = 0.023760 seconds | saved time = 0.000012 seconds\nRank 9: total time halo exchange = 0.082467 seconds | saved time = 0.000017 seconds\nRank 7: total time halo exchange = 0.102542 seconds | saved time = 0.003901 seconds\nRank 8: total time halo exchange = 0.013576 seconds | saved time = 0.012433 seconds\nRank 5: total time halo exchange = 0.103230 seconds | saved time = 0.000021 seconds\nRank 3: total time halo exchange = 0.110467 seconds | saved time = 0.002996 seconds\nRank 2: time for the reduction = 0.107549 seconds\nRank 1: time for the reduction = 0.086896 seconds\nRank 3: time for the reduction = 0.000064 seconds\nRank 4: total time halo exchange = 0.007116 seconds | saved time = 0.000254 seconds\nRank 2: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 15: time for the reduction = 0.102656 seconds\nRank 13: time for the reduction = 0.102676 seconds\nRank 9: time for the reduction = 0.021049 seconds\nRank 14: time for the reduction = 0.102659 seconds\nRank 5: time for the reduction = 0.007131 seconds\nRank 11: time for the reduction = 0.091368 seconds\nRank 7: time for the reduction = 0.007458 seconds\nRank 10: time for the reduction = 0.099336 seconds\nRank 6: time for the reduction = 0.106092 seconds\nRank 6: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 1: total time halo exchange = 0.000391 seconds | saved time = 0.000002 seconds\nRank 0: time for the reduction = 0.087302 seconds\nRank 0: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 3: total time halo exchange = 0.000415 seconds | saved time = 0.000003 seconds\nRank 12: time for the reduction = 0.091806 seconds\nRank 4: time for the reduction = 0.000439 seconds\nRank 5: total time halo exchange = 0.000383 seconds | saved time = 0.000003 seconds\nRank 4: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 14: total time halo exchange = 0.000011 seconds | saved time = 0.000003 seconds\nRank 15: total time halo exchange = 0.000009 seconds | saved time = 0.000002 seconds\nRank 10: total time halo exchange = 0.000005 seconds | saved time = 0.000004 seconds\nRank 12: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 11: total time halo exchange = 0.000417 seconds | saved time = 0.000005 seconds\nRank 13: total time halo exchange = 0.000417 seconds | saved time = 0.000004 seconds\nRank 8: time for the reduction = 0.014687 seconds\nRank 2: time for the reduction = 0.008683 seconds\nRank 1: time for the reduction = 0.008250 seconds\nRank 3: time for the reduction = 0.008252 seconds\nRank 2: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 7: total time halo exchange = 0.008666 seconds | saved time = 0.000004 seconds\nRank 9: total time halo exchange = 0.007232 seconds | saved time = 0.000003 seconds\nRank 15: time for the reduction = 0.007270 seconds\nRank 8: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 11: time for the reduction = 0.006824 seconds\nRank 14: time for the reduction = 0.007261 seconds\nRank 13: time for the reduction = 0.006831 seconds\nRank 6: time for the reduction = 0.008692 seconds\nRank 5: time for the reduction = 0.008278 seconds\nRank 9: time for the reduction = 0.000008 seconds\nRank 7: time for the reduction = 0.000009 seconds\nRank 10: time for the reduction = 0.007149 seconds\nRank 6: total time halo exchange = 0.000432 seconds | saved time = 0.000003 seconds\nRank 14: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 15: total time halo exchange = 0.000015 seconds | saved time = 0.000002 seconds\nRank 10: total time halo exchange = 0.005834 seconds | saved time = 0.000003 seconds\nRank 3: total time halo exchange = 0.151093 seconds | saved time = 0.000003 seconds\nRank 0: time for the reduction = 0.159495 seconds\nRank 12: time for the reduction = 0.157938 seconds\nRank 4: time for the reduction = 0.159402 seconds\nRank 5: total time halo exchange = 0.151101 seconds | saved time = 0.000003 seconds\nRank 1: total time halo exchange = 0.151301 seconds | saved time = 0.000003 seconds\nRank 0: total time halo exchange = 0.000024 seconds | saved time = 0.000022 seconds\nRank 4: total time halo exchange = 0.000004 seconds | saved time = 0.000002 seconds\nRank 8: time for the reduction = 0.151479 seconds\nRank 13: total time halo exchange = 0.151106 seconds | saved time = 0.000004 seconds\nRank 11: total time halo exchange = 0.150993 seconds | saved time = 0.000004 seconds\nRank 12: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 0: time for the reduction = 0.001645 seconds\nRank 2: time for the reduction = 0.152942 seconds\nRank 3: time for the reduction = 0.001822 seconds\nRank 1: time for the reduction = 0.001624 seconds\nRank 3: total time halo exchange = 0.000010 seconds | saved time = 0.000002 seconds\nRank 0: total time halo exchange = 0.000006 seconds | saved time = 0.000005 seconds\nRank 2: total time halo exchange = 0.000004 seconds | saved time = 0.000002 seconds\nRank 1: total time halo exchange = 0.000019 seconds | saved time = 0.000003 seconds\nRank 7: total time halo exchange = 0.152492 seconds | saved time = 0.000003 seconds\nRank 8: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 13: time for the reduction = 0.000406 seconds\nRank 9: total time halo exchange = 0.145666 seconds | saved time = 0.000004 seconds\nRank 14: time for the reduction = 0.151540 seconds\nRank 5: time for the reduction = 0.001833 seconds\nRank 5: total time halo exchange = 0.000017 seconds | saved time = 0.000004 seconds\nRank 10: time for the reduction = 0.145675 seconds\nRank 15: time for the reduction = 0.151542 seconds\nRank 4: time for the reduction = 0.001861 seconds\nRank 4: total time halo exchange = 0.000012 seconds | saved time = 0.000003 seconds\nRank 11: time for the reduction = 0.000406 seconds\nRank 12: time for the reduction = 0.000440 seconds\nRank 6: time for the reduction = 0.152513 seconds\nRank 8: time for the reduction = 0.000041 seconds\nRank 7: time for the reduction = 0.000007 seconds\nRank 9: time for the reduction = 0.000011 seconds\nRank 6: total time halo exchange = 0.001342 seconds | saved time = 0.000003 seconds\nRank 15: total time halo exchange = 0.000017 seconds | saved time = 0.000003 seconds\nRank 11: total time halo exchange = 0.000094 seconds | saved time = 0.000004 seconds\nRank 12: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 13: total time halo exchange = 0.000009 seconds | saved time = 0.000004 seconds\nRank 14: total time halo exchange = 0.005728 seconds | saved time = 0.000004 seconds\nRank 10: total time halo exchange = 0.005710 seconds | saved time = 0.000004 seconds\nRank 2: time for the reduction = 0.026189 seconds\nRank 3: time for the reduction = 0.026191 seconds\nRank 1: time for the reduction = 0.026190 seconds\nRank 2: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 7: total time halo exchange = 0.024818 seconds | saved time = 0.000004 seconds\nRank 15: time for the reduction = 0.024769 seconds\nRank 8: total time halo exchange = 0.000005 seconds | saved time = 0.000004 seconds\nRank 13: time for the reduction = 0.019042 seconds\nRank 5: time for the reduction = 0.026192 seconds\nRank 14: time for the reduction = 0.019022 seconds\nRank 7: time for the reduction = 0.000014 seconds\nRank 6: time for the reduction = 0.024821 seconds\nRank 9: total time halo exchange = 0.018866 seconds | saved time = 0.000003 seconds\nRank 9: time for the reduction = 0.000006 seconds\nRank 10: time for the reduction = 0.018874 seconds\nRank 11: time for the reduction = 0.019041 seconds\nRank 6: total time halo exchange = 0.001315 seconds | saved time = 0.000003 seconds\nRank 15: total time halo exchange = 0.000003 seconds | saved time = 0.000002 seconds\nRank 14: total time halo exchange = 0.000009 seconds | saved time = 0.000003 seconds\nRank 10: total time halo exchange = 0.005869 seconds | saved time = 0.000004 seconds\nRank 0: time for the reduction = 0.198027 seconds\nRank 3: total time halo exchange = 0.171846 seconds | saved time = 0.000003 seconds\nRank 1: total time halo exchange = 0.171857 seconds | saved time = 0.000004 seconds\nRank 0: total time halo exchange = 0.000003 seconds | saved time = 0.000003 seconds\nRank 12: time for the reduction = 0.190879 seconds\nRank 8: time for the reduction = 0.171876 seconds\nRank 4: time for the reduction = 0.198033 seconds\nRank 5: total time halo exchange = 0.171838 seconds | saved time = 0.000003 seconds\nRank 4: total time halo exchange = 0.000005 seconds | saved time = 0.000004 seconds\nRank 13: total time halo exchange = 0.171844 seconds | saved time = 0.000005 seconds\nRank 11: total time halo exchange = 0.171735 seconds | saved time = 0.000003 seconds\nRank 12: total time halo exchange = 0.000003 seconds | saved time = 0.000003 seconds\nRank 1: time for the reduction = 0.008494 seconds\nRank 3: time for the reduction = 0.008498 seconds\nRank 2: time for the reduction = 0.180375 seconds\nRank 2: total time halo exchange = 0.000005 seconds | saved time = 0.000003 seconds\nRank 7: total time halo exchange = 0.179024 seconds | saved time = 0.000004 seconds\nRank 9: total time halo exchange = 0.173053 seconds | saved time = 0.000003 seconds\nRank 13: time for the reduction = 0.007083 seconds\nRank 5: time for the reduction = 0.008509 seconds\nRank 14: time for the reduction = 0.178954 seconds\nRank 6: time for the reduction = 0.179037 seconds\nRank 15: time for the reduction = 0.178960 seconds\nRank 7: time for the reduction = 0.000010 seconds\nRank 8: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 11: time for the reduction = 0.007075 seconds\nRank 9: time for the reduction = 0.000009 seconds\nRank 10: time for the reduction = 0.173064 seconds\nRank 6: total time halo exchange = 0.000515 seconds | saved time = 0.000003 seconds\nRank 14: total time halo exchange = 0.000006 seconds | saved time = 0.000003 seconds\nRank 15: total time halo exchange = 0.000011 seconds | saved time = 0.000002 seconds\nRank 10: total time halo exchange = 0.005754 seconds | saved time = 0.000003 seconds\nRank 3: total time halo exchange = 0.123429 seconds | saved time = 0.000003 seconds\nRank 12: time for the reduction = 0.130524 seconds\nRank 4: time for the reduction = 0.131941 seconds\nRank 5: total time halo exchange = 0.123428 seconds | saved time = 0.000002 seconds\nRank 4: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 13: total time halo exchange = 0.123421 seconds | saved time = 0.000004 seconds\nRank 11: total time halo exchange = 0.123430 seconds | saved time = 0.000003 seconds\nRank 12: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 0: time for the reduction = 0.134459 seconds\nRank 0: total time halo exchange = 0.000003 seconds | saved time = 0.000003 seconds\nRank 1: total time halo exchange = 0.125950 seconds | saved time = 0.000002 seconds\nRank 8: time for the reduction = 0.141802 seconds\nRank 3: time for the reduction = 0.019805 seconds\nRank 2: time for the reduction = 0.143247 seconds\nRank 1: time for the reduction = 0.017294 seconds\nRank 7: total time halo exchange = 0.142710 seconds | saved time = 0.000004 seconds\nRank 15: time for the reduction = 0.141836 seconds\nRank 9: total time halo exchange = 0.135947 seconds | saved time = 0.000004 seconds\nRank 13: time for the reduction = 0.018406 seconds\nRank 8: total time halo exchange = 0.000004 seconds | saved time = 0.000003 seconds\nRank 14: time for the reduction = 0.141833 seconds\nRank 11: time for the reduction = 0.018397 seconds\nRank 6: time for the reduction = 0.142723 seconds\nRank 5: time for the reduction = 0.019815 seconds\nRank 7: time for the reduction = 0.000006 seconds\nRank 10: time for the reduction = 0.135954 seconds\nRank 9: time for the reduction = 0.000014 seconds\nRank 0: time for the reduction = 0.157423 seconds\nRank 12: time for the reduction = 0.158544 seconds\nRank 4: time for the reduction = 0.159938 seconds\nRank 8: time for the reduction = 0.148484 seconds\n\nTime: 0.770999\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [770.999, 120.75, 100.23400000000001, 137.162, 129.89100000000002]}",
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -flto -march=native -mtune=native -mavx2 -funroll-loops -fno-fast-math -fno-associative-math -fno-finite-math-only -ftree-vectorize -fstrict-aliasing -D_FORCE_INLINE -DNOCHECK -DTIME energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 -Xcompiler \"-O3 -march=native -mtune=native -mavx2 -fno-fast-math\" energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.029209\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [29.209, 28.387, 28.744, 29.14, 28.116]}"
-            },
-            "avg_runtime": {
-                "test-mpi-openmp": 251.80720000000002,
-                "test-cuda": 28.7192
-            },
-            "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        770.999,
-                        120.75,
-                        100.23400000000001,
-                        137.162,
-                        129.89100000000002
-                    ]
-                },
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        29.209,
-                        28.387,
-                        28.744,
-                        29.14,
-                        28.116
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Valerio02",
-            "commit_hash": "3daf30577a721a2c6ddc3ce797aa724c2b7b0b13",
-            "tasks": [
-                "test-mpi-openmp",
-                "test-cuda"
-            ],
-            "status": {
-                "test-mpi-openmp": "graded",
-                "test-cuda": "graded"
-            },
-            "error": {
-                "test-mpi-openmp": "",
-                "test-cuda": ""
-            },
-            "stdout": {
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.148410\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [148.41, 169.61100000000002, 158.641, 171.903, 154.73700000000002]}",
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.036413\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [36.413000000000004, 25.961000000000002, 25.944, 25.954, 25.027]}"
-            },
-            "avg_runtime": {
-                "test-mpi-openmp": 160.6604,
-                "test-cuda": 27.8598
-            },
-            "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        148.41,
-                        169.61100000000002,
-                        158.641,
-                        171.903,
-                        154.73700000000002
-                    ]
-                },
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        36.413000000000004,
-                        25.961000000000002,
-                        25.944,
-                        25.954,
-                        25.027
-                    ]
-                }
-            }
-        },
-        {
-            "name": "alem1105",
-            "commit_hash": "837c35ec3df9e2a7911c64e49ffac0e9adb78bde",
-            "tasks": [
-                "test-mpi-openmp",
-                "test-cuda"
-            ],
-            "status": {
-                "test-mpi-openmp": "graded",
-                "test-cuda": "graded"
-            },
-            "error": {
-                "test-mpi-openmp": "",
-                "test-cuda": ""
-            },
-            "stdout": {
-                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.221366\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [221.366, 180.26, 142.906, 197.441, 160.918]}",
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 51.865136\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [51865.136, 51868.725, 51905.043999999994, 51890.498, 51899.789]}"
-            },
-            "avg_runtime": {
-                "test-mpi-openmp": 180.5782,
-                "test-cuda": 51885.83839999999
-            },
-            "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        221.366,
-                        180.26,
-                        142.906,
-                        197.441,
-                        160.918
-                    ]
-                },
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        51865.136,
-                        51868.725,
-                        51905.043999999994,
-                        51890.498,
-                        51899.789
                     ]
                 }
             }
@@ -570,54 +608,6 @@
                         422.33,
                         429.884,
                         429.981
-                    ]
-                }
-            }
-        },
-        {
-            "name": "MatteoCollica",
-            "commit_hash": "d85e6177c67938fa26272694d63da72d710b73cf",
-            "tasks": [
-                "test-mpi-openmp",
-                "test-cuda"
-            ],
-            "status": {
-                "test-mpi-openmp": "graded",
-                "test-cuda": "graded"
-            },
-            "error": {
-                "test-mpi-openmp": "",
-                "test-cuda": ""
-            },
-            "stdout": {
-                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.135401\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [135.40099999999998, 127.476, 110.614, 124.517, 129.882]}",
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 13.206256\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [13206.256, 13204.618, 13203.609, 13201.866, 13195.666]}"
-            },
-            "avg_runtime": {
-                "test-mpi-openmp": 125.578,
-                "test-cuda": 13202.403
-            },
-            "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        135.40099999999998,
-                        127.476,
-                        110.614,
-                        124.517,
-                        129.882
-                    ]
-                },
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        13206.256,
-                        13204.618,
-                        13203.609,
-                        13201.866,
-                        13195.666
                     ]
                 }
             }
