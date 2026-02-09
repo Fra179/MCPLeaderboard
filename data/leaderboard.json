@@ -2,7 +2,7 @@
     "final-exam": [
         {
             "name": "SepeFr",
-            "commit_hash": "d5097e70d85ce2e32a164dc58165df9456b3f54d",
+            "commit_hash": "d3724ad33ae7c6aa50df9647ca99a3c6baf81fd5",
             "tasks": [
                 "test-mpi-openmp",
                 "test-cuda"
@@ -16,41 +16,41 @@
                 "test-cuda": ""
             },
             "stdout": {
-                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 5.238033\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [5238.032999999999, 172.989, 119.749, 121.10600000000001, 139.212]}",
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 51.907746\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [51907.74600000001, 51883.133, 51877.831999999995, 51899.9, 51891.764]}"
+                "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 3.393854\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [3393.8540000000003, 159.12599999999998, 105.33, 106.817, 136.254]}",
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 51.898250\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [51898.25, 51874.104, 51849.037000000004, 51878.568, 51856.54]}"
             },
             "avg_runtime": {
-                "test-mpi-openmp": 1158.2178,
-                "test-cuda": 51892.075
+                "test-mpi-openmp": 780.2762,
+                "test-cuda": 51871.2998
             },
             "data": {
                 "test-mpi-openmp": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        5238.032999999999,
-                        172.989,
-                        119.749,
-                        121.10600000000001,
-                        139.212
+                        3393.8540000000003,
+                        159.12599999999998,
+                        105.33,
+                        106.817,
+                        136.254
                     ]
                 },
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        51907.74600000001,
-                        51883.133,
-                        51877.831999999995,
-                        51899.9,
-                        51891.764
+                        51898.25,
+                        51874.104,
+                        51849.037000000004,
+                        51878.568,
+                        51856.54
                     ]
                 }
             }
         },
         {
             "name": "GianmariaRomano",
-            "commit_hash": "2f4e18c24d71f45644e6c728a7e1018c02248b9e",
+            "commit_hash": "6fefbd487e0825d9d48e2948cd23344591fbddd7",
             "tasks": [
                 "test-mpi-openmp",
                 "test-cuda"
@@ -64,82 +64,72 @@
                 "test-cuda": ""
             },
             "stdout": {
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=znver1 -mtune=znver1 -mfma -mavx2 -fno-math-errno -fno-trapping-math -fno-signaling-nans -ffinite-math-only -fno-signed-zeros -funroll-loops -ftree-vectorize -fstrict-aliasing -fprefetch-loop-arrays -fno-stack-protector -fno-plt --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=znver1 -mtune=znver1 -mfma -mavx2 -fno-math-errno -fno-trapping-math -fno-signaling-nans -ffinite-math-only -fno-signed-zeros -funroll-loops -ftree-vectorize -fstrict-aliasing -fprefetch-loop-arrays -fno-stack-protector -fno-plt --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 1.010552\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [1010.5519999999999, 1592.606, 650.453, 1478.14, 757.501]}",
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=znver1 -mtune=znver1 -mfma -mavx2 -fno-math-errno -fno-trapping-math -fno-signaling-nans -ffinite-math-only -fno-signed-zeros -funroll-loops -ftree-vectorize -fstrict-aliasing -fprefetch-loop-arrays -fno-stack-protector -fno-plt --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=znver1 -mtune=znver1 -mfma -mavx2 -fno-math-errno -fno-trapping-math -fno-signaling-nans -ffinite-math-only -fno-signed-zeros -funroll-loops -ftree-vectorize -fstrict-aliasing -fprefetch-loop-arrays -fno-stack-protector -fno-plt --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=512 energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.037769\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [37.769, 37.486, 36.627, 36.115, 36.156]}"
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-math-errno -fno-trapping-math -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-math-errno -fno-trapping-math energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.950600\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [950.6, 1289.4509999999998, 977.553, 1124.23, 731.8860000000001]}",
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-math-errno -fno-trapping-math -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-math-errno -fno-trapping-math energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.037797\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [37.797, 37.519999999999996, 37.557, 37.507, 37.481]}"
             },
             "avg_runtime": {
-                "test-mpi-openmp": 1097.8504,
-                "test-cuda": 36.8306
+                "test-mpi-openmp": 1014.744,
+                "test-cuda": 37.5724
             },
             "data": {
                 "test-mpi-openmp": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        1010.5519999999999,
-                        1592.606,
-                        650.453,
-                        1478.14,
-                        757.501
+                        950.6,
+                        1289.4509999999998,
+                        977.553,
+                        1124.23,
+                        731.8860000000001
                     ]
                 },
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        37.769,
-                        37.486,
-                        36.627,
-                        36.115,
-                        36.156
+                        37.797,
+                        37.519999999999996,
+                        37.557,
+                        37.507,
+                        37.481
                     ]
                 }
             }
         },
         {
             "name": "Valerio02",
-            "commit_hash": "646837ad596af80685b0091dc7f094751b641868",
+            "commit_hash": "eab0261009ddbcb15b0ac4fec89350809a65d1b3",
             "tasks": [
                 "test-mpi-openmp",
                 "test-cuda"
             ],
             "status": {
-                "test-mpi-openmp": "graded",
+                "test-mpi-openmp": "error",
                 "test-cuda": "graded"
             },
             "error": {
-                "test-mpi-openmp": "",
+                "test-mpi-openmp": "[node132:1151922:0:1151956]    tag_recv.c:238  Assertion `ucs_async_check_owner_thread(&(worker)->async)' failed\n[node133:1645039:0:1645051]    tag_recv.c:238  Assertion `ucs_async_check_owner_thread(&(worker)->async)' failed\n==== backtrace (tid:1151956) ====\n 0  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_handle_error+0x304) [0x7a73cedbf074]\n 1  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_message+0xc2) [0x7a73cedbbf22]\n 2  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122) [0x7a73cedbc052]\n 3  /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8) [0x7a73cff694f8]\n 4  /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb) [0x7a73d406fe0b]\n 5  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85) [0x7a73d5149ff5]\n 6  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6) [0x7a73d514f2f6]\n 7  /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f) [0x7a73cea6808f]\n 8  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102) [0x7a73d5105e62]\n==== backtrace (tid:1645051) ====\n 0  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_handle_error+0x304) [0x727e42b04074]\n 1  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_message+0xc2) [0x727e42b00f22]\n 2  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122) [0x727e42b01052]\n 3  /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8) [0x727e419694f8]\n 4  /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb) [0x727e42b68e0b]\n 5  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85) [0x727e43c45ff5]\n 6  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6) [0x727e43c4b2f6]\n 7  /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f) [0x727e4156908f]\n 9  ./energy_storms_mpi_omp(+0x3496) [0x62887ef92496]\n10  /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f) [0x7a73d505b79f]\n11  /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4) [0x7a73d4e9caa4]\n12  /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c) [0x7a73d4f29c3c]\n=================================\n 8  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102) [0x727e43c01e62]\n 9  ./energy_storms_mpi_omp(+0x3496) [0x5ad83290e496]\n10  /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f) [0x727e43b5779f]\n11  /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4) [0x727e4389caa4]\n12  /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c) [0x727e43929c3c]\n=================================\n[node132:1151922] *** Process received signal ***\n[node133:1645039] *** Process received signal ***\n[node132:1151922] Signal: Aborted (6)\n[node132:1151922] Signal code:  (-6)\n[node132:1151922] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x7a73d4e45330]\n[node132:1151922] [ 1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x7a73d4e9eb2c]\n[node132:1151922] [ 2] [node133:1645039] Signal: Aborted (6)\n[node133:1645039] Signal code:  (-6)\n[node133:1645039] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x727e43845330]\n[node133:1645039] [ 1] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x7a73d4e4527e]\n[node132:1151922] [ 3] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x727e4389eb2c]\n[node133:1645039] [ 2] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x7a73d4e288ff]\n[node132:1151922] [ 4] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x727e4384527e]\n[node133:1645039] [ 3] /home/guest/ucx-1.18.0/lib/libucs.so.0(+0x38f27)[0x7a73cedbbf27]\n[node132:1151922] [ 5] /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122)[0x7a73cedbc052]\n[node132:1151922] [ 6] /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8)[0x7a73cff694f8]\n[node132:1151922] [ 7] /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb)[0x7a73d406fe0b]\n[node132:1151922] [ 8] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x727e438288ff]\n[node133:1645039] [ 4] /home/guest/ucx-1.18.0/lib/libucs.so.0(+0x38f27)[0x727e42b00f27]\n[node133:1645039] [ 5] /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122)[0x727e42b01052]\n[node133:1645039] [ 6] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85)[0x7a73d5149ff5]\n[node132:1151922] [ 9] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6)[0x7a73d514f2f6]\n[node132:1151922] [10] /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f)[0x7a73cea6808f]\n/home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8)[0x727e419694f8]\n[node133:1645039] [ 7] /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb)[0x727e42b68e0b]\n[node133:1645039] [ 8] [node132:1151922] [11] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102)[0x7a73d5105e62]\n[node132:1151922] [12] ./energy_storms_mpi_omp(+0x3496)[0x62887ef92496]\n[node132:1151922] [13] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85)[0x727e43c45ff5]\n[node133:1645039] [ 9] /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f)[0x7a73d505b79f]\n[node132:1151922] [14] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6)[0x727e43c4b2f6]\n[node133:1645039] [10] /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f)[0x727e4156908f]\n[node133:1645039] [11] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102)[0x727e43c01e62]\n[node133:1645039] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x7a73d4e9caa4]\n[node132:1151922] [15] [12] ./energy_storms_mpi_omp(+0x3496)[0x5ad83290e496]\n[node133:1645039] [13] /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f)[0x727e43b5779f]\n/lib/x86_64-linux-gnu/libc.so.6(+0x129c3c)[0x7a73d4f29c3c]\n[node132:1151922] *** End of error message ***\n[node133:1645039] [14] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x727e4389caa4]\n[node133:1645039] [15] /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c)[0x727e43929c3c]\n[node133:1645039] *** End of error message ***\n[node124:1049339:0:1049346]    tag_recv.c:238  Assertion `ucs_async_check_owner_thread(&(worker)->async)' failed\n[node134:1875922:0:1875926]    tag_recv.c:238  Assertion `ucs_async_check_owner_thread(&(worker)->async)' failed\n==== backtrace (tid:1049346) ====\n 0  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_handle_error+0x304) [0x7675899f0074]\n 1  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_message+0xc2) [0x7675899ecf22]\n 2  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122) [0x7675899ed052]\n 3  /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8) [0x767589b244f8]\n 4  /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb) [0x76758ac08e0b]\n 5  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85) [0x76758bcdfff5]\n 6  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6) [0x76758bce52f6]\n 7  /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f) [0x76758850b08f]\n 8  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102) [0x76758bc9be62]\n 9  ./energy_storms_mpi_omp(+0x3496) [0x628655320496]\n10  /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f) [0x76758bbf379f]\n11  /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4) [0x76758b89caa4]\n12  /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c) [0x76758b929c3c]\n=================================\n[node124:1049339] *** Process received signal ***\n[node124:1049339] Signal: Aborted (6)\n[node124:1049339] Signal code:  (-6)\n[node124:1049339] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x76758b845330]\n[node124:1049339] [ 1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x76758b89eb2c]\n[node124:1049339] [ 2] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x76758b84527e]\n[node124:1049339] [ 3] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x76758b8288ff]\n[node124:1049339] [ 4] /home/guest/ucx-1.18.0/lib/libucs.so.0(+0x38f27)[0x7675899ecf27]\n[node124:1049339] [ 5] /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122)[0x7675899ed052]\n[node124:1049339] [ 6] /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8)[0x767589b244f8]\n[node124:1049339] [ 7] /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb)[0x76758ac08e0b]\n[node124:1049339] [ 8] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85)[0x76758bcdfff5]\n[node124:1049339] [ 9] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6)[0x76758bce52f6]\n[node124:1049339] [10] /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f)[0x76758850b08f]\n[node124:1049339] [11] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102)[0x76758bc9be62]\n[node124:1049339] [12] ./energy_storms_mpi_omp(+0x3496)[0x628655320496]\n[node124:1049339] [13] /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f)[0x76758bbf379f]\n[node124:1049339] [14] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x76758b89caa4]\n[node124:1049339] [15] /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c)[0x76758b929c3c]\n[node124:1049339] *** End of error message ***\n==== backtrace (tid:1875926) ====\n 0  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_handle_error+0x304) [0x71667bc45074]\n 1  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_message+0xc2) [0x71667bc41f22]\n 2  /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122) [0x71667bc42052]\n 3  /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8) [0x71667ab694f8]\n 4  /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb) [0x71667bca9e0b]\n 5  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85) [0x71667cd89ff5]\n 6  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6) [0x71667cd8f2f6]\n 7  /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f) [0x71667a6a608f]\n 8  /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102) [0x71667cd45e62]\n 9  ./energy_storms_mpi_omp(+0x3496) [0x556545320496]\n10  /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f) [0x71667cc9b79f]\n11  /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4) [0x71667ca9caa4]\n12  /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c) [0x71667cb29c3c]\n=================================\n[node134:1875922] *** Process received signal ***\n[node134:1875922] Signal: Aborted (6)\n[node134:1875922] Signal code:  (-6)\n[node134:1875922] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x71667ca45330]\n[node134:1875922] [ 1] /lib/x86_64-linux-gnu/libc.so.6(pthread_kill+0x11c)[0x71667ca9eb2c]\n[node134:1875922] [ 2] /lib/x86_64-linux-gnu/libc.so.6(gsignal+0x1e)[0x71667ca4527e]\n[node134:1875922] [ 3] /lib/x86_64-linux-gnu/libc.so.6(abort+0xdf)[0x71667ca288ff]\n[node134:1875922] [ 4] /home/guest/ucx-1.18.0/lib/libucs.so.0(+0x38f27)[0x71667bc41f27]\n[node134:1875922] [ 5] /home/guest/ucx-1.18.0/lib/libucs.so.0(ucs_fatal_error_format+0x122)[0x71667bc42052]\n[node134:1875922] [ 6] /home/guest/ucx-1.18.0/lib/libucp.so.0(ucp_tag_recv_nbx+0x4b8)[0x71667ab694f8]\n[node134:1875922] [ 7] /home/guest/openmpi-4.1.6/lib/openmpi/mca_pml_ucx.so(mca_pml_ucx_irecv+0xbb)[0x71667bca9e0b]\n[node134:1875922] [ 8] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_sendrecv_actual+0x85)[0x71667cd89ff5]\n[node134:1875922] [ 9] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(ompi_coll_base_allreduce_intra_redscat_allgather+0x4a6)[0x71667cd8f2f6]\n[node134:1875922] [10] /home/guest/openmpi-4.1.6/lib/openmpi/mca_coll_tuned.so(ompi_coll_tuned_allreduce_intra_dec_fixed+0x4f)[0x71667a6a608f]\n[node134:1875922] [11] /home/guest/openmpi-4.1.6/lib/libmpi.so.40(PMPI_Allreduce+0x102)[0x71667cd45e62]\n[node134:1875922] [12] ./energy_storms_mpi_omp(+0x3496)[0x556545320496]\n[node134:1875922] [13] /lib/x86_64-linux-gnu/libgomp.so.1(+0x2279f)[0x71667cc9b79f]\n[node134:1875922] [14] /lib/x86_64-linux-gnu/libc.so.6(+0x9caa4)[0x71667ca9caa4]\n[node134:1875922] [15] /lib/x86_64-linux-gnu/libc.so.6(+0x129c3c)[0x71667cb29c3c]\n[node134:1875922] *** End of error message ***\n--------------------------------------------------------------------------\nPrimary job  terminated normally, but 1 process returned\na non-zero exit code. Per user-direction, the job has been aborted.\n--------------------------------------------------------------------------\n--------------------------------------------------------------------------\nmpirun noticed that process rank 0 with PID 0 on node node124 exited on signal 6 (Aborted).\n--------------------------------------------------------------------------\nmake: *** [Makefile:77: run_mpi] Error 134\n\n",
                 "test-cuda": ""
             },
             "stdout": {
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.138400\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [138.4, 165.16500000000002, 134.351, 159.088, 175.725]}",
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.025306\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [25.305999999999997, 25.894000000000002, 25.849, 25.128999999999998, 26.001]}"
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n3 total processes killed (some possibly by mpirun during cleanup)\n\nMPI Execution failed:\n",
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -mtune=native -flto -fno-math-errno -fno-trapping-math -funroll-loops -fno-signaling-nans -D_FORCE_INLINE energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.025951\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [25.950999999999997, 25.74, 24.872, 24.887, 24.822]}"
             },
             "avg_runtime": {
-                "test-mpi-openmp": 154.5458,
-                "test-cuda": 25.6358
+                "test-mpi-openmp": 0.0,
+                "test-cuda": 25.254399999999997
             },
             "data": {
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        138.4,
-                        165.16500000000002,
-                        134.351,
-                        159.088,
-                        175.725
-                    ]
-                },
+                "test-mpi-openmp": null,
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        25.305999999999997,
-                        25.894000000000002,
-                        25.849,
-                        25.128999999999998,
-                        26.001
+                        25.950999999999997,
+                        25.74,
+                        24.872,
+                        24.887,
+                        24.822
                     ]
                 }
             }
