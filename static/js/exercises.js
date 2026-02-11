@@ -16,6 +16,10 @@ const switchTab = (tabName) => {
     activeBtn.classList.remove('text-gray-500', 'hover:text-gray-900');
     activeBtn.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
 
+    if (tabName === 'leaderboard') {
+        window.highlightUserRow?.();
+    }
+
     if (history.pushState) {
         history.pushState(null, null, '#' + tabName);
     } else {

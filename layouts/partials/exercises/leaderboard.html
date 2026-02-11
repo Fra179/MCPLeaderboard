@@ -53,7 +53,6 @@
 
             <div class="overflow-x-auto leaderboard-task hidden" id="leaderboard-{{ $task }}" data-runtimes='{{ jsonify $runtimes }}'>
                 <!-- Runtime Distribution Panel -->
-                <!--
                 <div class="bg-white px-6 py-5 border-b border-gray-100">
                     <div class="flex flex-col gap-3">
                         <div class="flex items-center justify-between">
@@ -69,16 +68,16 @@
                                     <label class="flex items-center gap-2">
                                         <span>Min</span>
                                         <div class="runtime-range-control">
-                                            <input type="range" class="runtime-range runtime-range-min" min="0" max="100" step="0.01" value="0">
-                                            <input type="number" class="runtime-range-input runtime-range-min-input" min="0" max="100" step="0.01" value="0">
+                                            <input type="range" class="runtime-range runtime-range-min" min="0" max="100" step="15" value="0">
+                                            <input type="number" class="runtime-range-input runtime-range-min-input" min="0" max="100" step="any" value="0">
                                         </div>
                                         <span class="text-xs text-gray-400">ms</span>
                                     </label>
                                     <label class="flex items-center gap-2">
                                         <span>Max</span>
                                         <div class="runtime-range-control">
-                                            <input type="range" class="runtime-range runtime-range-max" min="0" max="100" step="0.01" value="100">
-                                            <input type="number" class="runtime-range-input runtime-range-max-input" min="0" max="100" step="0.01" value="100">
+                                            <input type="range" class="runtime-range runtime-range-max" min="0" max="100" step="15" value="100">
+                                            <input type="number" class="runtime-range-input runtime-range-max-input" min="0" max="100" step="any" value="100">
                                         </div>
                                         <span class="text-xs text-gray-400">ms</span>
                                     </label>
@@ -95,7 +94,6 @@
                         </div>
                     </div>
                 </div>
-                -->
                 <table class="min-w-full">
                     <thead class="bg-white border-b border-gray-100">
                         <tr>

@@ -1,4 +1,5 @@
 const MIN_HISTOGRAM_BINS = 200;
+const MIN_RANGE_STEP_MS = 15;
 
 // Log modal handlers
 const modal = document.getElementById('log-modal');
@@ -44,13 +45,18 @@ const highlightUserRow = () => {
         return;
     }
 
+    const normalizeName = (value) =>
+        value.trim().replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
     // Show the scroll button since username is set
     if (scrollBtn) scrollBtn.classList.remove('hidden');
 
+    const normalizedTarget = normalizeName(savedUsername);
     const rows = document.querySelectorAll('.leaderboard-task:not(.hidden) table tbody tr');
     rows.forEach(row => {
         const studentCell = row.querySelector('td:nth-child(3)');
-        if (studentCell && studentCell.textContent.trim() === savedUsername) {
+        const cellValue = studentCell?.textContent ? normalizeName(studentCell.textContent) : '';
+        if (cellValue && cellValue === normalizedTarget) {
             row.classList.add('bg-yellow-100');
         } else {
             row.classList.remove('bg-yellow-100');
@@ -64,10 +70,15 @@ window.scrollToUserRow = () => {
     const savedUsername = localStorage.getItem('github-username');
     if (!savedUsername) return;
 
+    const normalizeName = (value) =>
+        value.trim().replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const normalizedTarget = normalizeName(savedUsername);
+
     const rows = document.querySelectorAll('.leaderboard-task:not(.hidden) table tbody tr');
     for (let row of rows) {
         const studentCell = row.querySelector('td:nth-child(3)');
-        if (studentCell && studentCell.textContent.trim() === savedUsername) {
+        const cellValue = studentCell?.textContent ? normalizeName(studentCell.textContent) : '';
+        if (cellValue && cellValue === normalizedTarget) {
             row.scrollIntoView({ behavior: 'smooth', block: 'center' });
             break;
         }
@@ -118,6 +129,11 @@ const initRangeControls = (container, values) => {
     container.dataset.rangeOverallMin = String(overallMin);
     container.dataset.rangeOverallMax = String(overallMax);
 
+    const snapToStep = (val) => {
+        const snapped = Math.round(val / MIN_RANGE_STEP_MS) * MIN_RANGE_STEP_MS;
+        return Math.max(overallMin, Math.min(snapped, overallMax));
+    };
+
     if (!container.dataset.rangeInit) {
         minInput.min = String(overallMin);
         minInput.max = String(overallMax);
@@ -128,6 +144,11 @@ const initRangeControls = (container, values) => {
         maxNumber.min = String(overallMin);
         maxNumber.max = String(overallMax);
 
+        minInput.step = String(MIN_RANGE_STEP_MS);
+        maxInput.step = String(MIN_RANGE_STEP_MS);
+        minNumber.step = 'any';
+        maxNumber.step = 'any';
+
         const storedMin = parseFloat(localStorage.getItem(getLeaderboardStorageKey(container, 'range:min')));
         const storedMax = parseFloat(localStorage.getItem(getLeaderboardStorageKey(container, 'range:max')));
         const hasStoredMin = !Number.isNaN(storedMin);
@@ -135,11 +156,16 @@ const initRangeControls = (container, values) => {
 
         const initialMin = hasStoredMin ? storedMin : overallMin;
         const initialMax = hasStoredMax ? storedMax : overallMax;
+        const rawMin = Math.max(overallMin, Math.min(initialMin, overallMax));
+        const rawMax = Math.max(overallMin, Math.min(initialMax, overallMax));
 
-        minInput.value = String(initialMin);
-        maxInput.value = String(initialMax);
-        minNumber.value = String(initialMin);
-        maxNumber.value = String(initialMax);
+        container.dataset.rangeMinValue = String(rawMin);
+        container.dataset.rangeMaxValue = String(rawMax);
+
+        minInput.value = String(snapToStep(rawMin));
+        maxInput.value = String(snapToStep(rawMax));
+        minNumber.value = String(rawMin);
+        maxNumber.value = String(rawMax);
 
         const handleRangeInput = (source) => {
             let minVal = parseFloat(source === 'number' ? minNumber.value : minInput.value);
@@ -157,10 +183,25 @@ const initRangeControls = (container, values) => {
                 maxVal = temp;
             }
 
-            minInput.value = String(minVal);
-            maxInput.value = String(maxVal);
-            minNumber.value = String(minVal);
-            maxNumber.value = String(maxVal);
+            if (source === 'range') {
+                minVal = snapToStep(minVal);
+                maxVal = snapToStep(maxVal);
+            }
+
+            container.dataset.rangeMinValue = String(minVal);
+            container.dataset.rangeMaxValue = String(maxVal);
+
+            if (source === 'range') {
+                minInput.value = String(minVal);
+                maxInput.value = String(maxVal);
+                minNumber.value = String(minVal);
+                maxNumber.value = String(maxVal);
+            } else {
+                minInput.value = String(snapToStep(minVal));
+                maxInput.value = String(snapToStep(maxVal));
+                minNumber.value = String(minVal);
+                maxNumber.value = String(maxVal);
+            }
             localStorage.setItem(getLeaderboardStorageKey(container, 'range:min'), String(minVal));
             localStorage.setItem(getLeaderboardStorageKey(container, 'range:max'), String(maxVal));
             renderRuntimeChart(container);
@@ -168,13 +209,28 @@ const initRangeControls = (container, values) => {
 
         minInput.addEventListener('input', () => handleRangeInput('range'));
         maxInput.addEventListener('input', () => handleRangeInput('range'));
-        minNumber.addEventListener('input', () => handleRangeInput('number'));
-        maxNumber.addEventListener('input', () => handleRangeInput('number'));
+        minNumber.addEventListener('change', () => handleRangeInput('number'));
+        maxNumber.addEventListener('change', () => handleRangeInput('number'));
+        minNumber.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleRangeInput('number');
+            }
+        });
+        maxNumber.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleRangeInput('number');
+            }
+        });
         container.dataset.rangeInit = 'true';
     }
 
-    const minVal = parseFloat(minInput.value);
-    const maxVal = parseFloat(maxInput.value);
+    const storedMin = parseFloat(container.dataset.rangeMinValue ?? minNumber.value);
+    const storedMax = parseFloat(container.dataset.rangeMaxValue ?? maxNumber.value);
+    const minVal = Number.isNaN(storedMin) ? overallMin : storedMin;
+    const maxVal = Number.isNaN(storedMax) ? overallMax : storedMax;
+
+    minInput.value = String(snapToStep(minVal));
+    maxInput.value = String(snapToStep(maxVal));
     minNumber.value = String(minVal);
     maxNumber.value = String(maxVal);
     return { min: minVal, max: maxVal };
@@ -203,7 +259,7 @@ const renderRuntimeChart = (container) => {
     const width = parent?.clientWidth || 600;
     const height = parent?.clientHeight || 176;
     canvas.width = width;
-    canvas.height = height;
+    canvas.height = height + 10; // Extra space for x-axis labels
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -283,7 +339,7 @@ const renderRuntimeChart = (container) => {
     ctx.restore();
 
     ctx.textAlign = 'center';
-    ctx.fillText('Runtime (ms)', padding.left + chartWidth / 2, height - 6);
+    ctx.fillText('Runtime (ms)', padding.left + chartWidth / 2, height + 6);
 };
 
 const setupChartToggle = (container) => {
