@@ -39,24 +39,19 @@ modal?.addEventListener('click', closeLog);
 const highlightUserRow = () => {
     const savedUsername = localStorage.getItem('github-username');
     const scrollBtn = document.getElementById('scroll-to-user-btn');
-
+    
     if (!savedUsername) {
         if (scrollBtn) scrollBtn.classList.add('hidden');
         return;
     }
 
-    const normalizeName = (value) =>
-        value.trim().replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '');
-
     // Show the scroll button since username is set
     if (scrollBtn) scrollBtn.classList.remove('hidden');
 
-    const normalizedTarget = normalizeName(savedUsername);
     const rows = document.querySelectorAll('.leaderboard-task:not(.hidden) table tbody tr');
     rows.forEach(row => {
         const studentCell = row.querySelector('td:nth-child(3)');
-        const cellValue = studentCell?.textContent ? normalizeName(studentCell.textContent) : '';
-        if (cellValue && cellValue === normalizedTarget) {
+        if (studentCell && studentCell.textContent.trim() === savedUsername) {
             row.classList.add('bg-yellow-100');
         } else {
             row.classList.remove('bg-yellow-100');
@@ -70,15 +65,10 @@ window.scrollToUserRow = () => {
     const savedUsername = localStorage.getItem('github-username');
     if (!savedUsername) return;
 
-    const normalizeName = (value) =>
-        value.trim().replace(/^@/, '').toLowerCase().replace(/[^a-z0-9]/g, '');
-    const normalizedTarget = normalizeName(savedUsername);
-
     const rows = document.querySelectorAll('.leaderboard-task:not(.hidden) table tbody tr');
     for (let row of rows) {
         const studentCell = row.querySelector('td:nth-child(3)');
-        const cellValue = studentCell?.textContent ? normalizeName(studentCell.textContent) : '';
-        if (cellValue && cellValue === normalizedTarget) {
+        if (studentCell && studentCell.textContent.trim() === savedUsername) {
             row.scrollIntoView({ behavior: 'smooth', block: 'center' });
             break;
         }
