@@ -1,0 +1,202 @@
+<div id="content-leaderboard" class="tab-content hidden transition-opacity duration-300">
+    <section class="leaderboard max-w-4xl mx-auto">
+        {{ $folderName := path.Base (path.Dir .File.Path) }}
+        {{ $data := index .Site.Data.leaderboard $folderName }}
+
+        {{ if $data }}
+        {{ $tasks := slice }}
+        {{ range $data }}
+            {{ range .tasks }}
+                {{ $tasks = $tasks | append . }}
+            {{ end }}
+        {{ end }}
+        {{ $tasks = uniq $tasks }}
+
+        <div class="overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-0">
+                <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
+                    <button id="scroll-to-user-btn" class="hidden text-blue-600 hover:text-blue-800 transition-colors" title="Scroll to your position" onclick="scrollToUserRow()">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label for="task-select" class="text-sm text-gray-600">Task:</label>
+                    <select id="task-select" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
+                        {{ range $tasks }}
+                            <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select>
+                </div>
+            </div>
+
+            {{ range $tindex, $task := $tasks }}
+            {{ $rows := slice }}
+            {{ range $entry := $data }}
+                {{ $avg := index $entry.avg_runtime $task }}
+                {{ $status := index $entry.status $task }}
+                {{ $stdout := index $entry.stdout $task }}
+                {{ $stderr := index $entry.error $task }}
+                {{ $row := dict "name" $entry.name "commit_hash" $entry.commit_hash "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
+                {{ $rows = $rows | append $row }}
+            {{ end }}
+            {{ $ok := sort (where $rows "status" "!=" "error") "avg_runtime" "asc" }}
+            {{ $errs := sort (where $rows "status" "==" "error") "avg_runtime" "asc" }}
+            {{ $ordered := $ok | append $errs }}
+
+            {{ $runtimes := slice }}
+            {{ range $row := $ok }}
+                {{ if $row.avg_runtime }}
+                    {{ $runtimes = $runtimes | append $row.avg_runtime }}
+                {{ end }}
+            {{ end }}
+
+            <div class="overflow-x-auto leaderboard-task hidden" id="leaderboard-{{ $task }}" data-runtimes='{{ jsonify $runtimes }}'>
+                <!-- Runtime Distribution Panel -->
+                <div class="bg-white px-6 py-5 border-b border-gray-100">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-base font-semibold text-gray-700">Runtime Distribution</h4>
+                            <button type="button" class="runtime-toggle-btn text-xs font-semibold text-blue-600 hover:text-blue-800">Show chart</button>
+                        </div>
+                        <div class="runtime-chart-panel hidden flex flex-col gap-3">
+                            <div class="w-full h-44">
+                                <canvas class="runtime-chart w-full h-full"></canvas>
+                            </div>
+                            <div class="flex flex-col gap-2 text-sm text-gray-600">
+                                <div class="flex flex-wrap items-center gap-4">
+                                    <label class="flex items-center gap-2">
+                                        <span>Min</span>
+                                        <div class="runtime-range-control">
+                                            <input type="range" class="runtime-range runtime-range-min" min="0" max="100" step="15" value="0">
+                                            <input type="number" class="runtime-range-input runtime-range-min-input" min="0" max="100" step="any" value="0">
+                                        </div>
+                                        <span class="text-xs text-gray-400">ms</span>
+                                    </label>
+                                    <label class="flex items-center gap-2">
+                                        <span>Max</span>
+                                        <div class="runtime-range-control">
+                                            <input type="range" class="runtime-range runtime-range-max" min="0" max="100" step="15" value="100">
+                                            <input type="number" class="runtime-range-input runtime-range-max-input" min="0" max="100" step="any" value="100">
+                                        </div>
+                                        <span class="text-xs text-gray-400">ms</span>
+                                    </label>
+                                </div>
+                                <span class="text-xs text-gray-400">X-axis range (ms)</span>
+                            </div>
+                            <div class="text-sm text-gray-600" aria-live="polite">
+                                <span class="runtime-q1">Q1: -</span>
+                                <span class="mx-3 text-gray-300">|</span>
+                                <span class="runtime-median">Median: -</span>
+                                <span class="mx-3 text-gray-300">|</span>
+                                <span class="runtime-q3">Q3: -</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="min-w-full">
+                    <thead class="bg-white border-b border-gray-100">
+                        <tr>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Rank</th>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Student</th>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Commit</th>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Avg. Runtime</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {{ range $index, $row := $ordered }}
+                        <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer" onclick="showLog({{ $row.stdout | jsonify }}, {{ $row.stderr | jsonify }})">
+                            <td class="py-2 px-3 md:py-4 md:px-6 text-center">
+                                {{ if ne $row.status "error" }}
+                                <div class="bg-green-100 text-green-600 rounded-full p-1 w-fit mx-auto">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                {{ else }}
+                                <div class="bg-red-200 text-red-600 rounded-full p-1 w-fit mx-auto">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </div>
+                                {{ end }}
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600 font-bold">#{{ add $index 1 }}</span>
+                            </td>
+                            <td class="py-2 px-3 md:py-4 md:px-6 font-medium text-gray-900">{{ $row.name }}</td>
+                            <td class="py-2 px-3 md:py-4 md:px-6 text-right">
+                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600">{{ strings.Substr $row.commit_hash 0 7 }}</span>
+                            </td>
+                            <td class="py-2 px-3 md:py-4 md:px-6 text-right">
+                                <span class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
+                                    {{ printf "%.2f" $row.avg_runtime }} ms
+                                </span>
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
+            </div>
+            {{ end }}
+
+            <div id="log-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="log-modal-title">
+                <div class="bg-white rounded-lg shadow-xl w-[85vw] max-h-[1000px] max-w-[1200px] p-6 space-y-6" onclick="event.stopPropagation();">
+                    <div class="flex items-center justify-between">
+                        <h4 id="log-modal-title" class="text-lg font-semibold text-gray-800">Run Output</h4>
+                        <button class="text-gray-500 hover:text-gray-800" aria-label="Close modal" onclick="closeLog()">✕</button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">stdout</label>
+                        <textarea id="log-stdout" class="w-full h-64 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly></textarea>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">stderr</label>
+                        <textarea id="log-stderr" class="w-full h-48 border border-gray-200 rounded-md p-3 font-mono text-sm bg-gray-50" rows="10" readonly></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" onclick="closeLog()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ else }}
+        <div class="flex flex-col items-center justify-center p-12 bg-white rounded-lg border border-dashed border-gray-300 text-center">
+            <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            <p class="text-gray-500 text-lg">No leaderboard data found.</p>
+            <p class="text-gray-400 text-sm mt-1">Data for "{{ $folderName }}" is missing.</p>
+        </div>
+        {{ end }}
+    </section>
+</div>
+
+<!-- Floating GitHub Button -->
+<button id="github-btn" class="fixed bottom-6 right-6 bg-gray-900 hover:bg-gray-800 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:shadow-xl z-40" title="Set GitHub Username">
+    <i class="fa-brands fa-github text-xl"></i>
+</button>
+
+<!-- GitHub Username Modal -->
+<div id="github-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="github-modal-title">
+    <div class="bg-white rounded-lg shadow-xl p-8 w-[90vw] max-w-md" onclick="event.stopPropagation();">
+        <div class="flex items-center justify-between mb-6">
+            <h3 id="github-modal-title" class="text-2xl font-bold text-gray-900">GitHub Username</h3>
+            <button class="text-gray-500 hover:text-gray-800 text-2xl" onclick="closeGithubModal()" aria-label="Close modal">✕</button>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label for="github-username" class="block text-sm font-medium text-gray-700 mb-2">Username:</label>
+                <input id="github-username" type="text" placeholder="Enter your GitHub username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            </div>
+
+            <div class="flex gap-3 justify-end pt-4">
+                <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors" onclick="closeGithubModal()">Cancel</button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" onclick="saveGithubUsername()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ "js/leaderboard.js" | relURL }}" defer></script>
