@@ -1,4 +1,4 @@
-const MIN_HISTOGRAM_BINS = 200;
+const MIN_HISTOGRAM_BINS = 50;
 const MIN_RANGE_STEP_MS = 15;
 
 // Log modal handlers
@@ -264,7 +264,7 @@ const renderRuntimeChart = (container) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const range = initRangeControls(container, values);
     const filtered = range ? values.filter(v => v >= range.min && v <= range.max) : values;
@@ -298,7 +298,7 @@ const renderRuntimeChart = (container) => {
     const chartHeight = height - padding.top - padding.bottom;
     const maxCount = Math.max(...counts, 1);
     const barGap = 6;
-    const barWidth = (chartWidth - barGap * (bins - 1)) / bins;
+    const barWidth = Math.max(1, (chartWidth - barGap * (bins - 1)) / bins);
 
     ctx.fillStyle = '#f3f4f6';
     ctx.fillRect(padding.left, padding.top, chartWidth, chartHeight);
