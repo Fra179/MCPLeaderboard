@@ -2,6 +2,9 @@
     <section class="leaderboard max-w-4xl mx-auto">
         {{ $folderName := path.Base (path.Dir .File.Path) }}
         {{ $data := index .Site.Data.leaderboard $folderName }}
+        
+        {{ $metricName := .Params.leaderboard_metric | default "Avg. Runtime" }}
+        {{ $sortOrder := .Params.leaderboard_order | default "asc" }}
 
         {{ if $data }}
         {{ $tasks := slice }}
@@ -37,11 +40,17 @@
                 {{ $status := index $entry.status $task }}
                 {{ $stdout := index $entry.stdout $task }}
                 {{ $stderr := index $entry.error $task }}
-                {{ $row := dict "name" $entry.name "commit_hash" $entry.commit_hash "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
+                {{ $commit := "" }}
+                {{ if reflect.IsMap $entry.commit_hash }}
+                    {{ $commit = index $entry.commit_hash $task }}
+                {{ else }}
+                    {{ $commit = $entry.commit_hash }}
+                {{ end }}
+                {{ $row := dict "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
                 {{ $rows = $rows | append $row }}
             {{ end }}
-            {{ $ok := sort (where $rows "status" "!=" "error") "avg_runtime" "asc" }}
-            {{ $errs := sort (where $rows "status" "==" "error") "avg_runtime" "asc" }}
+            {{ $ok := sort (where $rows "status" "!=" "error") "avg_runtime" $sortOrder }}
+            {{ $errs := sort (where $rows "status" "==" "error") "avg_runtime" $sortOrder }}
             {{ $ordered := $ok | append $errs }}
 
             {{ $runtimes := slice }}
@@ -101,7 +110,9 @@
                             <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Rank</th>
                             <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Student</th>
                             <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Commit</th>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Avg. Runtime</th>
+                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                {{ $metricName }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -123,7 +134,13 @@
                             </td>
                             <td class="py-2 px-3 md:py-4 md:px-6 font-medium text-gray-900">{{ $row.name }}</td>
                             <td class="py-2 px-3 md:py-4 md:px-6 text-right">
-                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600">{{ strings.Substr $row.commit_hash 0 7 }}</span>
+                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600">
+                                    {{ if $row.commit_hash }}
+                                        {{ strings.Substr $row.commit_hash 0 7 }}
+                                    {{ else }}
+                                        N/A
+                                    {{ end }}
+                                </span>
                             </td>
                             <td class="py-2 px-3 md:py-4 md:px-6 text-right">
                                 <span class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
