@@ -3,6 +3,8 @@ title: "Final Exam"
 date: 2026-01-06T16:06:05+01:00
 draft: false
 technology: "exam"
+leaderboard_metric: "Median Runtime"
+leaderboard_order: "asc"
 ---
 
 # High-Energy Particle Storm Simulation
