@@ -342,8 +342,8 @@
         {
             "name": "Andrii04",
             "commit_hash": {
-                "test-cuda": "db0f4c805da141e0adbc9ab4e610d81968e72141",
-                "test-mpi-openmp": "db0f4c805da141e0adbc9ab4e610d81968e72141"
+                "test-cuda": "dc58231c5da73cd5ea6b9cd97524c8e0ecdf8017",
+                "test-mpi-openmp": "dc58231c5da73cd5ea6b9cd97524c8e0ecdf8017"
             },
             "tasks": [
                 "test-cuda",
@@ -351,27 +351,43 @@
             ],
             "status": {
                 "test-cuda": "error",
-                "test-mpi-openmp": "error"
+                "test-mpi-openmp": "graded"
             },
             "error": {
-                "test-cuda": "Traceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Andrii04_test-cuda/test-exam-cuda.py\", line 74, in <module>\n    assert_file_hash(file_path, expected_hash)\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Andrii04_test-cuda/test-exam-cuda.py\", line 65, in assert_file_hash\n    assert file_hash == expected_hash, f\"Hash mismatch for {file_path}: expected {expected_hash}, got {file_hash}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Hash mismatch for Makefile: expected 474b5d521353b277e849755f54d5dc0e61c862fb75d20fd865ada3c1cf8c9bd9, got 064eaece0f2d2a23c9b889752eb9c1182316b3e68cc8a4b51e6659d175086608\n",
-                "test-mpi-openmp": "make: *** No rule to make target 'run_mpi'.  Stop.\n\n"
+                "test-cuda": "Traceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Andrii04_test-cuda/test-exam-cuda.py\", line 74, in <module>\n    assert_file_hash(file_path, expected_hash)\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Andrii04_test-cuda/test-exam-cuda.py\", line 65, in assert_file_hash\n    assert file_hash == expected_hash, f\"Hash mismatch for {file_path}: expected {expected_hash}, got {file_hash}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Hash mismatch for Makefile: expected 474b5d521353b277e849755f54d5dc0e61c862fb75d20fd865ada3c1cf8c9bd9, got f2216a59dd77665f98ed629f0e472f850a67f6b05f86a7b6278a88d010e29c6d\n",
+                "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc -O3  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc -O3  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc -O3  -fopenmp -c energy_storms_mpi_omp_core.c -lm -o energy_storms_mpi_omp_core.o\nmpicc -O3  -fopenmp energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -o energy_storms_mpi_omp\nnvcc -arch=sm_75 -O3  -c energy_storms_cuda_core.cu -lm -o energy_storms_cuda_core.o\nnvcc -arch=sm_75 -O3  energy_storms_cuda.cpp energy_storms_cuda_core.o -lm -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\n",
-                "test-mpi-openmp": "gcc -O3  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc -O3  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc -O3  -fopenmp -c energy_storms_mpi_omp_core.c -lm -o energy_storms_mpi_omp_core.o\nmpicc -O3  -fopenmp energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -o energy_storms_mpi_omp\nnvcc -arch=sm_75 -O3  -c energy_storms_cuda_core.cu -lm -o energy_storms_cuda_core.o\nnvcc -arch=sm_75 -O3  energy_storms_cuda.cpp energy_storms_cuda_core.o -lm -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nMPI+OMP Execution failed:\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\n",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nCiao, sono il processo 0 di 4 processi MPI totali, con 32 thread OpenMP\nCiao, sono il processo 2 di 4 processi MPI totali, con 32 thread OpenMP\nCiao, sono il processo 1 di 4 processi MPI totali, con 32 thread OpenMP\nCiao, sono il processo 3 di 4 processi MPI totali, con 32 thread OpenMP\n\nTime: 1.016593\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [1016.5930000000001, 1319.607, 1325.5269999999998, 1304.789, 1195.072]}"
             },
             "runtimes": {
                 "test-cuda": [],
-                "test-mpi-openmp": []
+                "test-mpi-openmp": [
+                    1016.5930000000001,
+                    1319.607,
+                    1325.5269999999998,
+                    1304.789,
+                    1195.072
+                ]
             },
             "avg_runtime": {
                 "test-cuda": 0.0,
-                "test-mpi-openmp": 0.0
+                "test-mpi-openmp": 1304.789
             },
             "data": {
                 "test-cuda": {},
-                "test-mpi-openmp": {}
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        1016.5930000000001,
+                        1319.607,
+                        1325.5269999999998,
+                        1304.789,
+                        1195.072
+                    ]
+                }
             },
             "reduction": {
                 "test-cuda": "median",
@@ -2821,8 +2837,8 @@
         {
             "name": "ShuangDaii",
             "commit_hash": {
-                "test-cuda": "7f53bf1404dc173d56ee5af652a9159ecb9f9175",
-                "test-mpi-openmp": "7f53bf1404dc173d56ee5af652a9159ecb9f9175"
+                "test-cuda": "65853eb959cf8bfddc37b8eb8d1ba8678869f1d3",
+                "test-mpi-openmp": "65853eb959cf8bfddc37b8eb8d1ba8678869f1d3"
             },
             "tasks": [
                 "test-cuda",
@@ -2830,43 +2846,59 @@
             ],
             "status": {
                 "test-cuda": "graded",
-                "test-mpi-openmp": "error"
+                "test-mpi-openmp": "graded"
             },
             "error": {
                 "test-cuda": "",
-                "test-mpi-openmp": "MPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.041305\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [41.305, 32.852, 33.117, 33.115, 33.109]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.037087\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [37.087, 32.224000000000004, 31.399000000000004, 31.111, 31.869]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.992044\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [992.044, 892.365, 965.638, 902.04, 919.5269999999999]}"
             },
             "runtimes": {
                 "test-cuda": [
-                    41.305,
-                    32.852,
-                    33.117,
-                    33.115,
-                    33.109
+                    37.087,
+                    32.224000000000004,
+                    31.399000000000004,
+                    31.111,
+                    31.869
                 ],
-                "test-mpi-openmp": []
+                "test-mpi-openmp": [
+                    992.044,
+                    892.365,
+                    965.638,
+                    902.04,
+                    919.5269999999999
+                ]
             },
             "avg_runtime": {
-                "test-cuda": 33.115,
-                "test-mpi-openmp": 0.0
+                "test-cuda": 31.869,
+                "test-mpi-openmp": 919.5269999999999
             },
             "data": {
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        41.305,
-                        32.852,
-                        33.117,
-                        33.115,
-                        33.109
+                        37.087,
+                        32.224000000000004,
+                        31.399000000000004,
+                        31.111,
+                        31.869
                     ]
                 },
-                "test-mpi-openmp": {}
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        992.044,
+                        892.365,
+                        965.638,
+                        902.04,
+                        919.5269999999999
+                    ]
+                }
             },
             "reduction": {
                 "test-cuda": "median",
@@ -3944,8 +3976,8 @@
         {
             "name": "66Jar99",
             "commit_hash": {
-                "test-cuda": "fb953848d18a4a48a6492ff28e38e94513864eb1",
-                "test-mpi-openmp": "fb953848d18a4a48a6492ff28e38e94513864eb1"
+                "test-cuda": "e5f48e120998a5e881974222534fb0226a689b6b",
+                "test-mpi-openmp": "e5f48e120998a5e881974222534fb0226a689b6b"
             },
             "tasks": [
                 "test-cuda",
@@ -3956,8 +3988,8 @@
                 "test-mpi-openmp": "error"
             },
             "error": {
-                "test-cuda": "energy_storms_mpi_omp_core.c:130: warning: \"CACHE_LINE_SIZE\" redefined\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      | \n<command-line>: note: this is the location of the previous definition\nenergy_storms_mpi_omp_core.c: In function \u2018core\u2019:\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:325:51: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  325 |             prefetch_read( &storms_copy[ r * 2 ], CACHE_LINE_SIZE );\n      |                                                   ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:327:83: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  327 |                 prefetch_read( &storms_copy[ r * 2 + t * 2 + ELEM_PER_LINE * 2 ], CACHE_LINE_SIZE );\n      |                                                                                   ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:339:106: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  339 |                     prefetch_write( &layer[ start_temporary - start_chunk_minion + local_start_minion ], CACHE_LINE_SIZE );\n      |                                                                                                          ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:341:116: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  341 |                         prefetch_write( &layer[ g - start_chunk_minion + local_start_minion + ELEM_PER_LINE * 4 ], CACHE_LINE_SIZE );\n      |                                                                                                                    ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:407:87: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  407 |             prefetch_write( &layer[ start_temporary_relaxation - ELEM_PER_LINE * 3 ], CACHE_LINE_SIZE);\n      |                                                                                       ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:414:59: warning: integer overflow in expression of type \u2018int\u2019 results in \u20181693384704\u2019 [-Woverflow]\n  414 |                 prefetch_write( &layer[ g - ELEM_PER_LINE * 7 ], CACHE_LINE_SIZE );\n      |                                                           ^\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:414:66: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  414 |                 prefetch_write( &layer[ g - ELEM_PER_LINE * 7 ], CACHE_LINE_SIZE );\n      |                                                                  ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:440:49: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  440 |             prefetch_read( &layer[ max_start ], CACHE_LINE_SIZE );\n      |                                                 ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:442:65: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  442 |                 prefetch_read( &layer[ g + ELEM_PER_LINE * 4 ], CACHE_LINE_SIZE );\n      |                                                                 ^~~~~~~~~~~~~~~\nCUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
-                "test-mpi-openmp": "energy_storms_mpi_omp_core.c:130: warning: \"CACHE_LINE_SIZE\" redefined\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      | \n<command-line>: note: this is the location of the previous definition\nenergy_storms_mpi_omp_core.c: In function \u2018core\u2019:\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:325:51: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  325 |             prefetch_read( &storms_copy[ r * 2 ], CACHE_LINE_SIZE );\n      |                                                   ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:327:83: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  327 |                 prefetch_read( &storms_copy[ r * 2 + t * 2 + ELEM_PER_LINE * 2 ], CACHE_LINE_SIZE );\n      |                                                                                   ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:339:106: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  339 |                     prefetch_write( &layer[ start_temporary - start_chunk_minion + local_start_minion ], CACHE_LINE_SIZE );\n      |                                                                                                          ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:341:116: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  341 |                         prefetch_write( &layer[ g - start_chunk_minion + local_start_minion + ELEM_PER_LINE * 4 ], CACHE_LINE_SIZE );\n      |                                                                                                                    ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:407:87: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  407 |             prefetch_write( &layer[ start_temporary_relaxation - ELEM_PER_LINE * 3 ], CACHE_LINE_SIZE);\n      |                                                                                       ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:414:59: warning: integer overflow in expression of type \u2018int\u2019 results in \u20181693384704\u2019 [-Woverflow]\n  414 |                 prefetch_write( &layer[ g - ELEM_PER_LINE * 7 ], CACHE_LINE_SIZE );\n      |                                                           ^\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:414:66: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  414 |                 prefetch_write( &layer[ g - ELEM_PER_LINE * 7 ], CACHE_LINE_SIZE );\n      |                                                                  ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:440:49: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  440 |             prefetch_read( &layer[ max_start ], CACHE_LINE_SIZE );\n      |                                                 ^~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:130:25: warning: unsigned conversion from \u2018long int\u2019 to \u2018uint32_t\u2019 {aka \u2018unsigned int\u2019} changes value from \u20181000000000000000000\u2019 to \u20182808348672\u2019 [-Woverflow]\n  130 | #define CACHE_LINE_SIZE 1000000000000000000\n      |                         ^~~~~~~~~~~~~~~~~~~\nenergy_storms_mpi_omp_core.c:442:65: note: in expansion of macro \u2018CACHE_LINE_SIZE\u2019\n  442 |                 prefetch_read( &layer[ g + ELEM_PER_LINE * 4 ], CACHE_LINE_SIZE );\n      |                                                                 ^~~~~~~~~~~~~~~\n--------------------------------------------------------------------------\nThere are not enough slots available in the system to satisfy the 2\nslots that were requested by the application:\n\n  ./energy_storms_mpi_omp\n\nEither request fewer slots for your application, or make more slots\navailable for use.\n\nA \"slot\" is the Open MPI term for an allocatable unit where we can\nlaunch a process.  The number of slots available are defined by the\nenvironment in which Open MPI processes are run:\n\n  1. Hostfile, via \"slots=N\" clauses (N defaults to number of\n     processor cores if not provided)\n  2. The --host command line parameter, via a \":N\" suffix on the\n     hostname (N defaults to 1 if not provided)\n  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)\n  4. If none of a hostfile, the --host command line parameter, or an\n     RM is present, Open MPI defaults to the number of processor cores\n\nIn all the above cases, if you want Open MPI to default to the number\nof hardware threads instead of the number of processor cores, use the\n--use-hwthread-cpus option.\n\nAlternatively, you can use the --oversubscribe option to ignore the\nnumber of available slots when deciding the number of processes to\nlaunch.\n--------------------------------------------------------------------------\nmake: *** [Makefile:77: run_mpi] Error 1\n\n"
+                "test-cuda": "CUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
+                "test-mpi-openmp": "--------------------------------------------------------------------------\nThere are not enough slots available in the system to satisfy the 2\nslots that were requested by the application:\n\n  ./energy_storms_mpi_omp\n\nEither request fewer slots for your application, or make more slots\navailable for use.\n\nA \"slot\" is the Open MPI term for an allocatable unit where we can\nlaunch a process.  The number of slots available are defined by the\nenvironment in which Open MPI processes are run:\n\n  1. Hostfile, via \"slots=N\" clauses (N defaults to number of\n     processor cores if not provided)\n  2. The --host command line parameter, via a \":N\" suffix on the\n     hostname (N defaults to 1 if not provided)\n  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)\n  4. If none of a hostfile, the --host command line parameter, or an\n     RM is present, Open MPI defaults to the number of processor cores\n\nIn all the above cases, if you want Open MPI to default to the number\nof hardware threads instead of the number of processor cores, use the\n--use-hwthread-cpus option.\n\nAlternatively, you can use the --oversubscribe option to ignore the\nnumber of available slots when deciding the number of processes to\nlaunch.\n--------------------------------------------------------------------------\nmake: *** [Makefile:77: run_mpi] Error 1\n\n"
             },
             "stdout": {
                 "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3\t-march=native -DCACHE_LINE_SIZE=64 -c energy_storms_mpi_omp_core.c -lm -lnuma -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3\t-march=native -DCACHE_LINE_SIZE=64 energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -lnuma -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n",
@@ -4808,6 +4840,45 @@
             "commit_hash": {
                 "test-cuda": "0c45ffdaf5f01ba9d75c9accc4637a33f0e5e95d",
                 "test-mpi-openmp": "0c45ffdaf5f01ba9d75c9accc4637a33f0e5e95d"
+            },
+            "tasks": [
+                "test-cuda",
+                "test-mpi-openmp"
+            ],
+            "status": {
+                "test-cuda": "error",
+                "test-mpi-openmp": "error"
+            },
+            "error": {
+                "test-cuda": "CUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
+                "test-mpi-openmp": "MPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+            },
+            "stdout": {
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+            },
+            "runtimes": {
+                "test-cuda": [],
+                "test-mpi-openmp": []
+            },
+            "avg_runtime": {
+                "test-cuda": 0.0,
+                "test-mpi-openmp": 0.0
+            },
+            "data": {
+                "test-cuda": {},
+                "test-mpi-openmp": {}
+            },
+            "reduction": {
+                "test-cuda": "median",
+                "test-mpi-openmp": "median"
+            }
+        },
+        {
+            "name": "AidenMachine",
+            "commit_hash": {
+                "test-cuda": "8c43991fe2dd1590df8d059831d46cb28611a6c7",
+                "test-mpi-openmp": "8c43991fe2dd1590df8d059831d46cb28611a6c7"
             },
             "tasks": [
                 "test-cuda",
