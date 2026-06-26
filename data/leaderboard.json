@@ -90,21 +90,21 @@
                 "test-mpi-openmp": "MPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
             },
             "stdout": {
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.055344\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [55.343999999999994, 56.305, 54.065000000000005, 56.552, 54.593999999999994]}",
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nTime: 0.057013\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [57.013, 54.096, 56.562, 55.266999999999996, 54.087]}",
                 "test-mpi-openmp": "Verifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
             },
             "runtimes": {
                 "test-cuda": [
-                    55.343999999999994,
-                    56.305,
-                    54.065000000000005,
-                    56.552,
-                    54.593999999999994
+                    57.013,
+                    54.096,
+                    56.562,
+                    55.266999999999996,
+                    54.087
                 ],
                 "test-mpi-openmp": []
             },
             "avg_runtime": {
-                "test-cuda": 55.343999999999994,
+                "test-cuda": 55.266999999999996,
                 "test-mpi-openmp": 0.0
             },
             "data": {
@@ -112,11 +112,11 @@
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        55.343999999999994,
-                        56.305,
-                        54.065000000000005,
-                        56.552,
-                        54.593999999999994
+                        57.013,
+                        54.096,
+                        56.562,
+                        55.266999999999996,
+                        54.087
                     ]
                 },
                 "test-mpi-openmp": {}
@@ -1414,7 +1414,7 @@
         {
             "name": "Shavvid",
             "commit_hash": {
-                "test-cuda": "230db179bf2e8cf38eef2874ada61d37e94d3157",
+                "test-cuda": "a44845a7c80e14d918e3b9fc03d7e2bb41e32583",
                 "test-mpi-openmp": "d4a1c1123b893b0eae7b0ebeaba3fe849e358a5f"
             },
             "tasks": [
@@ -1422,43 +1422,27 @@
                 "test-mpi-openmp"
             ],
             "status": {
-                "test-cuda": "graded",
+                "test-cuda": "error",
                 "test-mpi-openmp": "error"
             },
             "error": {
-                "test-cuda": "",
-                "test-mpi-openmp": "MPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-cuda": "\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Shavvid_test-cuda/test-exam-cuda.py\", line 128, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-Shavvid_test-cuda/test-exam-cuda.py\", line 122, in test_program\n    assert expected.approx_eq(actual), f\"Expected {expected} (+- 1e-4), got {actual} for wave {wave_idx}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Expected Result(bucket_num=17223, energy=3274.642578) (+- 1e-4), got Result(bucket_num=17223, energy=3274.643311) for wave 1\n",
+                "test-mpi-openmp": "--------------------------------------------------------------------------\nThere are not enough slots available in the system to satisfy the 64\nslots that were requested by the application:\n\n  ./energy_storms_mpi_omp\n\nEither request fewer slots for your application, or make more slots\navailable for use.\n\nA \"slot\" is the Open MPI term for an allocatable unit where we can\nlaunch a process.  The number of slots available are defined by the\nenvironment in which Open MPI processes are run:\n\n  1. Hostfile, via \"slots=N\" clauses (N defaults to number of\n     processor cores if not provided)\n  2. The --host command line parameter, via a \":N\" suffix on the\n     hostname (N defaults to 1 if not provided)\n  3. Resource manager (e.g., SLURM, PBS/Torque, LSF, etc.)\n  4. If none of a hostfile, the --host command line parameter, or an\n     RM is present, Open MPI defaults to the number of processor cores\n\nIn all the above cases, if you want Open MPI to default to the number\nof hardware threads instead of the number of processor cores, use the\n--use-hwthread-cpus option.\n\nAlternatively, you can use the --oversubscribe option to ignore the\nnumber of available slots when deciding the number of processes to\nlaunch.\n--------------------------------------------------------------------------\nmake: *** [Makefile:77: run_mpi] Error 1\n\n"
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.028630\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [28.63, 27.023, 27.546999999999997, 28.152, 27.775000000000002]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --use_fast_math -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --use_fast_math energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --use_fast_math -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --use_fast_math energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.012228\nResult: 17197 1654.755371 17223 3274.643311 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.189453\n\n",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-trapping-math -fno-math-errno energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --use_fast_math -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --use_fast_math energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 64 --bind-to core ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nMPI+OMP Execution failed:\n"
             },
             "runtimes": {
-                "test-cuda": [
-                    28.63,
-                    27.023,
-                    27.546999999999997,
-                    28.152,
-                    27.775000000000002
-                ],
+                "test-cuda": [],
                 "test-mpi-openmp": []
             },
             "avg_runtime": {
-                "test-cuda": 27.775000000000002,
+                "test-cuda": 0.0,
                 "test-mpi-openmp": 0.0
             },
             "data": {
-                "test-cuda": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        28.63,
-                        27.023,
-                        27.546999999999997,
-                        28.152,
-                        27.775000000000002
-                    ]
-                },
+                "test-cuda": {},
                 "test-mpi-openmp": {}
             },
             "reduction": {
@@ -2798,7 +2782,7 @@
         {
             "name": "summerwaif643",
             "commit_hash": {
-                "test-cuda": "15118c7f006729347faf8b5639f8e4b08e245552",
+                "test-cuda": "71bc146df657a935cab893636a6d978f3f15a6f7",
                 "test-mpi-openmp": "e207e82e909b98a199412ba14e71ed71f3876c09"
             },
             "tasks": [
@@ -2811,24 +2795,24 @@
             },
             "error": {
                 "test-cuda": "",
-                "test-mpi-openmp": "energy_storms_mpi_omp_core.c: In function \u2018core\u2019:\nenergy_storms_mpi_omp_core.c:10:10: warning: unused variable \u2018j\u2019 [-Wunused-variable]\n   10 |   int i, j, k;\n      |          ^\nIn file included from energy_storms_mpi_omp_core.c:1:\nenergy_storms.h: At top level:\nenergy_storms.h:59:14: warning: \u2018read_storm_file\u2019 defined but not used [-Wunused-function]\n   59 | static Storm read_storm_file( char *fname ) {\n      |              ^~~~~~~~~~~~~~~\nenergy_storms.h:24:13: warning: \u2018debug_print\u2019 defined but not used [-Wunused-function]\n   24 | static void debug_print(int layer_size, float *layer, int *positions, float *maximum, int num_storms ) {\n      |             ^~~~~~~~~~~\nenergy_storms.h:8:15: warning: \u2018cp_Wtime\u2019 defined but not used [-Wunused-function]\n    8 | static double cp_Wtime(){\n      |               ^~~~~~~~\nIn file included from energy_storms_mpi_omp.c:20:\nenergy_storms.h:24:13: warning: \u2018debug_print\u2019 defined but not used [-Wunused-function]\n   24 | static void debug_print(int layer_size, float *layer, int *positions, float *maximum, int num_storms ) {\n      |             ^~~~~~~~~~~\nenergy_storms_cuda_core.cu(23): warning #177-D: variable \"tid\" was declared but never referenced\n    int tid = threadIdx.x;\n        ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\nMPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-mpi-openmp": "energy_storms_mpi_omp_core.c: In function \u2018core\u2019:\nenergy_storms_mpi_omp_core.c:10:10: warning: unused variable \u2018j\u2019 [-Wunused-variable]\n   10 |   int i, j, k;\n      |          ^\nIn file included from energy_storms_mpi_omp_core.c:1:\nenergy_storms.h: At top level:\nenergy_storms.h:59:14: warning: \u2018read_storm_file\u2019 defined but not used [-Wunused-function]\n   59 | static Storm read_storm_file( char *fname ) {\n      |              ^~~~~~~~~~~~~~~\nenergy_storms.h:24:13: warning: \u2018debug_print\u2019 defined but not used [-Wunused-function]\n   24 | static void debug_print(int layer_size, float *layer, int *positions, float *maximum, int num_storms ) {\n      |             ^~~~~~~~~~~\nenergy_storms.h:8:15: warning: \u2018cp_Wtime\u2019 defined but not used [-Wunused-function]\n    8 | static double cp_Wtime(){\n      |               ^~~~~~~~\nIn file included from energy_storms_mpi_omp.c:20:\nenergy_storms.h:24:13: warning: \u2018debug_print\u2019 defined but not used [-Wunused-function]\n   24 | static void debug_print(int layer_size, float *layer, int *positions, float *maximum, int num_storms ) {\n      |             ^~~~~~~~~~~\nenergy_storms_cuda_core.cu(23): warning #177-D: variable \"tid\" was declared but never referenced\n    int tid = threadIdx.x;\n        ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-summerwaif643_test-mpi-openmp/test-exam-mpi-openmp.py\", line 126, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-summerwaif643_test-mpi-openmp/test-exam-mpi-openmp.py\", line 118, in test_program\n    assert expected.approx_eq(actual), f\"Expected {expected} (+- 1e-4), got {actual} for wave {wave_idx}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Expected Result(bucket_num=17222, energy=8155.51123) (+- 1e-4), got Result(bucket_num=17222, energy=8155.510254) for wave 3\n"
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -pg -g -Wall  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -pg -g -Wall  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -g -G -fmad=false  -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -g -G -fmad=false  energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nRunning on: Quadro RTX 6000\nGrid size: 20 blocks, Block size: 1024 threads\n\nTime: 0.531470\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [531.47, 496.749, 496.93, 497.807, 503.84700000000004]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -pg -g -Wall  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -pg -g -Wall  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -pg -g -Wall  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -pg -g -Wall  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -g -G -fmad=false  -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -g -G -fmad=false  energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nRunning on: Quadro RTX 6000\nGrid size: 20 blocks, Block size: 1024 threads\n\nTime: 0.563502\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [563.502, 501.243, 497.78, 504.09400000000005, 502.757]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -pg -g -Wall  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -pg -g -Wall  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 3.429921\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.510254 15849 11403.597656 15924 14647.188477\n\n"
             },
             "runtimes": {
                 "test-cuda": [
-                    531.47,
-                    496.749,
-                    496.93,
-                    497.807,
-                    503.84700000000004
+                    563.502,
+                    501.243,
+                    497.78,
+                    504.09400000000005,
+                    502.757
                 ],
                 "test-mpi-openmp": []
             },
             "avg_runtime": {
-                "test-cuda": 497.807,
+                "test-cuda": 502.757,
                 "test-mpi-openmp": 0.0
             },
             "data": {
@@ -2836,11 +2820,11 @@
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        531.47,
-                        496.749,
-                        496.93,
-                        497.807,
-                        503.84700000000004
+                        563.502,
+                        501.243,
+                        497.78,
+                        504.09400000000005,
+                        502.757
                     ]
                 },
                 "test-mpi-openmp": {}
@@ -3274,11 +3258,11 @@
             },
             "error": {
                 "test-cuda": "\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-ThingoStar_test-cuda/test-exam-cuda.py\", line 128, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-ThingoStar_test-cuda/test-exam-cuda.py\", line 122, in test_program\n    assert expected.approx_eq(actual), f\"Expected {expected} (+- 1e-4), got {actual} for wave {wave_idx}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Expected Result(bucket_num=17197, energy=1654.755371) (+- 1e-4), got Result(bucket_num=0, energy=0.0) for wave 0\n",
-                "test-mpi-openmp": "energy_storms_cuda_core.cu(244): error: identifier \"num_storms\" is undefined\n      for ( int i = 0; i < num_storms; i++ )\n                           ^\n\nenergy_storms_cuda_core.cu(249): error: identifier \"cuda_storm_sizes\" is undefined\n          for ( int e = 0; e < cuda_storm_sizes[i]; i++ )\n                               ^\n\nenergy_storms_cuda_core.cu(253): error: identifier \"storms_posval\" is undefined\n              float position = storms_posval[e*2 + 0];\n                               ^\n\nenergy_storms_cuda_core.cu(257): error: identifier \"cuda_layer\" is undefined\n              update( cuda_layer, layer_size, threadID, position, energy );\n                      ^\n\nenergy_storms_cuda_core.cu(257): error: identifier \"layer_size\" is undefined\n              update( cuda_layer, layer_size, threadID, position, energy );\n                                  ^\n\nenergy_storms_cuda_core.cu(259): error: identifier \"cuda_storm_sizes\" is undefined\n          prec_sizes += cuda_storm_sizes[i];\n                        ^\n\nenergy_storms_cuda_core.cu(263): error: identifier \"cuda_layer_copy\" is undefined\n          cuda_layer_copy[threadID] = cuda_layer[threadID];\n          ^\n\nenergy_storms_cuda_core.cu(263): error: identifier \"cuda_layer\" is undefined\n          cuda_layer_copy[threadID] = cuda_layer[threadID];\n                                      ^\n\nenergy_storms_cuda_core.cu(267): error: identifier \"layer_size\" is undefined\n          if ( threadID != 0 || threadID != layer_size-1)\n                                            ^\n\nenergy_storms_cuda_core.cu(271): error: identifier \"cuda_maximum\" is undefined\n          atomicMaxf( &cuda_maximum[i], cuda_layer[threadID] );\n                       ^\n\n10 errors detected in the compilation of \"energy_storms_cuda_core.cu\".\nmake: *** [Makefile:63: energy_storms_cuda_core.o] Error 2\nMPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-mpi-openmp": "energy_storms_cuda_core.cu(244): error: identifier \"num_storms\" is undefined\n      for ( int i = 0; i < num_storms; i++ )\n                           ^\n\nenergy_storms_cuda_core.cu(249): error: identifier \"cuda_storm_sizes\" is undefined\n          for ( int e = 0; e < cuda_storm_sizes[i]; i++ )\n                               ^\n\nenergy_storms_cuda_core.cu(253): error: identifier \"storms_posval\" is undefined\n              float position = storms_posval[e*2 + 0];\n                               ^\n\nenergy_storms_cuda_core.cu(257): error: identifier \"cuda_layer\" is undefined\n              update( cuda_layer, layer_size, threadID, position, energy );\n                      ^\n\nenergy_storms_cuda_core.cu(257): error: identifier \"layer_size\" is undefined\n              update( cuda_layer, layer_size, threadID, position, energy );\n                                  ^\n\nenergy_storms_cuda_core.cu(259): error: identifier \"cuda_storm_sizes\" is undefined\n          prec_sizes += cuda_storm_sizes[i];\n                        ^\n\nenergy_storms_cuda_core.cu(263): error: identifier \"cuda_layer_copy\" is undefined\n          cuda_layer_copy[threadID] = cuda_layer[threadID];\n          ^\n\nenergy_storms_cuda_core.cu(263): error: identifier \"cuda_layer\" is undefined\n          cuda_layer_copy[threadID] = cuda_layer[threadID];\n                                      ^\n\nenergy_storms_cuda_core.cu(267): error: identifier \"layer_size\" is undefined\n          if ( threadID != 0 || threadID != layer_size-1)\n                                            ^\n\nenergy_storms_cuda_core.cu(271): error: identifier \"cuda_maximum\" is undefined\n          atomicMaxf( &cuda_maximum[i], cuda_layer[threadID] );\n                       ^\n\n10 errors detected in the compilation of \"energy_storms_cuda_core.cu\".\nmake: *** [Makefile:63: energy_storms_cuda_core.o] Error 2\n\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-ThingoStar_test-mpi-openmp/test-exam-mpi-openmp.py\", line 126, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-ThingoStar_test-mpi-openmp/test-exam-mpi-openmp.py\", line 115, in test_program\n    time_cuda, results_cuda = parse_output(stdout)\n                              ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-ThingoStar_test-mpi-openmp/test-exam-mpi-openmp.py\", line 79, in parse_output\n    parsed_results = [Result(int(results[i]), float(results[i+1])) for i in range(0, len(results), 2)]\n                             ^^^^^^^^^^^^^^^\nValueError: invalid literal for int() with base 10: 'time:'\n"
             },
             "stdout": {
-                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n==================================================\n CUDA Device Properties for: Quadro RTX 6000\n==================================================\nCompute Capability:               7.5\nNumber of Multiprocessors (SMs):  72\nPCI Bus ID / Device ID / Domain:  65 / 0 / 0\nIntegrated (vs Discrete) GPU:     No (Discrete)\nTCC Driver Mode:                  Disabled\nUUID:                             1df1a0e3-04a1-d12e-94c1-b89951e4f44a\n\n--- Memory Properties ---\nTotal Global Memory:              21.97 GB (23595188224 bytes)\nTotal Constant Memory:            64.00 KB (65536 bytes)\nL2 Cache Size:                    6.00 MB (6291456 bytes)\nGlobal Memory Bus Width:          384-bit\nPeak Memory Clock Rate:           6501000 kHz (Deprecated)\nECC Support Enabled:              Yes\n\n--- Execution Configuration Limits ---\nWarp Size (Threads):              32\nMax Threads per Block:            1024\nMax Threads Dimensions (X,Y,Z):   [1024, 1024, 64]\nMax Grid Dimensions (X,Y,Z):      [2147483647, 65535, 65535]\nMax Threads per SM:               1024\nMax Blocks per SM:                16\nRegisters per Block:              65536\nRegisters per SM:                 65536\n\n--- Shared Memory Properties ---\nShared Memory per Block:          48.00 KB (49152 bytes)\nShared Memory per Block (Opt-in): 64.00 KB (65536 bytes)\nShared Memory per SM:             64.00 KB (65536 bytes)\nReserved Shared Memory per Block: 0 bytes\n\n--- Feature & Architecture Support ---\nConcurrent Kernels Execution:     Supported\nUnified Addressing (UVA):         Supported\nManaged Memory (UVM):             Supported\nStream Priorities:                Supported\nCooperative Launch:               Supported\nCluster Launch Support:           Not Supported\nUnified Function Pointers:        Not Supported\nMemory Pools Support (Async):     Supported\nAsynchronous Engines Count:       3\n\n--- Host Memory & Hardware Interop ---\nCan Map Host Memory:              Yes\nHost Native Atomic Support:       No\nPageable Memory Access:           Supported\nConcurrent Managed Access:        Supported\nDirect Managed Access from Host:  Not Supported\nHost Register Supported:          Supported\nGPUDirect RDMA Support:           Supported\n\n--- Maximum Texture & Surface Dimensions ---\nMax Texture 1D / 2D / 3D:         131072 / [131072, 65536] / [16384, 16384, 16384]\nMax Surface 1D / 2D / 3D:         32768 / [131072, 65536] / [16384, 16384, 16384]\nTexture Alignment Requirement:    512 bytes\nSurface Alignment Requirement:    512 bytes\n==================================================\n\n\nTime: 0.003386\nResult: 0 0.000000 0 0.000000 0 0.000000 0 0.000000 0 0.000000 0 0.000000\n\n",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-cuda": "Verifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n==================================================\n CUDA Device Properties for: Quadro RTX 6000\n==================================================\nCompute Capability:               7.5\nNumber of Multiprocessors (SMs):  72\nPCI Bus ID / Device ID / Domain:  65 / 0 / 0\nIntegrated (vs Discrete) GPU:     No (Discrete)\nTCC Driver Mode:                  Disabled\nUUID:                             1df1a0e3-04a1-d12e-94c1-b89951e4f44a\n\n--- Memory Properties ---\nTotal Global Memory:              21.97 GB (23595188224 bytes)\nTotal Constant Memory:            64.00 KB (65536 bytes)\nL2 Cache Size:                    6.00 MB (6291456 bytes)\nGlobal Memory Bus Width:          384-bit\nPeak Memory Clock Rate:           6501000 kHz (Deprecated)\nECC Support Enabled:              Yes\n\n--- Execution Configuration Limits ---\nWarp Size (Threads):              32\nMax Threads per Block:            1024\nMax Threads Dimensions (X,Y,Z):   [1024, 1024, 64]\nMax Grid Dimensions (X,Y,Z):      [2147483647, 65535, 65535]\nMax Threads per SM:               1024\nMax Blocks per SM:                16\nRegisters per Block:              65536\nRegisters per SM:                 65536\n\n--- Shared Memory Properties ---\nShared Memory per Block:          48.00 KB (49152 bytes)\nShared Memory per Block (Opt-in): 64.00 KB (65536 bytes)\nShared Memory per SM:             64.00 KB (65536 bytes)\nReserved Shared Memory per Block: 0 bytes\n\n--- Feature & Architecture Support ---\nConcurrent Kernels Execution:     Supported\nUnified Addressing (UVA):         Supported\nManaged Memory (UVM):             Supported\nStream Priorities:                Supported\nCooperative Launch:               Supported\nCluster Launch Support:           Not Supported\nUnified Function Pointers:        Not Supported\nMemory Pools Support (Async):     Supported\nAsynchronous Engines Count:       3\n\n--- Host Memory & Hardware Interop ---\nCan Map Host Memory:              Yes\nHost Native Atomic Support:       No\nPageable Memory Access:           Supported\nConcurrent Managed Access:        Supported\nDirect Managed Access from Host:  Not Supported\nHost Register Supported:          Supported\nGPUDirect RDMA Support:           Supported\n\n--- Maximum Texture & Surface Dimensions ---\nMax Texture 1D / 2D / 3D:         131072 / [131072, 65536] / [16384, 16384, 16384]\nMax Surface 1D / 2D / 3D:         32768 / [131072, 65536] / [16384, 16384, 16384]\nTexture Alignment Requirement:    512 bytes\nSurface Alignment Requirement:    512 bytes\n==================================================\n\n\nTime: 0.003358\nResult: 0 0.000000 0 0.000000 0 0.000000 0 0.000000 0 0.000000 0 0.000000\n\n",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none --oversubscribe ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nimpacts time: 0.183988\nimpacts time: 0.190662\nimpacts time: 0.196853\nrelax time: 0.000771\nimpacts time: 0.239567\nrelax time: 0.001388\nrelax time: 0.000804\nmax time: 0.039214\nmax time: 0.003647\nmax time: 0.001698\nrelax time: 0.000152\nmax time: 0.000122\nimpacts time: 0.109678\nimpacts time: 0.137873\nrelax time: 0.000033\nmax time: 0.000053\nimpacts time: 0.153003\nrelax time: 0.000785\nimpacts time: 0.157380\nrelax time: 0.000110\nmax time: 0.000054\nmax time: 0.002139\nrelax time: 0.001410\nmax time: 0.001402\nimpacts time: 0.109132\nimpacts time: 0.109094\nrelax time: 0.000107\nmax time: 0.000049\nimpacts time: 0.151554\nrelax time: 0.000318\nmax time: 0.000166\nimpacts time: 0.154098\nrelax time: 0.000161\nrelax time: 0.000852\nmax time: 0.002096\nmax time: 0.001451\nimpacts time: 0.109353\nimpacts time: 0.109568\nrelax time: 0.000162\nmax time: 0.000091\nimpacts time: 0.142746\nrelax time: 0.000115\nimpacts time: 0.195430\nrelax time: 0.000111\nmax time: 0.000057\nrelax time: 0.001477\nmax time: 0.002829\nmax time: 0.001387\nimpacts time: 0.108726\nrelax time: 0.000110\nmax time: 0.000053\nimpacts time: 0.109570\nimpacts time: 0.109720\nimpacts time: 0.145396\nrelax time: 0.000112\nrelax time: 0.000109\nmax time: 0.000151\nrelax time: 0.000863\nmax time: 0.002383\nmax time: 0.001492\nimpacts time: 0.111844\nrelax time: 0.000105\nmax time: 0.000054\nimpacts time: 0.107921\nimpacts time: 0.136255\nimpacts time: 0.166092\nrelax time: 0.000191\nrelax time: 0.000114\nmax time: 0.000049\nrelax time: 0.001481\nmax time: 0.002804\n\nTime: 1.077655\nResult: 17198 1654.755371 17224 3274.642578 17230 5727.363281 17223 8155.511230 15850 11403.597656 15925 14647.188477\nmax time: 0.001525\n\n"
             },
             "runtimes": {
                 "test-cuda": [],
@@ -3607,50 +3591,50 @@
                 "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off -c energy_storms_mpi_omp_core.c -lm -lm -fopenmp -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -lm -fopenmp -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.037904\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [37.904, 38.177, 36.47, 37.656, 38.123999999999995]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off -c energy_storms_mpi_omp_core.c -lm -lm -fopenmp -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -lm -fopenmp -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.187954\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [187.954, 183.338, 181.288, 181.294, 182.697]}"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off -c energy_storms_mpi_omp_core.c -lm -lm -fopenmp -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -lm -fopenmp -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.037054\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [37.053999999999995, 38.191, 37.678000000000004, 36.549, 38.175]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off -c energy_storms_mpi_omp_core.c -lm -lm -fopenmp -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -fopenmp -flto -Wall -fstrict-aliasing -fno-math-errno -fno-trapping-math -ffp-contract=off energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm -lm -fopenmp -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.181352\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [181.352, 181.006, 198.77800000000002, 180.021, 180.481]}"
             },
             "runtimes": {
                 "test-cuda": [
-                    37.904,
-                    38.177,
-                    36.47,
-                    37.656,
-                    38.123999999999995
+                    37.053999999999995,
+                    38.191,
+                    37.678000000000004,
+                    36.549,
+                    38.175
                 ],
                 "test-mpi-openmp": [
-                    187.954,
-                    183.338,
-                    181.288,
-                    181.294,
-                    182.697
+                    181.352,
+                    181.006,
+                    198.77800000000002,
+                    180.021,
+                    180.481
                 ]
             },
             "avg_runtime": {
-                "test-cuda": 37.904,
-                "test-mpi-openmp": 182.697
+                "test-cuda": 37.678000000000004,
+                "test-mpi-openmp": 181.006
             },
             "data": {
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        37.904,
-                        38.177,
-                        36.47,
-                        37.656,
-                        38.123999999999995
+                        37.053999999999995,
+                        38.191,
+                        37.678000000000004,
+                        36.549,
+                        38.175
                     ]
                 },
                 "test-mpi-openmp": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        187.954,
-                        183.338,
-                        181.288,
-                        181.294,
-                        182.697
+                        181.352,
+                        181.006,
+                        198.77800000000002,
+                        180.021,
+                        180.481
                     ]
                 }
             },
@@ -4425,50 +4409,50 @@
                 "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.023319\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [23.319, 23.983, 23.969, 22.923, 22.953000000000003]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.139754\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [139.754, 132.84199999999998, 132.154, 139.132, 145.59]}"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.024324\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [24.323999999999998, 22.939, 22.965, 24.017, 23.961]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.130583\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [130.583, 134.296, 124.24300000000001, 141.84, 148.941]}"
             },
             "runtimes": {
                 "test-cuda": [
-                    23.319,
-                    23.983,
-                    23.969,
-                    22.923,
-                    22.953000000000003
+                    24.323999999999998,
+                    22.939,
+                    22.965,
+                    24.017,
+                    23.961
                 ],
                 "test-mpi-openmp": [
-                    139.754,
-                    132.84199999999998,
-                    132.154,
-                    139.132,
-                    145.59
+                    130.583,
+                    134.296,
+                    124.24300000000001,
+                    141.84,
+                    148.941
                 ]
             },
             "avg_runtime": {
-                "test-cuda": 23.319,
-                "test-mpi-openmp": 139.132
+                "test-cuda": 23.961,
+                "test-mpi-openmp": 134.296
             },
             "data": {
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        23.319,
-                        23.983,
-                        23.969,
-                        22.923,
-                        22.953000000000003
+                        24.323999999999998,
+                        22.939,
+                        22.965,
+                        24.017,
+                        23.961
                     ]
                 },
                 "test-mpi-openmp": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        139.754,
-                        132.84199999999998,
-                        132.154,
-                        139.132,
-                        145.59
+                        130.583,
+                        134.296,
+                        124.24300000000001,
+                        141.84,
+                        148.941
                     ]
                 }
             },
@@ -4826,50 +4810,50 @@
                 "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.024217\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [24.217, 22.956, 23.116999999999997, 23.976999999999997, 23.969]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.139046\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [139.046, 134.781, 142.357, 140.79, 136.31799999999998]}"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.023324\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [23.324, 22.967000000000002, 23.989, 23.979, 22.956]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.129504\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [129.50400000000002, 144.124, 141.043, 137.379, 128.64999999999998]}"
             },
             "runtimes": {
                 "test-cuda": [
-                    24.217,
-                    22.956,
-                    23.116999999999997,
-                    23.976999999999997,
-                    23.969
+                    23.324,
+                    22.967000000000002,
+                    23.989,
+                    23.979,
+                    22.956
                 ],
                 "test-mpi-openmp": [
-                    139.046,
-                    134.781,
-                    142.357,
-                    140.79,
-                    136.31799999999998
+                    129.50400000000002,
+                    144.124,
+                    141.043,
+                    137.379,
+                    128.64999999999998
                 ]
             },
             "avg_runtime": {
-                "test-cuda": 23.969,
-                "test-mpi-openmp": 139.046
+                "test-cuda": 23.324,
+                "test-mpi-openmp": 137.379
             },
             "data": {
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        24.217,
-                        22.956,
-                        23.116999999999997,
-                        23.976999999999997,
-                        23.969
+                        23.324,
+                        22.967000000000002,
+                        23.989,
+                        23.979,
+                        22.956
                     ]
                 },
                 "test-mpi-openmp": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        139.046,
-                        134.781,
-                        142.357,
-                        140.79,
-                        136.31799999999998
+                        129.50400000000002,
+                        144.124,
+                        141.043,
+                        137.379,
+                        128.64999999999998
                     ]
                 }
             },
@@ -4894,24 +4878,24 @@
             },
             "error": {
                 "test-cuda": "",
-                "test-mpi-openmp": "energy_storms_cuda_core.cu(65): warning #177-D: variable \"k\" was declared but never referenced\n      int i, j, k;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 126, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 115, in test_program\n    time_cuda, results_cuda = parse_output(stdout)\n                              ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 77, in parse_output\n    time = float(lines[1].strip().split()[1]) # Second line contains \"Time: ...\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: could not convert string to float: '[node124:246909:0]'\n"
+                "test-mpi-openmp": "energy_storms_cuda_core.cu(65): warning #177-D: variable \"k\" was declared but never referenced\n      int i, j, k;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n\nTraceback (most recent call last):\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 126, in <module>\n    runtimes.append(test_program())\n                    ^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 115, in test_program\n    time_cuda, results_cuda = parse_output(stdout)\n                              ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desensi_grader/grader_wd/mcp-25_exam-waves-marco2002panella_test-mpi-openmp/test-exam-mpi-openmp.py\", line 77, in parse_output\n    time = float(lines[1].strip().split()[1]) # Second line contains \"Time: ...\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: could not convert string to float: '[node122:591962:0]'\n"
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.380689\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [380.689, 387.416, 386.483, 389.912, 386.90999999999997]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nupdate = 0.055530\nupdate = 0.059749\nupdate = 0.056854\nupdate = 0.054973\nupdate = 0.050621\nupdate = 0.035557\ntotal time bottleneck: 0.313284 \ntotal time connection1: 0.033384 \ntotal time relaxTime: 0.000134 \ntotal time connection2: 0.000001 \nfinal time: 0.003617 \n\nTime: 0.414609\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n[1782501800.272151] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8cc00 was not matched\n[1782501800.272170] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8cb40 was not matched\n[1782501800.272179] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8ca80 was not matched\n[1782501800.272185] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8c9c0 was not matched\n[1782501800.272189] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8c900 was not matched\n[1782501800.272238] [node111:2317323:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5f8063d8c780 was not matched\n[1782501800.271432] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e8300 was not matched\n[1782501800.271466] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e8240 was not matched\n[1782501800.271472] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e8180 was not matched\n[1782501800.271479] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e80c0 was not matched\n[1782501800.271488] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e8000 was not matched\n[1782501800.271492] [node124:246909:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x5e0cae5e7f40 was not matched\n\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.378366\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [378.366, 385.106, 385.532, 386.086, 386.932]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\nupdate = 0.036869\nupdate = 0.035533\nupdate = 0.035475\nupdate = 0.045874\nupdate = 0.035708\nupdate = 0.035598\ntotal time bottleneck: 0.225058 \ntotal time connection1: 0.024562 \ntotal time relaxTime: 0.000290 \ntotal time connection2: 0.000031 \nfinal time: 0.010218 \n\nTime: 0.423183\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n[1782502186.676881] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b9c0 was not matched\n[1782502186.676905] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b900 was not matched\n[1782502186.676910] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b840 was not matched\n[1782502186.676914] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b780 was not matched\n[1782502186.676919] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b6c0 was not matched\n[1782502186.676922] [node111:2320745:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x6538e899b600 was not matched\n[1782502186.677077] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b692c0 was not matched\n[1782502186.677114] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b69200 was not matched\n[1782502186.677122] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b69140 was not matched\n[1782502186.677130] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b69080 was not matched\n[1782502186.677138] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b68fc0 was not matched\n[1782502186.677142] [node122:591962:0]       tag_match.c:62   UCX  WARN  unexpected tag-receive descriptor 0x633e67b68f00 was not matched\n\n"
             },
             "runtimes": {
                 "test-cuda": [
-                    380.689,
-                    387.416,
-                    386.483,
-                    389.912,
-                    386.90999999999997
+                    378.366,
+                    385.106,
+                    385.532,
+                    386.086,
+                    386.932
                 ],
                 "test-mpi-openmp": []
             },
             "avg_runtime": {
-                "test-cuda": 386.90999999999997,
+                "test-cuda": 385.532,
                 "test-mpi-openmp": 0.0
             },
             "data": {
@@ -4919,11 +4903,11 @@
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        380.689,
-                        387.416,
-                        386.483,
-                        389.912,
-                        386.90999999999997
+                        378.366,
+                        385.106,
+                        385.532,
+                        386.086,
+                        386.932
                     ]
                 },
                 "test-mpi-openmp": {}
@@ -5188,27 +5172,43 @@
             ],
             "status": {
                 "test-cuda": "error",
-                "test-mpi-openmp": "error"
+                "test-mpi-openmp": "graded"
             },
             "error": {
                 "test-cuda": "CUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
-                "test-mpi-openmp": "MPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-mpi-openmp": ""
             },
             "stdout": {
                 "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -g -fno-math-errno -ffinite-math-only -fno-signaling-nans -fno-rounding-math -fcx-limited-range -fno-signed-zeros -fno-trapping-math -march=znver1 -mtune=znver1 -mavx2 -mprefer-vector-width=256 -funroll-loops energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 32 --map-by ppr:1:numa:PE=4 --bind-to core --oversubscribe ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.098265\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [98.265, 126.27499999999999, 141.03, 150.16, 91.037]}"
             },
             "runtimes": {
                 "test-cuda": [],
-                "test-mpi-openmp": []
+                "test-mpi-openmp": [
+                    98.265,
+                    126.27499999999999,
+                    141.03,
+                    150.16,
+                    91.037
+                ]
             },
             "avg_runtime": {
                 "test-cuda": 0.0,
-                "test-mpi-openmp": 0.0
+                "test-mpi-openmp": 126.27499999999999
             },
             "data": {
                 "test-cuda": {},
-                "test-mpi-openmp": {}
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        98.265,
+                        126.27499999999999,
+                        141.03,
+                        150.16,
+                        91.037
+                    ]
+                }
             },
             "reduction": {
                 "test-cuda": "median",
@@ -5305,43 +5305,59 @@
             ],
             "status": {
                 "test-cuda": "graded",
-                "test-mpi-openmp": "error"
+                "test-mpi-openmp": "graded"
             },
             "error": {
                 "test-cuda": "",
-                "test-mpi-openmp": "energy_storms_mpi_omp_core.c:160:31: optimized: loop vectorized using 32 byte vectors\nenergy_storms_mpi_omp_core.c:160:31: optimized: loop vectorized using 16 byte vectors\nenergy_storms_mpi_omp_core.c:209:9: optimized: basic block part vectorized using 32 byte vectors\nenergy_storms_mpi_omp_core.c:209:9: optimized: basic block part vectorized using 32 byte vectors\nenergy_storms_mpi_omp_core.c:209:9: optimized: basic block part vectorized using 32 byte vectors\nptxas info    : 39 bytes gmem, 312 bytes cmem[4]\nptxas info    : Compiling entry function '_ZN3cub17CUB_200700_750_NS28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_S7_iS4_S3_S3_N4cuda3std3__410__identityEEEvT0_T1_T2_T3_T4_T6_' for 'sm_75'\nptxas info    : Function properties for _ZN3cub17CUB_200700_750_NS28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_S7_iS4_S3_S3_N4cuda3std3__410__identityEEEvT0_T1_T2_T3_T4_T6_\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 49 registers, used 1 barriers, 80 bytes smem, 385 bytes cmem[0]\nptxas info    : Compile time = 50.886 ms\nptxas info    : Compiling entry function '_ZN3cub17CUB_200700_750_NS18DeviceReduceKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_jS4_S3_N4cuda3std3__410__identityEEEvT0_PT3_T1_NS0_13GridEvenShareISF_EET2_T4_' for 'sm_75'\nptxas info    : Function properties for _ZN3cub17CUB_200700_750_NS18DeviceReduceKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_jS4_S3_N4cuda3std3__410__identityEEEvT0_PT3_T1_NS0_13GridEvenShareISF_EET2_T4_\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 48 registers, used 1 barriers, 80 bytes smem, 414 bytes cmem[0]\nptxas info    : Compile time = 54.846 ms\nptxas info    : Compiling entry function '_ZN3cub17CUB_200700_750_NS28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_S7_jS4_S3_S3_N4cuda3std3__410__identityEEEvT0_T1_T2_T3_T4_T6_' for 'sm_75'\nptxas info    : Function properties for _ZN3cub17CUB_200700_750_NS28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyI6ValPosj8ArgMaxOpE9Policy600EPS3_S7_jS4_S3_S3_N4cuda3std3__410__identityEEEvT0_T1_T2_T3_T4_T6_\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 46 registers, used 1 barriers, 80 bytes smem, 385 bytes cmem[0]\nptxas info    : Compile time = 50.268 ms\nptxas info    : Compiling entry function '_ZN3cub17CUB_200700_750_NS11EmptyKernelIvEEvv' for 'sm_75'\nptxas info    : Function properties for _ZN3cub17CUB_200700_750_NS11EmptyKernelIvEEvv\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 4 registers, used 0 barriers, 352 bytes cmem[0]\nptxas info    : Compile time = 0.611 ms\nptxas info    : Compiling entry function '_Z18kernel_fused_tiledPfiPK8ParticleiP6ValPos' for 'sm_75'\nptxas info    : Function properties for _Z18kernel_fused_tiledPfiPK8ParticleiP6ValPos\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 23 registers, used 1 barriers, 3072 bytes smem, 392 bytes cmem[0]\nptxas info    : Compile time = 101.108 ms\nMPI+OMP Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n"
+                "test-mpi-openmp": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.023763\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [23.762999999999998, 24.354, 23.494999999999997, 23.291, 23.241]}",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.023484\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [23.484, 23.299, 24.366, 24.351000000000003, 23.304]}",
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -mavx2 -ftree-vectorize -fopt-info-vec energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75  -O3 --ptxas-options=-v --ftz=true energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 1 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.288234\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [288.234, 462.991, 281.302, 383.77299999999997, 255.711]}"
             },
             "runtimes": {
                 "test-cuda": [
-                    23.762999999999998,
-                    24.354,
-                    23.494999999999997,
-                    23.291,
-                    23.241
+                    23.484,
+                    23.299,
+                    24.366,
+                    24.351000000000003,
+                    23.304
                 ],
-                "test-mpi-openmp": []
+                "test-mpi-openmp": [
+                    288.234,
+                    462.991,
+                    281.302,
+                    383.77299999999997,
+                    255.711
+                ]
             },
             "avg_runtime": {
-                "test-cuda": 23.494999999999997,
-                "test-mpi-openmp": 0.0
+                "test-cuda": 23.484,
+                "test-mpi-openmp": 288.234
             },
             "data": {
                 "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        23.762999999999998,
-                        24.354,
-                        23.494999999999997,
-                        23.291,
-                        23.241
+                        23.484,
+                        23.299,
+                        24.366,
+                        24.351000000000003,
+                        23.304
                     ]
                 },
-                "test-mpi-openmp": {}
+                "test-mpi-openmp": {
+                    "total": 5,
+                    "passed": 5,
+                    "times": [
+                        288.234,
+                        462.991,
+                        281.302,
+                        383.77299999999997,
+                        255.711
+                    ]
+                }
             },
             "reduction": {
                 "test-cuda": "median",
@@ -5368,21 +5384,21 @@
             },
             "stdout": {
                 "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nCUDA Execution failed:\n",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 1.060595\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [1060.595, 1100.112, 1006.5939999999999, 989.151, 1003.398]}"
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 1.167522\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [1167.522, 947.824, 814.119, 1149.809, 960.504]}"
             },
             "runtimes": {
                 "test-cuda": [],
                 "test-mpi-openmp": [
-                    1060.595,
-                    1100.112,
-                    1006.5939999999999,
-                    989.151,
-                    1003.398
+                    1167.522,
+                    947.824,
+                    814.119,
+                    1149.809,
+                    960.504
                 ]
             },
             "avg_runtime": {
                 "test-cuda": 0.0,
-                "test-mpi-openmp": 1006.5939999999999
+                "test-mpi-openmp": 960.504
             },
             "data": {
                 "test-cuda": {},
@@ -5390,11 +5406,11 @@
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        1060.595,
-                        1100.112,
-                        1006.5939999999999,
-                        989.151,
-                        1003.398
+                        1167.522,
+                        947.824,
+                        814.119,
+                        1149.809,
+                        960.504
                     ]
                 }
             },
@@ -5415,43 +5431,27 @@
             ],
             "status": {
                 "test-cuda": "error",
-                "test-mpi-openmp": "graded"
+                "test-mpi-openmp": "error"
             },
             "error": {
                 "test-cuda": "CUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
-                "test-mpi-openmp": ""
+                "test-mpi-openmp": "cc1plus: fatal error: energy_storms_cuda.cpp: No such file or directory\ncompilation terminated.\nmake: *** [Makefile:66: energy_storms_cuda] Error 1\nmake: *** No rule to make target 'run_mpi'.  Stop.\n\n"
             },
             "stdout": {
                 "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.079885\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [79.88499999999999, 83.62700000000001, 82.94500000000001, 92.11500000000001, 85.699]}"
+                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp -O3 -march=native -fno-math-errno  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\n\nMPI+OMP Execution failed:\n"
             },
             "runtimes": {
                 "test-cuda": [],
-                "test-mpi-openmp": [
-                    79.88499999999999,
-                    83.62700000000001,
-                    82.94500000000001,
-                    92.11500000000001,
-                    85.699
-                ]
+                "test-mpi-openmp": []
             },
             "avg_runtime": {
                 "test-cuda": 0.0,
-                "test-mpi-openmp": 83.62700000000001
+                "test-mpi-openmp": 0.0
             },
             "data": {
                 "test-cuda": {},
-                "test-mpi-openmp": {
-                    "total": 5,
-                    "passed": 5,
-                    "times": [
-                        79.88499999999999,
-                        83.62700000000001,
-                        82.94500000000001,
-                        92.11500000000001,
-                        85.699
-                    ]
-                }
+                "test-mpi-openmp": {}
             },
             "reduction": {
                 "test-cuda": "median",
@@ -5500,56 +5500,47 @@
         {
             "name": "artaasadi",
             "commit_hash": {
-                "test-cuda": "ef97a032196407ccc71beac495641a92bc8950f1",
-                "test-mpi-openmp": "16141055cb59e7dc95154a0d8f5aead4cc9406b9"
+                "test-cuda": "7a170d68bde32a1203ccc94cb33793a14c8966c4"
             },
             "tasks": [
-                "test-cuda",
-                "test-mpi-openmp"
+                "test-cuda"
             ],
             "status": {
-                "test-cuda": "error",
-                "test-mpi-openmp": "graded"
+                "test-cuda": "graded"
             },
             "error": {
-                "test-cuda": "CUDA Execution timed out.\nExecution time is capped at 10s. You're on the right track, continue improving!\n",
-                "test-mpi-openmp": ""
+                "test-cuda": ""
             },
             "stdout": {
-                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nTimeout reached, sending SIGTERM and waiting 5s for graceful exit.\n",
-                "test-mpi-openmp": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nTesting MPI+OpenMP version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nmpirun -np 4 --bind-to none ./energy_storms_mpi_omp 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.965885\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nMPI+OpenMP Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [965.885, 984.775, 957.076, 964.711, 931.925]}"
+                "test-cuda": "gcc  -c energy_storms_core.c -lm -o energy_storms_core.o\ngcc  energy_storms_seq.c energy_storms_core.o -lm -o energy_storms_seq\nmpicc  -fopenmp  -c energy_storms_mpi_omp_core.c -lm  -o energy_storms_mpi_omp_core.o\nmpicc  -fopenmp  energy_storms_mpi_omp.c energy_storms_mpi_omp_core.o -lm  -o energy_storms_mpi_omp\nnvcc -arch=sm_75   -c energy_storms_cuda_core.cu -lm  -o energy_storms_cuda_core.o\nnvcc -arch=sm_75   energy_storms_cuda.cpp energy_storms_cuda_core.o -lm  -o energy_storms_cuda\nVerifying input file hashes...\nAll input file hashes are correct.\nVerifying protected files hashes...\nAll protected file hashes are correct.\nTesting CUDA version with 20000 buckets and 6 input files...\n======= Running test nr. 1 =======\nsrun -N 1 -n 1 ./energy_storms_cuda 20000 test_files/test_02_a30k_p20k_w1 test_files/test_02_a30k_p20k_w2 test_files/test_02_a30k_p20k_w3 test_files/test_02_a30k_p20k_w4 test_files/test_02_a30k_p20k_w5 test_files/test_02_a30k_p20k_w6\n\nTime: 0.031196\nResult: 17197 1654.755371 17223 3274.642578 17229 5727.363281 17222 8155.511230 15849 11403.597656 15924 14647.188477\n\n======= Running test nr. 2 =======\n======= Running test nr. 3 =======\n======= Running test nr. 4 =======\n======= Running test nr. 5 =======\nCUDA Execution succeeded\n{\"total\": 5, \"passed\": 5, \"times\": [31.196, 31.964, 30.669999999999998, 30.615, 31.947999999999997]}"
             },
             "runtimes": {
-                "test-cuda": [],
-                "test-mpi-openmp": [
-                    965.885,
-                    984.775,
-                    957.076,
-                    964.711,
-                    931.925
+                "test-cuda": [
+                    31.196,
+                    31.964,
+                    30.669999999999998,
+                    30.615,
+                    31.947999999999997
                 ]
             },
             "avg_runtime": {
-                "test-cuda": 0.0,
-                "test-mpi-openmp": 964.711
+                "test-cuda": 31.196
             },
             "data": {
-                "test-cuda": {},
-                "test-mpi-openmp": {
+                "test-cuda": {
                     "total": 5,
                     "passed": 5,
                     "times": [
-                        965.885,
-                        984.775,
-                        957.076,
-                        964.711,
-                        931.925
+                        31.196,
+                        31.964,
+                        30.669999999999998,
+                        30.615,
+                        31.947999999999997
                     ]
                 }
             },
             "reduction": {
-                "test-cuda": "median",
-                "test-mpi-openmp": "median"
+                "test-cuda": "median"
             }
         }
     ]
