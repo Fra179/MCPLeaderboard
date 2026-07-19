@@ -3467,8 +3467,8 @@
         {
             "name": "LorenzoBurello",
             "commit_hash": {
-                "test-cuda": "749bced284181b9959f1305ec26b0407e2c55562",
-                "test-mpi-openmp": "749bced284181b9959f1305ec26b0407e2c55562"
+                "test-cuda": "f7859e77c450990571c8d9baec863c69f327870d",
+                "test-mpi-openmp": "f7859e77c450990571c8d9baec863c69f327870d"
             },
             "tasks": [
                 "test-cuda",
