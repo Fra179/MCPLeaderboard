@@ -1556,8 +1556,8 @@
         {
             "name": "Arbaen25",
             "commit_hash": {
-                "test-cuda": "835fe669f70ddfc63dcdf8b2d3e5c9ffd41d7311",
-                "test-mpi-openmp": "835fe669f70ddfc63dcdf8b2d3e5c9ffd41d7311"
+                "test-cuda": "a42b94f05fc7571e2a445b41fb88bb68e70fb805",
+                "test-mpi-openmp": "a42b94f05fc7571e2a445b41fb88bb68e70fb805"
             },
             "tasks": [
                 "test-cuda",
