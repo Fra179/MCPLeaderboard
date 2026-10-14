@@ -1,9 +1,10 @@
 baseURL = 'https://fra179.github.io/MCPLeaderboard/'
 languageCode = 'en-us'
-title = 'MCP 2025' # This is the customizable website name
+title = 'MCP 2026' # This is the customizable website name
 
 [params]
   teacher_name = "Prof. De Sensi" # The Teacher Name
+  grader_api_url = "https://grader-api.francescodb.me" # Base URL of the grader API
 
 [taxonomies]
   technology = "technology"

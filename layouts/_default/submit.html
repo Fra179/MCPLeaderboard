@@ -1,0 +1,166 @@
+{{ define "main" }}
+<h1 class="text-2xl font-bold text-gray-900 mb-6">{{ .Title }}</h1>
+
+<form id="submit-form" class="space-y-4 max-w-xl">
+    <div>
+        <label for="assignment_name" class="block text-sm font-medium text-gray-700 mb-2">Assignment</label>
+        <select id="assignment_name" name="assignment_name" required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="" disabled selected>Select an assignment</option>
+            {{ range where .Site.RegularPages "Section" "exercises" }}
+            <option value="{{ .File.ContentBaseName }}">
+                {{ if .Params.technology }}[{{ .Params.technology | strings.ToUpper }}] {{ end }}{{ .Title }}
+            </option>
+            {{ end }}
+        </select>
+    </div>
+
+    <div>
+        <label for="repo_url" class="block text-sm font-medium text-gray-700 mb-2">Repository URL</label>
+        <input id="repo_url" name="repo_url" type="text" required maxlength="512" placeholder="https://github.com/username/repository"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    </div>
+
+    <div>
+        <label for="student_id" class="block text-sm font-medium text-gray-700 mb-2">Student ID</label>
+        <input id="student_id" name="student_id" type="number" required min="1" step="1" placeholder="1234567"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    </div>
+
+    <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+        <input id="email" name="email" type="email" required placeholder="surname.1234567@studenti.uniroma1.it"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    </div>
+
+    <div id="submit-status" class="hidden px-4 py-3 rounded-lg text-sm"></div>
+
+    <div class="flex justify-end pt-2">
+        <button id="submit-btn" type="submit"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50">
+            Submit
+        </button>
+    </div>
+</form>
+
+<div id="submit-result" class="hidden mt-8 space-y-6 max-w-3xl">
+    <div class="mt-6 px-4 py-3 rounded-lg text-sm bg-red-50 text-red-700 border border-red-300">
+        Copy these values now: the deploy key and the webhook secret are <strong>not shown again</strong>.
+        Keep the secret saved somewhere safe, as you will need it to retrieve your artifacts.
+    </div>
+
+    <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-1">1. Add the deploy key</h2>
+        <p class="text-sm text-gray-600 mb-2">
+            On GitHub, open your repository's <em>Settings &rarr; Deploy keys &rarr; Add deploy key</em> and paste this key
+            (read-only access is enough).
+        </p>
+        <div class="flex gap-2">
+            <textarea id="result-public_key" readonly autocomplete="off" rows="3"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 font-mono text-xs"></textarea>
+            <button type="button" data-copy="result-public_key"
+                class="self-start px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors" title="Copy">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-1">2. Add the webhook</h2>
+        <p class="text-sm text-gray-600 mb-4">
+            Open <em>Settings &rarr; Webhooks &rarr; Add webhook</em> and fill in these values.
+        </p>
+        <label for="result-webhook_url" class="block text-sm font-medium text-gray-700 mb-2">Payload URL</label>
+        <div class="flex gap-2 mb-3">
+            <input id="result-webhook_url" type="text" readonly autocomplete="off"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 font-mono text-xs" />
+            <button type="button" data-copy="result-webhook_url"
+                class="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors" title="Copy">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+        <label for="result-content_type" class="block text-sm font-medium text-gray-700 mb-2">Content type</label>
+        <input id="result-content_type" type="text" readonly autocomplete="off" value="application/json"
+            class="w-full px-3 py-2 mb-3 border border-gray-300 rounded-lg bg-gray-50 font-mono text-xs" />
+        <label for="result-webhook_secret" class="block text-sm font-medium text-gray-700 mb-2">Secret</label>
+        <div class="flex gap-2 mb-3">
+            <input id="result-webhook_secret" type="text" readonly autocomplete="off"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 font-mono text-xs" />
+            <button type="button" data-copy="result-webhook_secret"
+                class="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors" title="Copy">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+        <label for="result-events" class="block text-sm font-medium text-gray-700 mb-2">Which events would you like to trigger this webhook?</label>
+        <input id="result-events" type="text" readonly autocomplete="off" value="Just the push event"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 font-mono text-xs" />
+    </div>
+</div>
+
+<script>
+    const emailPattern = /^[^\s@]+@studenti\.uniroma1\.it$/i;
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', function () {
+        emailInput.setCustomValidity(
+            emailPattern.test(emailInput.value.trim()) ? '' : 'Use your @studenti.uniroma1.it address.'
+        );
+    });
+
+    document.querySelectorAll('[data-copy]').forEach(function (button) {
+        button.addEventListener('click', async function () {
+            const field = document.getElementById(button.dataset.copy);
+            try {
+                await navigator.clipboard.writeText(field.value);
+            } catch (error) {
+                field.select();
+                document.execCommand('copy');
+            }
+        });
+    });
+
+    document.getElementById('submit-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const button = document.getElementById('submit-btn');
+        const status = document.getElementById('submit-status');
+        const result = document.getElementById('submit-result');
+
+        const payload = {
+            assignment_name: form.assignment_name.value.trim(),
+            repo_url: form.repo_url.value.trim(),
+            student_id: Number(form.student_id.value),
+            email: form.email.value.trim().toLowerCase()
+        };
+
+        const showStatus = (message, ok) => {
+            status.textContent = message;
+            status.className = 'px-4 py-3 rounded-lg text-sm ' +
+                (ok ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200');
+        };
+
+        button.disabled = true;
+        result.classList.add('hidden');
+        try {
+            const response = await fetch({{ printf "%s/submit" (strings.TrimSuffix "/" site.Params.grader_api_url) }}, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json().catch(() => null);
+            if (!response.ok) {
+                throw new Error((data && data.error) || `Request failed with status ${response.status}`);
+            }
+            ['public_key', 'webhook_url', 'webhook_secret'].forEach(function (key) {
+                document.getElementById('result-' + key).value = data[key];
+            });
+            showStatus('Submission received! Complete the setup below.', true);
+            result.classList.remove('hidden');
+            form.reset();
+        } catch (error) {
+            showStatus('Submission failed: ' + error.message, false);
+        } finally {
+            button.disabled = false;
+        }
+    });
+</script>
+{{ end }}

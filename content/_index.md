@@ -1,7 +1,7 @@
 ---
 title: "Embedded and Multicore Systems Programming"
-description: "Course syllabus, logistics, and technical overview for the 2025/2026 academic year."
-date: 2025-09-23
+description: "Course syllabus, logistics, and technical overview for the 2026/2027 academic year."
+date: 2026-10-13
 author: "Daniele De Sensi"
 draft: false
 ---
@@ -18,14 +18,15 @@ This course covers the design and implementation of explicitly parallel programs
 ## Logistics
 
 ### General Information
-* **Teacher:** Daniele De Sensi (`desensi@di.uniromal.it`).
-* **Academic Year:** 2025/2026.
+* **Teacher:** Daniele De Sensi (`desensi@di.uniroma1.it`).
+* **Academic Year:** 2026/2027.
 * **Language:** C is the reference programming language.
-* **Resources:** Slides, code, and exercises are available on the [Moodle Course Page](https://elearning.uniromal.it/course/view.php?id=19949).
+* **Resources:** Slides, code, and exercises are available on the [Moodle Course Page](https://elearning.uniroma1.it/course/view.php?id=19949).
+* **Telegram Group:** Join the [Programmazione di Sistemi Embedded e Multicore group](https://t.me/sapienzainformatica3) for updates on schedule changes, resources, and course info.
 
 ### Schedule
-* **Tuesday:** 17:00 – 19:00 (Aula Magna RM111).
-* **Wednesday:** 14:00 – 17:00 (Aula 11, Via Scarpa).
+* **Tuesday:** 14:00 – 17:00 (Aula Magna Regina Elena, Building C).
+* **Friday:** 11:00 – 13:00 (Aula Magna Regina Elena, Building C).
 * **Office Hours:** Available by appointment via email.
 * **Hands-on Labs:** Practical coding sessions will occur during specific 3-hour slots (laptop required).
 
@@ -70,8 +71,8 @@ The final grade is calculated as the average of two components:
 1.  **Project:** Practical implementation of parallel systems.
 2.  **Oral Exam:** Theoretical assessment.
 
-## Excercises
+## Exercises
 
-From this website it will be possible to see the leaderboard for each published exercixe: Please have a look either at the sidebar on the left or at the [Excercises Page]({{< ref "/exercises" >}})
+From this website it will be possible to see the leaderboard for each published exercise: Please have a look either at the sidebar on the left or at the [Exercises Page]({{< ref "/exercises" >}})
 
 *Note: Possibility of extra points for intermediate evaluations (TBD).*

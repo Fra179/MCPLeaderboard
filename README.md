@@ -304,7 +304,7 @@ The `data/leaderboard.json` file should contain output directly from MCPGrader:
 {
   "exercise-slug": [
     {
-      "name": "StudentUsername",
+      "name": "1234567",
       "commit_hash": "abc1234",
       "status": "graded",
       "error": "",
@@ -317,7 +317,7 @@ The `data/leaderboard.json` file should contain output directly from MCPGrader:
       }
     },
     {
-      "name": "AnotherStudent",
+      "name": "7654321",
       "commit_hash": "def5678",
       "status": "error",
       "error": "Compilation failed",
@@ -331,7 +331,7 @@ The `data/leaderboard.json` file should contain output directly from MCPGrader:
 
 **Field Descriptions:**
 
-- **`name`**: Student name(s) from GitHub Classroom
+- **`name`**: Student ID (matricola) of the submitter
 - **`commit_hash`**: Git commit hash (first 7 characters) of the graded submission
 - **`status`**: Grading status - `"graded"` (success) or `"error"` (failure)
 - **`error`**: Error message if status is `"error"`, empty otherwise
