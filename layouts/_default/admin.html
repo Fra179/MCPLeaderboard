@@ -1,0 +1,90 @@
+{{ define "main" }}
+<link rel="stylesheet" href="{{ "css/admin.css" | relURL }}">
+<div class="grader-admin">
+    <header class="admin-header">
+        <p class="eyebrow">Administration</p>
+        <h1>{{ .Title }}</h1>
+        <p class="intro">Manage submissions and repository access.</p>
+        <label class="api-setting">Grader API URL
+            <input id="api-url" type="url" value="{{ site.Params.grader_api_url }}" placeholder="https://grader-api.example.com" spellcheck="false">
+        </label>
+    </header>
+
+    <section class="card" aria-labelledby="key-heading">
+        <div class="section-heading">
+            <div class="section-title"><span class="section-icon" aria-hidden="true"><i class="fa-solid fa-key"></i></span><h2 id="key-heading">Admin key</h2></div>
+            <span class="badge">Browser only</span>
+        </div>
+        <p class="hint">Upload your private key to authorize admin actions. The key stays in this browser; only request signatures are sent to the grader.</p>
+        <div class="key-layout">
+            <div class="row key-buttons">
+                <input id="key-file" aria-label="Admin private key file" type="file" accept=".key,.pem" class="visually-hidden">
+                <button id="key-upload" type="button"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Upload private key</button>
+                <button id="key-clear" type="button" class="secondary">Remove</button>
+            </div>
+            <dl class="key-status key-summary">
+                <dt>Private key</dt><dd id="key-state">—</dd>
+                <dt>Public key</dt><dd id="key-public" class="mono">—</dd>
+            </dl>
+        </div>
+        <p role="status" aria-live="polite" class="msg" id="key-msg"></p>
+        <details class="key-help">
+            <summary>How to create an admin key</summary>
+            <p>In the grader worker, run <code>scripts/admin-keys.sh new &lt;name&gt;</code>, then upload <code>keys/&lt;name&gt;.key</code> here. Authorize the public key with <code>scripts/admin-keys.sh push</code>.</p>
+        </details>
+    </section>
+
+    <section class="card" aria-labelledby="submissions-heading">
+        <div class="section-heading">
+            <div class="section-title"><span class="section-icon" aria-hidden="true"><i class="fa-solid fa-list"></i></span><h2 id="submissions-heading">Submissions</h2></div>
+            <span class="badge">Admin access</span>
+        </div>
+        <p class="hint">Browse submissions, copy deploy keys, or reset webhook secrets. Leave the assignment empty to view all submissions.</p>
+        <form id="list-form" class="filter-form">
+            <label>Assignment <span class="optional">(optional)</span><input list="admin-assignments" name="assignment_name" placeholder="All assignments"></label>
+            <label>Pushed after <span class="optional">(local time)</span><input name="pushed_after" type="datetime-local" step="1"></label>
+            <label>Sort by<select name="order_by">
+                <option value="created_at">Submission time</option>
+                <option value="last_push">Last push</option>
+            </select></label>
+            <button type="submit">Load submissions</button>
+        </form>
+        <p role="status" aria-live="polite" class="msg" id="list-msg"></p>
+        <div class="empty-state" id="list-empty">
+            <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+            <p id="list-empty-title">Your submissions will appear here</p>
+            <span id="list-empty-hint">Upload an admin key, then load submissions to get started.</span>
+        </div>
+        <div class="table-wrap" id="list-wrap" hidden tabindex="0" role="region" aria-label="Submissions table">
+            <table>
+                <thead><tr><th>Assignment</th><th>Student ID</th><th>Email</th><th>Repository</th><th>Submitted</th><th>Webhook</th><th>Last push</th><th>ID</th><th>Actions</th></tr></thead>
+                <tbody id="list-body"></tbody>
+            </table>
+        </div>
+        <p class="table-note" id="list-note" hidden>Webhook shows the last verified delivery from GitHub. “Never” means no verified delivery has been received.</p>
+        <div id="rotate-result" class="rotation-result" hidden>
+            <h3 id="rotate-title"></h3>
+            <div id="rotate-webhook"></div>
+        </div>
+    </section>
+
+    <section class="card danger-card" aria-labelledby="delete-heading">
+        <div class="section-heading">
+            <div class="section-title"><span class="section-icon" aria-hidden="true"><i class="fa-regular fa-trash-can"></i></span><h2 id="delete-heading">Delete assignment submissions</h2></div>
+        </div>
+        <p class="hint">Permanently delete every submission for an assignment. This action cannot be undone.</p>
+        <form id="delete-assignment-form" class="row">
+            <label>Assignment name<input list="admin-assignments" name="assignment_name" required placeholder="Enter the assignment name"></label>
+            <button type="submit" class="danger">Delete all submissions</button>
+        </form>
+        <p role="status" aria-live="polite" class="msg" id="delete-assignment-msg"></p>
+    </section>
+
+    <datalist id="admin-assignments">
+        {{ range where .Site.RegularPages "Section" "exercises" }}
+        <option value="{{ .File.ContentBaseName }}">{{ .Title }}</option>
+        {{ end }}
+    </datalist>
+</div>
+<script src="{{ "js/admin.js" | relURL }}" defer></script>
+{{ end }}

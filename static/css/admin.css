@@ -1,0 +1,101 @@
+.grader-admin {
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --danger: #b91c1c;
+    display: grid;
+    gap: 24px;
+    width: 100%;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+}
+.grader-admin *, .grader-admin > * { min-width: 0; box-sizing: border-box; }
+.grader-admin [hidden] { display: none !important; }
+.grader-admin .admin-header { padding: 4px 0 0; }
+.grader-admin .eyebrow { color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 6px; }
+.grader-admin h1 { font-size: 28px; font-weight: 700; letter-spacing: -.025em; line-height: 1.25; margin: 0; }
+.grader-admin .intro { color: var(--muted); margin: 8px 0 20px; }
+.grader-admin .api-setting { padding: 14px 16px; border-radius: 10px; background: #f9fafb; border: 1px solid var(--border); }
+.grader-admin .api-setting input { font-family: ui-monospace, monospace; font-size: 12px; }
+.grader-admin .card { border: 1px solid var(--border); border-radius: 12px; padding: 24px; background: #fff; box-shadow: 0 1px 2px rgb(17 24 39 / 3%); }
+.grader-admin .section-heading, .grader-admin .section-title { display: flex; align-items: center; gap: 12px; }
+.grader-admin .section-heading { justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 12px; }
+.grader-admin .section-icon { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; flex-shrink: 0; background: #eff6ff; color: var(--accent); border-radius: 9px; }
+.grader-admin h2 { font-size: 17px; font-weight: 650; letter-spacing: -.015em; margin: 0; line-height: 1.35; }
+.grader-admin .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: #f3f4f6; color: #4b5563; white-space: nowrap; }
+.grader-admin .hint { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+.grader-admin label { display: flex; flex-wrap: wrap; align-content: start; gap: 6px 4px; color: #374151; font-size: 12px; font-weight: 600; }
+.grader-admin .optional { color: var(--muted); font-weight: 400; }
+.grader-admin input, .grader-admin select { width: 100%; min-height: 40px; padding: 8px 11px; border: 1px solid #d1d5db; border-radius: 7px; background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 400; transition: border-color .15s, box-shadow .15s; }
+.grader-admin input::placeholder { color: #9ca3af; }
+.grader-admin input:focus, .grader-admin select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px #dbeafe; }
+.grader-admin .row { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
+.grader-admin .row > label { flex: 1 1 220px; }
+.grader-admin button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--accent); border-radius: 7px; background: var(--accent); color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s, box-shadow .15s; }
+.grader-admin button:hover { background: #1d4ed8; border-color: #1d4ed8; }
+.grader-admin button.secondary { color: #374151; border-color: #d1d5db; background: #fff; }
+.grader-admin button.secondary:hover { background: #f3f4f6; border-color: #9ca3af; }
+.grader-admin button.danger { color: var(--danger); background: #fff; border-color: #fca5a5; }
+.grader-admin button.danger:hover { background: #fef2f2; border-color: #ef4444; }
+.grader-admin button:focus-visible, .grader-admin summary:focus-visible, .grader-admin .table-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.grader-admin button:disabled { opacity: .5; cursor: progress; }
+.grader-admin button.small { min-height: 30px; padding: 4px 9px; font-size: 12px; }
+.grader-admin .key-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+.grader-admin .key-buttons { align-items: center; }
+.grader-admin .key-status { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 0; font-size: 12px; }
+.grader-admin .key-status dt { color: var(--muted); }
+.grader-admin .key-status dd { margin: 0; overflow-wrap: anywhere; }
+.grader-admin .key-summary { background: #f9fafb; padding: 14px 16px; border-radius: 8px; }
+.grader-admin #key-state { font-weight: 600; }
+.grader-admin #key-state[data-ready="true"] { color: #15803d; }
+.grader-admin .key-help { margin-top: 20px; padding-top: 14px; border-top: 1px solid #f3f4f6; color: var(--muted); font-size: 12px; }
+.grader-admin .key-help summary { cursor: pointer; width: fit-content; }
+.grader-admin .key-help p { margin: 10px 0 0; }
+.grader-admin .filter-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: end; padding: 18px; background: #f9fafb; border: 1px solid #f3f4f6; border-radius: 9px; }
+.grader-admin .filter-form button { justify-self: end; }
+.grader-admin .empty-state { padding: 36px 16px 16px; text-align: center; color: var(--muted); font-size: 12px; }
+.grader-admin .empty-state > i { font-size: 25px; color: #9ca3af; margin-bottom: 10px; }
+.grader-admin .empty-state p { font-size: 14px; font-weight: 600; color: #4b5563; margin: 0 0 4px; }
+.grader-admin .msg { margin: 16px 0 0; padding: 10px 12px; border-radius: 7px; background: #f9fafb; color: #4b5563; font-size: 13px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.grader-admin .msg.error { background: #fef2f2; color: var(--danger); }
+.grader-admin .msg.ok { background: #f0fdf4; color: #166534; }
+.grader-admin .msg:empty { display: none; }
+.grader-admin .table-wrap { overflow-x: auto; margin-top: 20px; border: 1px solid var(--border); border-radius: 9px; }
+.grader-admin table { border-collapse: collapse; width: 100%; font-size: 12px; }
+.grader-admin th, .grader-admin td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.grader-admin th { background: #f9fafb; color: #6b7280; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.grader-admin tbody tr:last-child td { border-bottom: 0; }
+.grader-admin tbody tr:hover { background: #f8faff; }
+.grader-admin td.actions div { display: flex; flex-wrap: wrap; gap: 6px; min-width: 150px; }
+.grader-admin .mono { font-family: ui-monospace, monospace; font-size: 11px; }
+.grader-admin .table-note { color: var(--muted); margin: 12px 0 0; font-size: 12px; }
+.grader-admin .rotation-result { margin-top: 20px; padding: 18px; border: 1px solid #bfdbfe; border-radius: 9px; background: #eff6ff; }
+.grader-admin h3 { font-size: 14px; font-weight: 600; margin: 0 0 12px; }
+.grader-admin .setup { margin: 16px 0; }
+.grader-admin .setup dd { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.grader-admin pre, .grader-admin code { font-family: ui-monospace, monospace; font-size: 12px; background: #f3f4f6; border-radius: 5px; }
+.grader-admin pre { padding: 12px; margin: 10px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.grader-admin code { padding: 2px 5px; overflow-wrap: anywhere; }
+.grader-admin .muted { color: var(--muted); }
+.grader-admin .danger-card { border-color: #fecaca; box-shadow: none; }
+.grader-admin .danger-card .section-icon { color: var(--danger); background: #fef2f2; }
+.grader-admin .danger-card .hint { margin-bottom: 16px; }
+.grader-admin .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (min-width: 1280px) {
+    .grader-admin .filter-form { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, .9fr) auto; }
+}
+@media (max-width: 1023px) {
+    .grader-admin .key-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (max-width: 639px) {
+    .grader-admin { gap: 20px; }
+    .grader-admin h1 { font-size: 25px; }
+    .grader-admin .card { padding: 18px 16px; }
+    .grader-admin .filter-form { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+    .grader-admin .filter-form button { justify-self: stretch; }
+    .grader-admin .danger-card .row > button { width: 100%; }
+    .grader-admin .section-title { gap: 9px; }
+    .grader-admin .key-status { gap: 6px 10px; }
+}
