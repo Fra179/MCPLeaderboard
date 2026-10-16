@@ -1,7 +1,7 @@
 ---
 title: "MPI Matmul"
 date: 2026-10-14T22:51:51+02:00
-draft: true
+draft: false
 technology: "MPI"
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
