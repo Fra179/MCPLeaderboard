@@ -1,0 +1,7 @@
+{{ with .Page.Params.github_url }}
+{{ $url := . }}
+{{ if not (findRE `^https?://` $url) }}
+{{ $url = printf "https://%s" $url }}
+{{ end }}
+<em><a href="{{ $url }}" target="_blank" rel="noopener noreferrer">View the exercise on GitHub</a>.</em>
+{{ end }}

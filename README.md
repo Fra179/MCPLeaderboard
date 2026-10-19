@@ -177,9 +177,10 @@ This creates a new exercise file with:
    date: 2026-01-03T00:00:00Z
    draft: false
    technology: "cuda"  # Options: cuda, mpi, omp
+   github_url: "https://github.com/your-org/your-exercise"  # Optional
    ---
    ```
-3. Fill in the exercise content
+3. Fill in the exercise content. To display the optional GitHub link, add `{{< githublink >}}` where you want it to appear (for example, below `{{< faqlink >}}`).
 4. Set `draft: false` to publish
 
 ### Method 2: Manual Creation
@@ -199,9 +200,14 @@ title: "Matrix Multiplication"
 date: 2026-01-03T00:00:00Z
 draft: false
 technology: "cuda"  # Options: cuda, mpi, omp
+github_url: "https://github.com/your-org/your-exercise"  # Optional
 ---
 
 # Exercise Name
+
+{{< faqlink >}}
+
+{{< githublink >}}
 
 ## What this program does
 Brief description of the program's purpose and learning objectives.
@@ -241,6 +247,27 @@ Only modify the code between the guard comments:
 - **`date`** (required): Publication date (ISO 8601 format)
 - **`draft`** (required): Set to `false` to publish, `true` to hide
 - **`technology`** (required): One of `"cuda"`, `"mpi"`, or `"omp"` - determines grouping on exercise list page
+- **`github_url`** (optional): GitHub URL used by the `githublink` shortcode. Omit it or leave it empty to hide the link.
+
+### Adding a GitHub Link
+
+Set `github_url` in the frontmatter of the exercise's `index.md`:
+
+```yaml
+github_url: "https://github.com/your-org/your-exercise"
+```
+
+Then place `{{< githublink >}}` wherever you want the link in the exercise Markdown, for example below the FAQ:
+
+```markdown
+{{< faqlink >}}
+
+{{< githublink >}}
+```
+
+The shortcode displays the italic text “View the exercise on GitHub” as a link that opens in a new tab. Setting `github_url` alone does not display the link; the shortcode controls its placement. If the field is missing or empty, the shortcode renders nothing. URLs without a protocol automatically use `https://`.
+
+The `faqlink` and `githublink` shortcodes work independently, so you can use either one on its own.
 
 ## MCPGrader Integration
 
@@ -413,10 +440,13 @@ MCPLeaderboard/
 │   ├── exercises/
 │   │   ├── list.html         # Exercise listing with technology groups
 │   │   └── single.html       # Individual exercise page with leaderboard
-│   └── partials/             # Reusable components
-│       ├── footer.html
-│       ├── navbar.html
-│       └── sidebar.html
+│   ├── partials/             # Reusable components
+│   │   ├── footer.html
+│   │   ├── navbar.html
+│   │   └── sidebar.html
+│   └── shortcodes/           # Components placed in Markdown
+│       ├── faqlink.html      # FAQ link
+│       └── githublink.html   # Exercise GitHub link
 ├── public/                   # Generated site (after `hugo` build)
 ├── resources/                # Hugo's asset cache
 ├── hugo.toml                 # Hugo configuration

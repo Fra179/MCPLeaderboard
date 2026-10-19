@@ -3,6 +3,7 @@ title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 date: {{ .Date }}
 draft: true
 technology: "Sequential"
+github_url: ""
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
 ---

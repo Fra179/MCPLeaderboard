@@ -5,6 +5,7 @@ draft: false
 technology: "MPI"
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
+github_url: "frdb.me/mpi-matmul"
 ---
 
 # Matrix Multiplication
@@ -12,8 +13,9 @@ leaderboard_order: "asc"
 {{< faqlink >}}
 
 ## 1. Introduction
-This program computes the product of two square matrices, `C = A × B`.
+{{< githublink >}}
 
+This program computes the product of two square matrices, `C = A × B`.
 `A` and `B` are filled with constant values, so every element of the result is known in advance and the output can be checked quickly.
 
 The goal of this assignment is to parallelize the provided sequential reference code using **MPI**, so that the multiplication runs correctly on multiple processes.
