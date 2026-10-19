@@ -65,7 +65,7 @@ const setupStudentIdModal = () => {
             closeStudentIdModal();
             window.highlightUserRow?.();
         } else {
-            alert('Please enter your student ID');
+            alert('Please enter your GitHub username');
         }
     };
 

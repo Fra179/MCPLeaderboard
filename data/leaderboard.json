@@ -1,0 +1,388 @@
+{
+    "mpi-matmul": [
+        {
+            "name": "yt-terzi",
+            "commit_hash": {
+                "test-cpu": "41ac4cb059ae9e6337265468c3073588123b779e"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "error"
+            },
+            "error": {
+                "test-cpu": "Loading gcc/12.2.0\n  Loading requirement: zlib-ng/2.1.6-jkgunjc zstd/1.5.6-uq5yyux binutils/2.42\nLoading openmpi/4.1.6--gcc--12.2.0-cuda-12.2\n  Loading requirement: glibc/2.28--gcc--12.2.0-gi6mmti\n    gcc-runtime/12.2.0--gcc--12.2.0-dqfwf7y numactl/2.0.14--gcc--12.2.0-cxzp4ci\n    bzip2/1.0.8-ib3znej libiconv/1.17-nhc3mhm xz/5.4.6-xxxg42c\n    libxml2/2.10.3-zbbe7lm ncurses/6.5-svfl57u pigz/2.8-5bwzpml tar/1.34-jgektnv\n    gettext/0.22.5-hsxgafg krb5/1.20.1-n4kmebh libedit/3.1-20230828-nme7boz\n    libxcrypt/4.4.35-7om46b5 openssh/9.7p1-tk2b5yv\nMPI matrix multiplication test failed: Hash mismatch for matmul.c: expected 084f10e57b81ca484ef60ca31edaa6789f128af76c77ca6e64b0a58de2f3b888, got a1c1457afe0292e27f3c846aa93f397a88e982c6b2e76ca82ddddee3f9297214\n"
+            },
+            "stdout": {
+                "test-cpu": ""
+            },
+            "runtimes": {
+                "test-cpu": []
+            },
+            "avg_runtime": {
+                "test-cpu": 0.0
+            },
+            "data": {
+                "test-cpu": {}
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "justch3cco-19",
+            "commit_hash": {
+                "test-cpu": "fce4005dee1b5435a3018a0c68ed971930e79d5b"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "graded"
+            },
+            "error": {
+                "test-cpu": ""
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\nOrder 1000 multiplication in 0.628998 seconds\nOrder 1000 multiplication at 3179.662603 mflops\nHey, it worked!\n======= Order 1000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1500, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\nOrder 1500 multiplication in 1.456055 seconds\nOrder 1500 multiplication at 4635.814203 mflops\nHey, it worked!\n======= Order 1500, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 2000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nOrder 2000 multiplication in 3.306577 seconds\nOrder 2000 multiplication at 4838.840983 mflops\nHey, it worked!\n======= Order 2000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nMPI matrix multiplication succeeded; runtimes are in milliseconds.\n{\"total\": 15, \"passed\": 15, \"times\": [628.9979999999999, 634.927, 675.947, 691.141, 554.153, 1456.055, 1495.473, 1469.7469999999998, 1542.4850000000001, 1547.132, 3306.5769999999998, 3289.208, 3393.607, 3472.268, 3392.1220000000003]}"
+            },
+            "runtimes": {
+                "test-cpu": [
+                    628.9979999999999,
+                    634.927,
+                    675.947,
+                    691.141,
+                    554.153,
+                    1456.055,
+                    1495.473,
+                    1469.7469999999998,
+                    1542.4850000000001,
+                    1547.132,
+                    3306.5769999999998,
+                    3289.208,
+                    3393.607,
+                    3472.268,
+                    3392.1220000000003
+                ]
+            },
+            "avg_runtime": {
+                "test-cpu": 1836.656
+            },
+            "data": {
+                "test-cpu": {
+                    "total": 15,
+                    "passed": 15,
+                    "times": [
+                        628.9979999999999,
+                        634.927,
+                        675.947,
+                        691.141,
+                        554.153,
+                        1456.055,
+                        1495.473,
+                        1469.7469999999998,
+                        1542.4850000000001,
+                        1547.132,
+                        3306.5769999999998,
+                        3289.208,
+                        3393.607,
+                        3472.268,
+                        3392.1220000000003
+                    ]
+                }
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "andrwaa",
+            "commit_hash": {
+                "test-cpu": "ba2a5b24588fbf36e9b10d742a6a32ade15cb500"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "error"
+            },
+            "error": {
+                "test-cpu": "Loading gcc/12.2.0\n  Loading requirement: zlib-ng/2.1.6-jkgunjc zstd/1.5.6-uq5yyux binutils/2.42\nLoading openmpi/4.1.6--gcc--12.2.0-cuda-12.2\n  Loading requirement: glibc/2.28--gcc--12.2.0-gi6mmti\n    gcc-runtime/12.2.0--gcc--12.2.0-dqfwf7y numactl/2.0.14--gcc--12.2.0-cxzp4ci\n    bzip2/1.0.8-ib3znej libiconv/1.17-nhc3mhm xz/5.4.6-xxxg42c\n    libxml2/2.10.3-zbbe7lm ncurses/6.5-svfl57u pigz/2.8-5bwzpml tar/1.34-jgektnv\n    gettext/0.22.5-hsxgafg krb5/1.20.1-n4kmebh libedit/3.1-20230828-nme7boz\n    libxcrypt/4.4.35-7om46b5 openssh/9.7p1-tk2b5yv\n\n[lrdn4761:76998:0:76998] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n[lrdn4762:3244935:0:3244935] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n[lrdn4763:3400422:0:3400422] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n==== backtrace (tid:3244935) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4762:3244935] *** Process received signal ***\n[lrdn4762:3244935] Signal: Segmentation fault (11)\n[lrdn4762:3244935] Signal code:  (-6)\n[lrdn4762:3244935] Failing at address: 0x36fdc00318387\n==== backtrace (tid:  76998) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4761:76998] *** Process received signal ***\n[lrdn4761:76998] Signal: Segmentation fault (11)\n[lrdn4761:76998] Signal code:  (-6)\n[lrdn4761:76998] Failing at address: 0x36fdc00012cc6\n==== backtrace (tid:3400422) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4763:3400422] *** Process received signal ***\n[lrdn4763:3400422] Signal: Segmentation fault (11)\n[lrdn4763:3400422] Signal code:  (-6)\n[lrdn4763:3400422] Failing at address: 0x36fdc0033e2e6\n[lrdn4762:3244935] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x1505937cbcf0]\n[lrdn4762:3244935] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4762:3244935] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x15059342ed85]\n[lrdn4762:3244935] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4762:3244935] *** End of error message ***\n[lrdn4761:76998] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x14ddfaf39cf0]\n[lrdn4761:76998] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4761:76998] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x14ddfab9cd85]\n[lrdn4761:76998] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4761:76998] *** End of error message ***\n[lrdn4763:3400422] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x151715002cf0]\n[lrdn4763:3400422] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4763:3400422] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x151714c65d85]\n[lrdn4763:3400422] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/andrwaa_matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4763:3400422] *** End of error message ***\nsrun: error: lrdn4762: task 2: Segmentation fault\nsrun: error: lrdn4763: task 3: Segmentation fault\nsrun: error: lrdn4761: task 1: Segmentation fault\nsrun: forcing job termination\nsrun: Job step aborted: Waiting up to 182 seconds for job step to finish.\n[2026-10-19T11:52:51.701] error: *** STEP 61378958.0 ON lrdn4759 CANCELLED AT 2026-10-19T11:52:51 DUE to SIGNAL Killed ***\nsrun: error: lrdn4759: task 0: Killed\nMPI matrix multiplication test failed: Execution timed out after 60s\n"
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n\n"
+            },
+            "runtimes": {
+                "test-cpu": []
+            },
+            "avg_runtime": {
+                "test-cpu": 0.0
+            },
+            "data": {
+                "test-cpu": {}
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "pottarino",
+            "commit_hash": {
+                "test-cpu": "491c9093a51ac65b876cf365b6e09223498bbc2a"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "error"
+            },
+            "error": {
+                "test-cpu": "Loading gcc/12.2.0\n  Loading requirement: zlib-ng/2.1.6-jkgunjc zstd/1.5.6-uq5yyux binutils/2.42\nLoading openmpi/4.1.6--gcc--12.2.0-cuda-12.2\n  Loading requirement: glibc/2.28--gcc--12.2.0-gi6mmti\n    gcc-runtime/12.2.0--gcc--12.2.0-dqfwf7y numactl/2.0.14--gcc--12.2.0-cxzp4ci\n    bzip2/1.0.8-ib3znej libiconv/1.17-nhc3mhm xz/5.4.6-xxxg42c\n    libxml2/2.10.3-zbbe7lm ncurses/6.5-svfl57u pigz/2.8-5bwzpml tar/1.34-jgektnv\n    gettext/0.22.5-hsxgafg krb5/1.20.1-n4kmebh libedit/3.1-20230828-nme7boz\n    libxcrypt/4.4.35-7om46b5 openssh/9.7p1-tk2b5yv\n\n\n\nsrun: Step created for StepId=61378951.10\nMPI matrix multiplication test failed: Expected exactly one successful matrix verification\n"
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\nOrder 1000 multiplication in 0.279642 seconds\nOrder 1000 multiplication at 7151.999390 mflops\nHey, it worked!\n======= Order 1000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1500, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\nOrder 1500 multiplication in 0.725412 seconds\nOrder 1500 multiplication at 9305.053307 mflops\nHey, it worked!\n======= Order 1500, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 2000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n[1792403549.017005] [lrdn4762:3254521:0]          rcache.c:701  UCX  WARN  ucp_rcache: destroying inuse region 0x138cec0 [0x14f388231000..0x14f3889d2240] g- rw ref 1 md[4]=mlx5_0\nOrder 2000 multiplication in 1.628715 seconds\nOrder 2000 multiplication at 9823.694161 mflops\nErrors in multiplication: 900000000000000.000000\n"
+            },
+            "runtimes": {
+                "test-cpu": []
+            },
+            "avg_runtime": {
+                "test-cpu": 0.0
+            },
+            "data": {
+                "test-cpu": {}
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "amsabir",
+            "commit_hash": {
+                "test-cpu": "78ceead7ded9ff89509a783e9c631fc74589bcf9"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "error"
+            },
+            "error": {
+                "test-cpu": "Loading gcc/12.2.0\n  Loading requirement: zlib-ng/2.1.6-jkgunjc zstd/1.5.6-uq5yyux binutils/2.42\nLoading openmpi/4.1.6--gcc--12.2.0-cuda-12.2\n  Loading requirement: glibc/2.28--gcc--12.2.0-gi6mmti\n    gcc-runtime/12.2.0--gcc--12.2.0-dqfwf7y numactl/2.0.14--gcc--12.2.0-cxzp4ci\n    bzip2/1.0.8-ib3znej libiconv/1.17-nhc3mhm xz/5.4.6-xxxg42c\n    libxml2/2.10.3-zbbe7lm ncurses/6.5-svfl57u pigz/2.8-5bwzpml tar/1.34-jgektnv\n    gettext/0.22.5-hsxgafg krb5/1.20.1-n4kmebh libedit/3.1-20230828-nme7boz\n    libxcrypt/4.4.35-7om46b5 openssh/9.7p1-tk2b5yv\n\n[lrdn4761:76965:0:76965] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n[lrdn4763:3400414:0:3400414] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n[lrdn4762:3244930:0:3244930] Caught signal 11 (Segmentation fault: invalid permissions for mapped object at address 0x4016c0)\n==== backtrace (tid:3244930) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4762:3244930] *** Process received signal ***\n[lrdn4762:3244930] Signal: Segmentation fault (11)\n[lrdn4762:3244930] Signal code:  (-6)\n[lrdn4762:3244930] Failing at address: 0x36fdc00318382\n==== backtrace (tid:  76965) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4761:76965] *** Process received signal ***\n[lrdn4761:76965] Signal: Segmentation fault (11)\n[lrdn4761:76965] Signal code:  (-6)\n[lrdn4761:76965] Failing at address: 0x36fdc00012ca5\n[lrdn4762:3244930] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x14ec15313cf0]\n[lrdn4762:3244930] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4762:3244930] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x14ec14f76d85]\n[lrdn4762:3244930] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4762:3244930] *** End of error message ***\n[lrdn4761:76965] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x14613f435cf0]\n[lrdn4761:76965] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4761:76965] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x14613f098d85]\n[lrdn4761:76965] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4761:76965] *** End of error message ***\n==== backtrace (tid:3400414) ====\n 0 0x0000000000012cf0 __funlockfile()  :0\n 1 0x0000000000401488 main()  ???:0\n 2 0x000000000003ad85 __libc_start_main()  ???:0\n 3 0x000000000040110e _start()  ???:0\n=================================\n[lrdn4763:3400414] *** Process received signal ***\n[lrdn4763:3400414] Signal: Segmentation fault (11)\n[lrdn4763:3400414] Signal code:  (-6)\n[lrdn4763:3400414] Failing at address: 0x36fdc0033e2de\n[lrdn4763:3400414] [ 0] /lib64/libpthread.so.0(+0x12cf0)[0x1503b9e19cf0]\n[lrdn4763:3400414] [ 1] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x401488]\n[lrdn4763:3400414] [ 2] /lib64/libc.so.6(__libc_start_main+0xe5)[0x1503b9a7cd85]\n[lrdn4763:3400414] [ 3] /leonardo_scratch/large/userexternal/fdebened/grader/amsabir_mpi-matmul_test-cpu/./matmul_mpi.out[0x40110e]\n[lrdn4763:3400414] *** End of error message ***\nsrun: error: lrdn4762: task 2: Segmentation fault\nsrun: error: lrdn4763: task 3: Segmentation fault\nsrun: error: lrdn4761: task 1: Segmentation fault\nsrun: forcing job termination\nsrun: Job step aborted: Waiting up to 182 seconds for job step to finish.\n[2026-10-19T11:52:51.693] error: *** STEP 61378964.0 ON lrdn4759 CANCELLED AT 2026-10-19T11:52:51 DUE to SIGNAL Killed ***\nsrun: error: lrdn4759: task 0: Killed\nMPI matrix multiplication test failed: Execution timed out after 60s\n"
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n\n"
+            },
+            "runtimes": {
+                "test-cpu": []
+            },
+            "avg_runtime": {
+                "test-cpu": 0.0
+            },
+            "data": {
+                "test-cpu": {}
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "plat12",
+            "commit_hash": {
+                "test-cpu": "37b664ad255a60483b0f4c929c9df5b766a8dbf2"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "graded"
+            },
+            "error": {
+                "test-cpu": ""
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\nOrder 1000 multiplication in 0.989081 seconds\nOrder 1000 multiplication at 2022.079370 mflops\nHey, it worked!\n======= Order 1000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1500, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\nOrder 1500 multiplication in 3.005385 seconds\nOrder 1500 multiplication at 2245.968147 mflops\nHey, it worked!\n======= Order 1500, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 2000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nOrder 2000 multiplication in 6.202630 seconds\nOrder 2000 multiplication at 2579.551076 mflops\nHey, it worked!\n======= Order 2000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nMPI matrix multiplication succeeded; runtimes are in milliseconds.\n{\"total\": 15, \"passed\": 15, \"times\": [989.081, 1008.6740000000001, 910.0840000000001, 955.0110000000001, 990.162, 3005.3849999999998, 2977.979, 3184.2450000000003, 3107.114, 2838.819, 6202.63, 6221.61, 6235.321, 6127.081, 6087.277]}"
+            },
+            "runtimes": {
+                "test-cpu": [
+                    989.081,
+                    1008.6740000000001,
+                    910.0840000000001,
+                    955.0110000000001,
+                    990.162,
+                    3005.3849999999998,
+                    2977.979,
+                    3184.2450000000003,
+                    3107.114,
+                    2838.819,
+                    6202.63,
+                    6221.61,
+                    6235.321,
+                    6127.081,
+                    6087.277
+                ]
+            },
+            "avg_runtime": {
+                "test-cpu": 3389.3648666666663
+            },
+            "data": {
+                "test-cpu": {
+                    "total": 15,
+                    "passed": 15,
+                    "times": [
+                        989.081,
+                        1008.6740000000001,
+                        910.0840000000001,
+                        955.0110000000001,
+                        990.162,
+                        3005.3849999999998,
+                        2977.979,
+                        3184.2450000000003,
+                        3107.114,
+                        2838.819,
+                        6202.63,
+                        6221.61,
+                        6235.321,
+                        6127.081,
+                        6087.277
+                    ]
+                }
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "alessandrosavioli",
+            "commit_hash": {
+                "test-cpu": "024609f5bb746738a5d36db919fd5a88f77f2782"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "graded"
+            },
+            "error": {
+                "test-cpu": ""
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\nOrder 1000 multiplication in 1.352156 seconds\nOrder 1000 multiplication at 1479.118961 mflops\nHey, it worked!\n======= Order 1000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1500, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\nOrder 1500 multiplication in 4.895365 seconds\nOrder 1500 multiplication at 1378.855301 mflops\nHey, it worked!\n======= Order 1500, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 2000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nOrder 2000 multiplication in 10.986694 seconds\nOrder 2000 multiplication at 1456.307106 mflops\nHey, it worked!\n======= Order 2000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nMPI matrix multiplication succeeded; runtimes are in milliseconds.\n{\"total\": 15, \"passed\": 15, \"times\": [1352.156, 1437.353, 1129.792, 1370.2620000000002, 1342.843, 4895.365, 5336.312999999999, 4654.861999999999, 4399.855, 4514.572, 10986.694, 10847.845, 10654.238, 10679.447, 10513.68]}"
+            },
+            "runtimes": {
+                "test-cpu": [
+                    1352.156,
+                    1437.353,
+                    1129.792,
+                    1370.2620000000002,
+                    1342.843,
+                    4895.365,
+                    5336.312999999999,
+                    4654.861999999999,
+                    4399.855,
+                    4514.572,
+                    10986.694,
+                    10847.845,
+                    10654.238,
+                    10679.447,
+                    10513.68
+                ]
+            },
+            "avg_runtime": {
+                "test-cpu": 5607.685133333333
+            },
+            "data": {
+                "test-cpu": {
+                    "total": 15,
+                    "passed": 15,
+                    "times": [
+                        1352.156,
+                        1437.353,
+                        1129.792,
+                        1370.2620000000002,
+                        1342.843,
+                        4895.365,
+                        5336.312999999999,
+                        4654.861999999999,
+                        4399.855,
+                        4514.572,
+                        10986.694,
+                        10847.845,
+                        10654.238,
+                        10679.447,
+                        10513.68
+                    ]
+                }
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        },
+        {
+            "name": "agaziomaida",
+            "commit_hash": {
+                "test-cpu": "dc8a8d904add294608b059e7073dbe3a89d389e5"
+            },
+            "tasks": [
+                "test-cpu"
+            ],
+            "status": {
+                "test-cpu": "graded"
+            },
+            "error": {
+                "test-cpu": ""
+            },
+            "stdout": {
+                "test-cpu": "Protected file hashes verified.\nRunning: make -f Makefile all\nmpicc -Wall -pedantic matmul.c -o matmul.out\nmpicc -Wall -pedantic matmul_mpi.c -o matmul_mpi.out\n======= Order 1000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\nOrder 1000 multiplication in 1.347312 seconds\nOrder 1000 multiplication at 1484.437317 mflops\nHey, it worked!\n======= Order 1000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1000\n======= Order 1500, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\nOrder 1500 multiplication in 4.902349 seconds\nOrder 1500 multiplication at 1376.890949 mflops\nHey, it worked!\n======= Order 1500, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 1500, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 1500\n======= Order 2000, 4 ranks, run 1/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nOrder 2000 multiplication in 10.804547 seconds\nOrder 2000 multiplication at 1480.857958 mflops\nHey, it worked!\n======= Order 2000, 4 ranks, run 2/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 3/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 4/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\n======= Order 2000, 4 ranks, run 5/5 =======\nRunning: srun -n 4 ./matmul_mpi.out 2000\nMPI matrix multiplication succeeded; runtimes are in milliseconds.\n{\"total\": 15, \"passed\": 15, \"times\": [1347.3120000000001, 1251.437, 1225.605, 1413.637, 1285.7920000000001, 4902.349, 4818.803, 4120.797, 4056.8650000000002, 4237.633, 10804.546999999999, 10794.487000000001, 10612.135, 10679.57, 10410.668]}"
+            },
+            "runtimes": {
+                "test-cpu": [
+                    1347.3120000000001,
+                    1251.437,
+                    1225.605,
+                    1413.637,
+                    1285.7920000000001,
+                    4902.349,
+                    4818.803,
+                    4120.797,
+                    4056.8650000000002,
+                    4237.633,
+                    10804.546999999999,
+                    10794.487000000001,
+                    10612.135,
+                    10679.57,
+                    10410.668
+                ]
+            },
+            "avg_runtime": {
+                "test-cpu": 5464.109133333333
+            },
+            "data": {
+                "test-cpu": {
+                    "total": 15,
+                    "passed": 15,
+                    "times": [
+                        1347.3120000000001,
+                        1251.437,
+                        1225.605,
+                        1413.637,
+                        1285.7920000000001,
+                        4902.349,
+                        4818.803,
+                        4120.797,
+                        4056.8650000000002,
+                        4237.633,
+                        10804.546999999999,
+                        10794.487000000001,
+                        10612.135,
+                        10679.57,
+                        10410.668
+                    ]
+                }
+            },
+            "reduction": {
+                "test-cpu": "mean"
+            }
+        }
+    ]
+}
