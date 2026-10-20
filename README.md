@@ -376,10 +376,14 @@ adapter reads both and creates the page only when the recovery email is configur
 
 Students select an assignment and either the deploy key, webhook secret, or both.
 Assignments use the same published exercise list and assignment identifiers as the
-submission page. **Send email** opens a Gmail draft addressed to the configured
+submission page. **Send email** opens Google's account chooser so the student can
+select their Sapienza account (or sign in), then opens a Gmail draft addressed to the configured
 recipient, with subject `Recover secret` and a JSON body containing
 `assignment_name` and `actions`. Deploy keys request `get_public_key`; webhook
 secrets request `rotate_webhook_secret`. Selecting both includes both actions.
+Clicking **Send email** also displays the recipient, subject, and JSON body below
+the form, with copy buttons for manually composing the email. These details update
+if the assignment or secret selection changes.
 The email is sent by the student from Gmail. A yellow notice reminds them to use
 the same Sapienza email address used for submission. Webhook recovery rotates the
 secret, so students must update their repository's webhook settings afterward.
