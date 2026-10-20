@@ -51,7 +51,7 @@ The system:
    cd MCPLeaderboard
    ```
 
-2. **Install Hugo** (extended version recommended):
+2. **Install Hugo**:
    ```bash
    # macOS
    brew install hugo
