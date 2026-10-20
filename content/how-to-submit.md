@@ -61,7 +61,7 @@ The webhook lets GitHub notify the grader when you push code to your repository.
 
 | Setting | Value |
 | --- | --- |
-| Payload URL | Copy the webhook URL from the submission page. |
+| Payload URL | ```https://grader-api.francescodb.me/webhook/github``` |
 | Content type | `application/json` |
 | Secret | Copy the webhook secret from the submission page exactly. |
 | SSL verification | Leave SSL verification enabled. |
