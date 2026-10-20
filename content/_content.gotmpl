@@ -1,0 +1,15 @@
+{{ if (site.Params.recovery_email | default "" | strings.TrimSpace) }}
+    {{ $source := os.ReadFile "content/recover-secrets.md" }}
+    {{ $parts := findRESubmatch `(?s)^---\r?\n(.*?)\r?\n---(?:\r?\n|$)(.*)$` $source 1 }}
+    {{ if not $parts }}
+        {{ errorf "content/recover-secrets.md must begin with YAML front matter enclosed in --- lines" }}
+    {{ else }}
+        {{ $match := index $parts 0 }}
+        {{ $metadata := index $match 1 | transform.Unmarshal (dict "format" "yaml") }}
+        {{ $page := merge $metadata (dict
+            "path" "recover-secrets"
+            "content" (dict "mediaType" "text/markdown" "value" (index $match 2))
+        ) }}
+        {{ .AddPage $page }}
+    {{ end }}
+{{ end }}

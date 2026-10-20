@@ -1,9 +1,11 @@
 baseURL = 'https://fra179.github.io/MCPLeaderboard/'
 languageCode = 'en-us'
 title = 'MCP 2026' # This is the customizable website name
+ignoreFiles = ['(^|/)recover-secrets\.md$'] # Loaded conditionally by the content adapter
 
 [params]
   teacher_name = "Prof. De Sensi" # The Teacher Name
+  recovery_email = "grader@frdb.me" # Recipient for secret recovery requests; leave empty to hide the page
   leaderboard_source = "api" # Site-wide leaderboard source: "file" or "api"
   grader_api_url = "https://grader-api.francescodb.me" # Base URL of the grader API
 

@@ -27,6 +27,12 @@
             Get Help
         </a>
         {{ end }}
+        {{ with site.GetPage "/recover-secrets" }}
+        <a href='{{ .RelPermalink }}'
+            class="block px-3 py-2 rounded transition-colors hover:bg-gray-100 text-gray-700">
+            {{ .Title }}
+        </a>
+        {{ end }}
         <a href='{{ relURL "submit/" }}'
             class="block mt-2 px-3 py-2 rounded-lg text-center font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
             Submit your project

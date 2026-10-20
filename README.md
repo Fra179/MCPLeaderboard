@@ -92,6 +92,7 @@ title = 'MCP 2025'  # Website title displayed in navigation
 
 [params]
   teacher_name = "Prof. De Sensi"  # Teacher name shown throughout the site
+  recovery_email = "grader@example.org"  # Recipient for secret recovery requests
   leaderboard_source = "file"  # "file" or "api", for all exercise pages
   grader_api_url = "https://grader-api.francescodb.me"  # Grader API base URL
 
@@ -104,6 +105,7 @@ title = 'MCP 2025'  # Website title displayed in navigation
 - **`baseURL`**: The full URL where your site will be deployed. Update this before production deployment.
 - **`title`**: Website name displayed in the browser tab and navigation bar.
 - **`teacher_name`**: Instructor name displayed on the site. This appears in the header and footer.
+- **`recovery_email`**: Recipient of secret recovery emails. Set this to the actual recovery inbox; the recovery page and sidebar link are omitted when empty or whitespace-only.
 - **`leaderboard_source`**: Site-wide data source: `"file"` (default) embeds `data/leaderboard.json` at build time; `"api"` loads current results in the browser.
 - **`grader_api_url`**: Grader API base URL, shared by API leaderboards and the submission/admin pages.
 - **`technology`**: Taxonomy used to group exercises. Do not modify unless you're adding custom taxonomies.
@@ -361,6 +363,26 @@ Use the separate **Submit your project** page to create submissions.
 Deletion and secret rotation require confirmation. It deliberately omits the
 worker's consuming `GET /updates` action; use **Pushed after** to inspect recent
 pushes without clearing the grader's pending updates.
+
+## Recovering secrets
+
+The **Recovering secrets** sidebar link opens `/recover-secrets/`. Set
+`params.recovery_email` in `hugo.toml` to the recovery inbox and rebuild the site.
+Edit `content/recover-secrets.md` to add or change Markdown text above the form.
+Its YAML front matter defines the page title, layout, and URL; the Markdown below
+it supplies the preamble. The sidebar uses that title and URL too. Hugo's content
+adapter reads both and creates the page only when the recovery email is configured;
+`ignoreFiles` prevents a duplicate page. Rebuild and deploy to apply changes.
+
+Students select an assignment and either the deploy key, webhook secret, or both.
+Assignments use the same published exercise list and assignment identifiers as the
+submission page. **Send email** opens a Gmail draft addressed to the configured
+recipient, with subject `Recover secret` and a JSON body containing
+`assignment_name` and `actions`. Deploy keys request `get_public_key`; webhook
+secrets request `rotate_webhook_secret`. Selecting both includes both actions.
+The email is sent by the student from Gmail. A yellow notice reminds them to use
+the same Sapienza email address used for submission. Webhook recovery rotates the
+secret, so students must update their repository's webhook settings afterward.
 
 ## Leaderboard Data Format
 
