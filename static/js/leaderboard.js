@@ -361,8 +361,95 @@ const setupChartToggle = (container) => {
     container.dataset.chartToggleInit = 'true';
 };
 
+// API mode uses the same task and row markup as the file-backed leaderboard.
+const loadAPILeaderboard = async () => {
+    const config = document.getElementById('leaderboard-api');
+    if (!config) return;
+
+    const message = document.getElementById('leaderboard-message');
+    try {
+        const url = new URL(`${config.dataset.apiUrl.replace(/\/+$/, '')}/leaderboard`);
+        url.searchParams.set('assignment_name', config.dataset.assignment);
+        const response = await fetch(url, { credentials: 'omit', cache: 'no-store' });
+        if (!response.ok) throw new Error(`Leaderboard request failed (${response.status})`);
+        const payload = await response.json();
+        if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+            throw new Error('Invalid leaderboard response');
+        }
+        const entries = payload[config.dataset.assignment] ?? [];
+        if (!Array.isArray(entries)) throw new Error('Invalid assignment leaderboard');
+        const tasks = [...new Set(entries.flatMap(entry => entry.tasks || []))];
+        if (!tasks.length) {
+            message.textContent = 'No leaderboard data found.';
+            return;
+        }
+
+        const select = document.getElementById('task-select');
+        const standings = document.getElementById('leaderboard-standings');
+        const taskTemplate = document.getElementById('leaderboard-task-template');
+        const rowTemplate = document.getElementById('leaderboard-row-template');
+        const statusStyles = {
+            graded: ['bg-green-100 text-green-600', 'fa-solid fa-check', 'Graded'],
+            timeout: ['bg-amber-100 text-amber-600', 'fa-solid fa-clock', 'Timeout'],
+            error: ['bg-red-200 text-red-600', 'fa-solid fa-xmark', 'Error'],
+            grading: ['bg-blue-100 text-blue-600', 'fa-solid fa-spinner fa-spin', 'Grading'],
+            pending: ['bg-gray-100 text-gray-600', 'fa-solid fa-clock', 'Pending'],
+        };
+
+        tasks.forEach(task => {
+            const option = document.createElement('option');
+            option.value = task;
+            option.textContent = task;
+            select.append(option);
+
+            const container = taskTemplate.content.firstElementChild.cloneNode(true);
+            container.id = 'leaderboard-' + task;
+            const rows = entries.filter(entry => entry.tasks.includes(task));
+            const completed = rows.filter(entry => entry.status?.[task] === 'graded');
+            completed.sort((a, b) => (a.avg_runtime[task] - b.avg_runtime[task]) * (config.dataset.order === 'desc' ? -1 : 1));
+            const other = rows.filter(entry => entry.status?.[task] !== 'graded');
+            other.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+            container.dataset.runtimes = JSON.stringify(completed.map(entry => entry.avg_runtime[task]).filter(value => Number.isFinite(value) && value > 0));
+            const reduction = rows.map(entry => entry.reduction?.[task]).filter(Boolean).pop();
+            const metric = reduction === 'median' ? 'Median Runtime' : reduction === 'mean' ? 'Mean Runtime' : config.dataset.metric;
+            container.querySelector('thead th:last-child').textContent = metric;
+            const tbody = container.querySelector('tbody');
+
+            [...completed, ...other].forEach((entry, index) => {
+                const row = rowTemplate.content.querySelector('tr').cloneNode(true);
+                row.removeAttribute('onclick');
+                row.addEventListener('click', () => window.showLog(entry.stdout?.[task] || '', entry.error?.[task] || ''));
+                const cells = row.querySelectorAll('td');
+                const status = entry.status?.[task];
+                const grading = entry.is_grading?.[task];
+                const [color, icon, label] = statusStyles[grading ? 'grading' : status] || statusStyles.pending;
+                const indicator = cells[0].firstElementChild;
+                indicator.className = `${color} rounded-full w-7 h-7 flex items-center justify-center mx-auto`;
+                indicator.title = grading && status ? 'Grading (previous result shown)' : label;
+                indicator.setAttribute('aria-label', indicator.title);
+                indicator.firstElementChild.className = icon;
+                cells[1].firstElementChild.textContent = `#${index + 1}`;
+                cells[2].querySelector('.leaderboard-username').textContent = entry.name;
+                cells[2].querySelector('.leaderboard-grading-dot').classList.toggle('hidden', !grading);
+                const commit = typeof entry.commit_hash === 'string' ? entry.commit_hash : entry.commit_hash?.[task];
+                cells[3].firstElementChild.textContent = commit ? commit.slice(0, 7) : 'N/A';
+                cells[4].firstElementChild.textContent = status === 'graded' ? `${entry.avg_runtime[task].toFixed(2)} ms` : '—';
+                tbody.append(row);
+            });
+            standings.insertBefore(container, document.getElementById('log-modal'));
+        });
+        message.classList.add('hidden');
+        standings.classList.remove('hidden');
+    } catch (error) {
+        console.error('Could not load leaderboard:', error);
+        document.getElementById('leaderboard-standings').classList.add('hidden');
+        message.textContent = 'Unable to load leaderboard. Please try reloading the page.';
+    }
+};
+
 // Task dropdown handling
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadAPILeaderboard();
     const select = document.getElementById('task-select');
     const containers = document.querySelectorAll('.leaderboard-task');
 
@@ -382,7 +469,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const params = new URLSearchParams(window.location.search);
-    const initial = params.get('task') || (select?.options[0]?.value ?? null);
+    const requested = params.get('task');
+    const initial = Array.from(select?.options || []).some(option => option.value === requested)
+        ? requested : (select?.options[0]?.value ?? null);
     if (initial && select) {
         select.value = initial;
         showTask(initial);

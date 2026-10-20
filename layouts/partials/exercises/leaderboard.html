@@ -1,12 +1,33 @@
 <div id="content-leaderboard" class="tab-content hidden transition-opacity duration-300">
     <section class="leaderboard max-w-4xl mx-auto">
         {{ $folderName := path.Base (path.Dir .File.Path) }}
-        {{ $data := index .Site.Data.leaderboard $folderName }}
+        {{ $source := .Site.Params.leaderboard_source | default "file" }}
+        {{ if not (in (slice "file" "api") $source) }}
+            {{ errorf "params.leaderboard_source must be file or api (got %q)" $source }}
+        {{ end }}
+        {{ $isAPI := eq $source "api" }}
+        {{ $apiURL := .Site.Params.grader_api_url | default "https://grader-api.francescodb.me" }}
+        {{ $data := slice }}
+        {{ if not $isAPI }}
+            {{ $data = index .Site.Data.leaderboard $folderName }}
+        {{ end }}
         
         {{ $metricName := .Params.leaderboard_metric | default "Avg. Runtime" }}
         {{ $sortOrder := .Params.leaderboard_order | default "asc" }}
 
-        {{ if $data }}
+        {{ if $isAPI }}
+        <p id="leaderboard-message" class="text-center text-gray-500 p-12" role="status">Loading leaderboard…</p>
+        <div id="leaderboard-api" data-api-url="{{ $apiURL }}" data-assignment="{{ $folderName }}" data-metric="{{ $metricName }}" data-order="{{ $sortOrder }}">
+            <template id="leaderboard-task-template">
+                {{ partial "exercises/leaderboard-task.html" (dict "task" "" "metric" $metricName "runtimes" slice "rows" slice) }}
+            </template>
+            <template id="leaderboard-row-template">
+                <table><tbody>{{ partial "exercises/leaderboard-row.html" (dict "row" (dict "status" "" "name" "" "commit_hash" "" "stdout" "" "stderr" "") "index" 0) }}</tbody></table>
+            </template>
+        </div>
+        {{ end }}
+
+        {{ if or $data $isAPI }}
         {{ $tasks := slice }}
         {{ range $data }}
             {{ range .tasks }}
@@ -15,7 +36,7 @@
         {{ end }}
         {{ $tasks = uniq $tasks }}
 
-        <div class="overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+        <div id="leaderboard-standings" class="{{ if $isAPI }}hidden {{ end }}overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
             <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-0">
                 <div class="flex items-center gap-2">
                     <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
@@ -49,7 +70,9 @@
                     {{ $commit = $entry.commit_hash }}
                 {{ end }}
                 {{ with $entry.reduction }}{{ with index . $task }}{{ $reduction = . }}{{ end }}{{ end }}
-                {{ $row := dict "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
+                {{ $isGrading := false }}
+                {{ with $entry.is_grading }}{{ $isGrading = index . $task | default false }}{{ end }}
+                {{ $row := dict "is_grading" $isGrading "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
                 {{ $rows = $rows | append $row }}
                 {{ end }}
             {{ end }}
@@ -67,102 +90,7 @@
                 {{ end }}
             {{ end }}
 
-            <div class="overflow-x-auto leaderboard-task hidden" id="leaderboard-{{ $task }}" data-runtimes='{{ jsonify $runtimes }}'>
-                <!-- Runtime Distribution Panel -->
-                <div class="bg-white px-6 py-5 border-b border-gray-100">
-                    <div class="flex flex-col gap-3">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-base font-semibold text-gray-700">Runtime Distribution</h4>
-                            <button type="button" class="runtime-toggle-btn text-xs font-semibold text-blue-600 hover:text-blue-800">Show chart</button>
-                        </div>
-                        <div class="runtime-chart-panel hidden flex flex-col gap-3">
-                            <div class="w-full h-44">
-                                <canvas class="runtime-chart w-full h-full"></canvas>
-                            </div>
-                            <div class="flex flex-col gap-2 text-sm text-gray-600">
-                                <div class="flex flex-wrap items-center gap-4">
-                                    <label class="flex items-center gap-2">
-                                        <span>Min</span>
-                                        <div class="runtime-range-control">
-                                            <input type="range" class="runtime-range runtime-range-min" min="0" max="100" step="15" value="0">
-                                            <input type="number" class="runtime-range-input runtime-range-min-input" min="0" max="100" step="any" value="0">
-                                        </div>
-                                        <span class="text-xs text-gray-400">ms</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                        <span>Max</span>
-                                        <div class="runtime-range-control">
-                                            <input type="range" class="runtime-range runtime-range-max" min="0" max="100" step="15" value="100">
-                                            <input type="number" class="runtime-range-input runtime-range-max-input" min="0" max="100" step="any" value="100">
-                                        </div>
-                                        <span class="text-xs text-gray-400">ms</span>
-                                    </label>
-                                </div>
-                                <span class="text-xs text-gray-400">X-axis range (ms)</span>
-                            </div>
-                            <div class="text-sm text-gray-600" aria-live="polite">
-                                <span class="runtime-q1">Q1: -</span>
-                                <span class="mx-3 text-gray-300">|</span>
-                                <span class="runtime-median">Median: -</span>
-                                <span class="mx-3 text-gray-300">|</span>
-                                <span class="runtime-q3">Q3: -</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <table class="min-w-full">
-                    <thead class="bg-white border-b border-gray-100">
-                        <tr>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Rank</th>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Username</th>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Commit</th>
-                            <th class="py-1 px-3 md:py-3 md:px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                {{ $metric }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        {{ range $index, $row := $ordered }}
-                        <tr class="group hover:bg-blue-50 transition-colors duration-150 cursor-pointer" onclick="showLog({{ $row.stdout | jsonify }}, {{ $row.stderr | jsonify }})">
-                            <td class="py-2 px-3 md:py-4 md:px-6 text-center">
-                                {{ if eq $row.status "graded" }}
-                                <div class="bg-green-100 text-green-600 rounded-full w-7 h-7 flex items-center justify-center mx-auto">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                {{ else if eq $row.status "timeout" }}
-                                <div class="bg-amber-100 text-amber-600 rounded-full w-7 h-7 flex items-center justify-center mx-auto" title="Timeout">
-                                    <i class="fa-solid fa-clock"></i>
-                                </div>
-                                {{ else }}
-                                <div class="bg-red-200 text-red-600 rounded-full w-7 h-7 flex items-center justify-center mx-auto">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </div>
-                                {{ end }}
-                            </td>
-                            <td class="py-4 px-6">
-                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600 font-bold">#{{ add $index 1 }}</span>
-                            </td>
-                            <td class="py-2 px-3 md:py-4 md:px-6 font-medium text-gray-900">{{ $row.name }}</td>
-                            <td class="py-2 px-3 md:py-4 md:px-6 text-right">
-                                <span class="font-mono text-sm text-gray-500 group-hover:text-blue-600">
-                                    {{ if $row.commit_hash }}
-                                        {{ strings.Substr $row.commit_hash 0 7 }}
-                                    {{ else }}
-                                        N/A
-                                    {{ end }}
-                                </span>
-                            </td>
-                            <td class="py-2 px-3 md:py-4 md:px-6 text-right">
-                                <span class="inline-block px-3 py-1 bg-gray-100 text-gray-700 font-bold rounded-full text-sm group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
-                                    {{ if eq $row.status "graded" }}{{ printf "%.2f" $row.avg_runtime }} ms{{ else }}&mdash;{{ end }}
-                                </span>
-                            </td>
-                        </tr>
-                        {{ end }}
-                    </tbody>
-                </table>
-            </div>
+            {{ partial "exercises/leaderboard-task.html" (dict "task" $task "metric" $metric "runtimes" $runtimes "rows" $ordered) }}
             {{ end }}
 
             <div id="log-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" role="dialog" aria-modal="true" aria-labelledby="log-modal-title">

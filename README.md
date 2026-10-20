@@ -92,6 +92,8 @@ title = 'MCP 2025'  # Website title displayed in navigation
 
 [params]
   teacher_name = "Prof. De Sensi"  # Teacher name shown throughout the site
+  leaderboard_source = "file"  # "file" or "api", for all exercise pages
+  grader_api_url = "https://grader-api.francescodb.me"  # Grader API base URL
 
 [taxonomies]
   technology = "technology"  # Exercise grouping by technology
@@ -102,6 +104,8 @@ title = 'MCP 2025'  # Website title displayed in navigation
 - **`baseURL`**: The full URL where your site will be deployed. Update this before production deployment.
 - **`title`**: Website name displayed in the browser tab and navigation bar.
 - **`teacher_name`**: Instructor name displayed on the site. This appears in the header and footer.
+- **`leaderboard_source`**: Site-wide data source: `"file"` (default) embeds `data/leaderboard.json` at build time; `"api"` loads current results in the browser.
+- **`grader_api_url`**: Grader API base URL, shared by API leaderboards and the submission/admin pages.
 - **`technology`**: Taxonomy used to group exercises. Do not modify unless you're adding custom taxonomies.
 
 ### Step 2: Customize Homepage Content
@@ -136,13 +140,27 @@ See the [Creating Exercises](#creating-exercises) section below for detailed ins
 
 ### Step 4: Integrate Leaderboard Data
 
-Copy the MCPGrader output JSON to `data/leaderboard.json`:
+Choose one source for the entire website with `params.leaderboard_source` in `hugo.toml`.
+
+With `leaderboard_source = "file"` (the default), copy the MCPGrader output JSON to `data/leaderboard.json`:
 
 ```bash
 cp /path/to/grader/leaderboard.json data/leaderboard.json
 ```
 
-The site will automatically read this file and display leaderboards on exercise pages. See [MCPGrader Integration](#mcpgrader-integration) for details.
+Rebuild and deploy the site to publish file changes. See [MCPGrader Integration](#mcpgrader-integration) for details.
+
+With `leaderboard_source = "api"`, every exercise page fetches
+`GET <grader_api_url>/leaderboard?assignment_name=<exercise-folder>` when it opens.
+This public endpoint needs no admin key. Results, task choices, charts, and logs
+load from the API; no local leaderboard file is required. Active evaluations show
+a grading indicator while keeping any previous completed result visible.
+Empty results and request failures display a message on the leaderboard tab.
+
+Set the worker's `ALLOWED_ORIGINS` to include the website's origin (for example,
+`https://fra179.github.io` or `http://localhost:1313`). API results update on page
+reload without rebuilding; changing the site configuration still requires a rebuild.
+API mode does not fall back to the local file if a request fails.
 
 ## Creating Exercises
 
