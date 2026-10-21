@@ -15,6 +15,20 @@ This leaderboard tracks and displays the performance of students on the programm
 ## > How often is the leaderboard updated?
 The leaderboard is updated every time a student pushes an update to their repository. Of course there is a delay between your push and the grader running your code, so please allow a few minutes of slack. Once the grader has picked up your submission a green blinking dot will appear next to your username in the leaderboard. Old results will be visible until new results are available.
 
+## > How are medals awarded?
+Medals are awarded separately for each task once its leaderboard has **at least 10 submissions**. All submissions count toward the medal cutoffs, including incorrect results, but **only correct results can earn medals**.
+
+Let `N` be the number of submissions for that task. The cumulative rank cutoffs are:
+
+| Medal | Cutoff | Awarded to ranks |
+| --- | --- | --- |
+| Gold | `G = max(1, round(5% × N))` | 1 through G |
+| Silver | `S = max(G + 1, round(10% × N))` | G + 1 through S |
+| Bronze | `B = max(S + 1, round(20% × N))` | S + 1 through B |
+
+Cutoffs are rounded to the nearest whole number, with halves rounded up. Each tier has at least one place available. For example, with **10 submissions**, the cutoffs are **1, 2, and 3**: first place earns gold, second silver, and third bronze. A tier can remain empty if there are too few correct results.
+Medals reflect the current standings and may change as results are updated.
+
 ## > Why is my result not changing after I submit a new solution?
 If you've waited a few minutes and your result is still not changing, it's possible that the specific assignment you pushed to has a cooldown timer. It can happen that if you push too many times in a short period of time, the grader will delay the grading of your submission until the cooldown timer elapsed. If after 10-15 minutes your result is still not changing (check the hash of your commit), please make sure that you're pushing to the correct branch (usually `main` or `master`). If the problem persists, have a look at "[Still having problems?](#-still-having-problems)" section
 

@@ -40,6 +40,7 @@ The system:
 - **Exercise Templates**: Standardized archetype for consistent exercise pages
 - **Responsive Design**: Mobile-friendly interface built with Tailwind CSS
 - **Performance Metrics**: Runtime-based rankings with average execution times
+- **Per-task Medals**: Tasks with at least 10 submissions award gold, silver, and bronze to correct results. All submissions count toward cumulative cutoffs of 5%, 10%, and 20%, rounded with JavaScript's `Math.round`. Each cutoff is at least one rank above the previous cutoff (gold starts at rank 1), so 10 submissions give cutoffs of 1, 2, and 3. Medal tiers can remain empty when there are too few correct results.
 - **Easy Content Management**: Markdown-based content with Hugo
 - **Static Site**: Fast, deployable anywhere (GitHub Pages, Netlify, etc.)
 

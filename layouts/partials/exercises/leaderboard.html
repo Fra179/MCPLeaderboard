@@ -155,4 +155,5 @@
     </div>
 </div>
 
-<script src="{{ "js/leaderboard.js" | relURL }}" defer></script>
+{{ $leaderboardScript := resources.FromString "js/leaderboard.js" (readFile "static/js/leaderboard.js") | fingerprint }}
+<script src="{{ $leaderboardScript.RelPermalink }}" defer></script>

@@ -1,6 +1,110 @@
 const MIN_HISTOGRAM_BINS = 50;
 const MIN_RANGE_STEP_MS = 15;
 
+const getMedalCutoffs = (count) => {
+    if (count < 10) return null;
+    const gold = Math.max(1, Math.round(count * 0.05));
+    const silver = Math.max(gold + 1, Math.round(count * 0.10));
+    const bronze = Math.max(silver + 1, Math.round(count * 0.20));
+    return { gold, silver, bronze };
+};
+
+const awardTaskMedals = (container) => {
+    const rows = container.querySelectorAll('tbody tr');
+    // Every submission counts toward the cutoffs; only correct results earn medals.
+    const cutoffs = getMedalCutoffs(rows.length);
+    let rank = 0;
+    rows.forEach(row => {
+        const badge = row.querySelector('.leaderboard-rank-badge');
+        const medal = row.querySelector('.leaderboard-medal');
+        delete badge.dataset.medal;
+        badge.removeAttribute('tabindex');
+        badge.removeAttribute('title');
+        medal.classList.add('hidden');
+        medal.removeAttribute('title');
+        medal.removeAttribute('aria-label');
+        if (!cutoffs || row.dataset.status !== 'graded') return;
+        rank += 1;
+        const tier = rank <= cutoffs.gold ? 'gold'
+            : rank <= cutoffs.silver ? 'silver'
+            : rank <= cutoffs.bronze ? 'bronze' : null;
+        if (!tier) return;
+        const label = `${tier[0].toUpperCase()}${tier.slice(1)} medal`;
+        badge.dataset.medal = tier;
+        badge.tabIndex = 0;
+        medal.setAttribute('aria-label', label);
+        medal.classList.remove('hidden');
+    });
+};
+
+const setupMedalTooltip = () => {
+    const tooltip = document.createElement('div');
+    tooltip.id = 'medal-tooltip';
+    tooltip.className = 'medal-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.innerHTML = `
+        <p class="medal-tooltip-heading">Medals are awarded as follows:</p>
+        <div class="medal-tooltip-formula">
+            <span class="medal-tooltip-circle" data-medal="gold" role="img" aria-label="Gold cutoff"></span>
+            <code>G = max(1, round(5% × N))</code>
+        </div>
+        <div class="medal-tooltip-formula">
+            <span class="medal-tooltip-circle" data-medal="silver" role="img" aria-label="Silver cutoff"></span>
+            <code>S = max(G + 1, round(10% × N))</code>
+        </div>
+        <div class="medal-tooltip-formula">
+            <span class="medal-tooltip-circle" data-medal="bronze" role="img" aria-label="Bronze cutoff"></span>
+            <code>B = max(S + 1, round(20% × N))</code>
+        </div>
+        <hr class="medal-tooltip-separator">
+        <p class="medal-tooltip-note">N = all submissions, correct + incorrect.</p>
+        <p class="medal-tooltip-note">Only correct results earn medals.</p>
+    `;
+    tooltip.hidden = true;
+    document.body.append(tooltip);
+    let activeBadge = null;
+    let hideTimer;
+    const hide = () => {
+        clearTimeout(hideTimer);
+        tooltip.hidden = true;
+        activeBadge?.removeAttribute('aria-describedby');
+        activeBadge = null;
+    };
+    const scheduleHide = () => {
+        hideTimer = setTimeout(hide, 150);
+    };
+    const show = (badge) => {
+        hide();
+        activeBadge = badge;
+        tooltip.hidden = false;
+        badge.setAttribute('aria-describedby', tooltip.id);
+        const rect = badge.getBoundingClientRect();
+        const width = tooltip.offsetWidth;
+        const height = tooltip.offsetHeight;
+        const left = Math.max(12, Math.min(rect.left, window.innerWidth - width - 12));
+        const top = rect.bottom + height + 8 <= window.innerHeight - 12
+            ? rect.bottom + 8 : Math.max(12, rect.top - height - 8);
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+    };
+    document.querySelectorAll('.leaderboard-rank-badge[data-medal]').forEach(badge => {
+        badge.addEventListener('mouseenter', () => show(badge));
+        badge.addEventListener('mouseleave', scheduleHide);
+        badge.addEventListener('focus', () => show(badge));
+        badge.addEventListener('blur', hide);
+    });
+    tooltip.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    tooltip.addEventListener('mouseleave', scheduleHide);
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') hide();
+    });
+    document.addEventListener('scroll', event => {
+        if (!tooltip.contains(event.target)) hide();
+    }, true);
+    document.addEventListener('click', hide);
+    window.addEventListener('resize', hide);
+};
+
 // Log modal handlers
 const modal = document.getElementById('log-modal');
 const stdoutEl = document.getElementById('log-stdout');
@@ -421,6 +525,7 @@ const loadAPILeaderboard = async () => {
                 row.addEventListener('click', () => window.showLog(entry.stdout?.[task] || '', entry.error?.[task] || ''));
                 const cells = row.querySelectorAll('td');
                 const status = entry.status?.[task];
+                row.dataset.status = status || '';
                 const grading = entry.is_grading?.[task];
                 const [color, icon, label] = statusStyles[grading ? 'grading' : status] || statusStyles.pending;
                 const indicator = cells[0].firstElementChild;
@@ -428,7 +533,7 @@ const loadAPILeaderboard = async () => {
                 indicator.title = grading && status ? 'Grading (previous result shown)' : label;
                 indicator.setAttribute('aria-label', indicator.title);
                 indicator.firstElementChild.className = icon;
-                cells[1].firstElementChild.textContent = `#${index + 1}`;
+                cells[1].querySelector('.leaderboard-rank-value').textContent = `#${index + 1}`;
                 cells[2].querySelector('.leaderboard-username').textContent = entry.name;
                 cells[2].querySelector('.leaderboard-grading-dot').classList.toggle('hidden', !grading);
                 const commit = typeof entry.commit_hash === 'string' ? entry.commit_hash : entry.commit_hash?.[task];
@@ -452,6 +557,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadAPILeaderboard();
     const select = document.getElementById('task-select');
     const containers = document.querySelectorAll('.leaderboard-task');
+    containers.forEach(awardTaskMedals);
+    setupMedalTooltip();
 
     const showTask = (task) => {
         containers.forEach(c => c.classList.add('hidden'));
