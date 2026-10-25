@@ -235,6 +235,7 @@ function renderSubmissions(rows, tbody = $("list-body"), wrap = $("list-wrap")) 
 				await api("DELETE", "/submissions", { id: s.id });
 				tr.remove();
 				await loadSubmissions();
+				await refreshPenalties();
 			});
 		});
 		const rotate = Object.assign(document.createElement("button"), { type: "button", className: "secondary small", textContent: "New webhook secret" });
@@ -250,7 +251,14 @@ function renderSubmissions(rows, tbody = $("list-body"), wrap = $("list-wrap")) 
 			});
 		});
 		const group = document.createElement("div");
-		group.append(copyKey, rotate, del);
+		const penalty = Object.assign(document.createElement("button"), { type: "button", className: "secondary small", textContent: "Add penalty" });
+		penalty.addEventListener("click", () => {
+			$("penalty-id").value = s.id;
+			showMsg("penalty-msg", `Student ${s.student_id} · ${s.assignment_name}. Enter the task and penalty details.`);
+			$("penalty-form").scrollIntoView({ behavior: "smooth", block: "center" });
+			$("penalty-task").focus({ preventScroll: true });
+		});
+		group.append(copyKey, rotate, penalty, del);
 		actions.append(group);
 	}
 	wrap.hidden = rows.length === 0;
@@ -273,6 +281,125 @@ $("list-form").addEventListener("submit", (e) => {
 	run(e.submitter, "list-msg", loadSubmissions);
 });
 
+// --- Penalties ---------------------------------------------------------------------------------------
+
+$("penalty-form").addEventListener("submit", (e) => {
+	e.preventDefault();
+	const f = new FormData(e.target);
+	const id = f.get("id").trim();
+	const task = f.get("task").trim();
+	const amountText = f.get("amount").trim();
+	const amount = Number(amountText);
+	const description = f.get("description");
+	if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id) || !task || task.length > 512 ||
+		!amountText || !Number.isFinite(amount) || amount < 0 || description.length > 4096) {
+		return showMsg("penalty-msg", "Enter a submission UUID, a task (up to 512 characters), a finite nonnegative amount, and a description of up to 4096 characters.", "error");
+	}
+	run(e.submitter, "penalty-msg", async () => {
+		const penalty = await api("POST", "/penalties", { id, task, amount, description: description || null });
+		showMsg("penalty-msg", `Added penalty ${penalty.amount} for task “${penalty.task}” on submission ${penalty.id}. It will appear when the leaderboard is reloaded.`, "ok");
+		await refreshPenalties();
+	});
+});
+
+let penaltiesFilter = new URLSearchParams();
+let penaltiesLoaded = false;
+let editingPenalty = null;
+
+function closePenaltyEditor() {
+	editingPenalty = null;
+	$("penalty-edit").hidden = true;
+}
+
+async function loadPenalties() {
+	const query = penaltiesFilter.toString();
+	const { penalties } = await api("GET", "/penalties" + (query ? `?${query}` : ""), undefined, { admin: false });
+	if (!Array.isArray(penalties)) throw new Error("Invalid penalties response.");
+	renderPenalties(penalties);
+	penaltiesLoaded = true;
+	showMsg("penalties-list-msg", `${penalties.length} penalt${penalties.length === 1 ? "y" : "ies"} found.`, "ok");
+}
+
+async function refreshPenalties() {
+	// A failed refresh must not make a successful mutation look like it failed.
+	if (penaltiesLoaded) await run($("penalties-list-form").querySelector("button"), "penalties-list-msg", loadPenalties);
+}
+
+function renderPenalties(penalties) {
+	closePenaltyEditor();
+	$("penalties-body").replaceChildren();
+	for (const penalty of penalties) {
+		const tr = $("penalties-body").insertRow();
+		cell(tr, penalty.id, "mono");
+		cell(tr, penalty.task);
+		cell(tr, String(penalty.amount));
+		cell(tr, penalty.description ?? "—", "penalty-description");
+		const group = document.createElement("div");
+		const edit = Object.assign(document.createElement("button"), { type: "button", className: "secondary small", textContent: "Edit" });
+		edit.addEventListener("click", () => {
+			editingPenalty = penalty;
+			$("penalty-edit-identity").textContent = `${penalty.id} · ${penalty.task}`;
+			$("penalty-edit-amount").value = penalty.amount;
+			$("penalty-edit-description").value = penalty.description ?? "";
+			showMsg("penalty-edit-msg", "");
+			$("penalty-edit").hidden = false;
+			$("penalty-edit").scrollIntoView({ behavior: "smooth", block: "nearest" });
+			$("penalty-edit-amount").focus({ preventScroll: true });
+		});
+		const del = Object.assign(document.createElement("button"), { type: "button", className: "danger small", textContent: "Delete" });
+		del.addEventListener("click", () => {
+			if (!confirm(`Delete the penalty for task “${penalty.task}” on submission ${penalty.id}?`)) return;
+			run(del, "penalties-list-msg", async () => {
+				await api("DELETE", "/penalties", { id: penalty.id, task: penalty.task });
+				if (editingPenalty === penalty) closePenaltyEditor();
+				tr.remove();
+				showMsg("penalties-list-msg", "Penalty deleted.", "ok");
+				await refreshPenalties();
+			});
+		});
+		group.append(edit, del);
+		cell(tr, "", "actions").append(group);
+	}
+	$("penalties-wrap").hidden = penalties.length === 0;
+	$("penalties-empty").hidden = penalties.length > 0;
+	$("penalties-empty").querySelector("p").textContent = "No penalties found. Try different filters.";
+}
+
+$("penalties-list-form").addEventListener("submit", (e) => {
+	e.preventDefault();
+	const f = new FormData(e.target);
+	penaltiesFilter = new URLSearchParams();
+	for (const field of ["assignment_name", "id"]) {
+		const value = f.get(field).trim();
+		if (value) penaltiesFilter.set(field, value);
+	}
+	run(e.submitter, "penalties-list-msg", loadPenalties);
+});
+
+$("penalty-edit-cancel").addEventListener("click", closePenaltyEditor);
+$("penalty-edit-form").addEventListener("submit", (e) => {
+	e.preventDefault();
+	const penalty = editingPenalty;
+	if (!penalty) return;
+	const f = new FormData(e.target);
+	const amountText = f.get("amount").trim();
+	const amount = Number(amountText);
+	const description = f.get("description");
+	if (!amountText || !Number.isFinite(amount) || amount < 0 || description.length > 4096) {
+		return showMsg("penalty-edit-msg", "Enter a finite nonnegative amount and a description of up to 4096 characters.", "error");
+	}
+	const changes = {};
+	if (amount !== penalty.amount) changes.amount = amount;
+	if (description !== (penalty.description ?? "")) changes.description = description || null;
+	if (!Object.keys(changes).length) return showMsg("penalty-edit-msg", "No changes to save.");
+	run(e.submitter, "penalty-edit-msg", async () => {
+		const updated = await api("PATCH", "/penalties", { id: penalty.id, task: penalty.task, ...changes });
+		Object.assign(penalty, updated);
+		showMsg("penalty-edit-msg", "Penalty updated. Reload the leaderboard to see the changes.", "ok");
+		await refreshPenalties();
+	});
+});
+
 // --- Delete assignment -------------------------------------------------------------------------------
 
 $("delete-assignment-form").addEventListener("submit", (e) => {
@@ -284,6 +411,7 @@ $("delete-assignment-form").addEventListener("submit", (e) => {
 		showMsg("delete-assignment-msg", `Deleted ${deleted} submission${deleted === 1 ? "" : "s"}.`, "ok");
 		$("rotate-result").hidden = true;
 		await run($("list-form").querySelector("button"), "list-msg", loadSubmissions);
+		await refreshPenalties();
 	});
 });
 })();

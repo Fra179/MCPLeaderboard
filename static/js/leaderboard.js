@@ -508,6 +508,7 @@ const loadAPILeaderboard = async () => {
 
             const container = taskTemplate.content.firstElementChild.cloneNode(true);
             container.id = 'leaderboard-' + task;
+            container.dataset.task = task;
             const rows = entries.filter(entry => entry.tasks.includes(task));
             const completed = rows.filter(entry => entry.status?.[task] === 'graded');
             completed.sort((a, b) => (a.avg_runtime[task] - b.avg_runtime[task]) * (config.dataset.order === 'desc' ? -1 : 1));
@@ -526,6 +527,8 @@ const loadAPILeaderboard = async () => {
                 const cells = row.querySelectorAll('td');
                 const status = entry.status?.[task];
                 row.dataset.status = status || '';
+                row.dataset.submissionId = entry.submission_id || entry.id || '';
+                row.dataset.baseScore = status === 'graded' ? String(entry.avg_runtime[task]) : '';
                 const grading = entry.is_grading?.[task];
                 const [color, icon, label] = statusStyles[grading ? 'grading' : status] || statusStyles.pending;
                 const indicator = cells[0].firstElementChild;
@@ -552,13 +555,156 @@ const loadAPILeaderboard = async () => {
     }
 };
 
+// Add task penalties to raw scores before initializing ranks, medals, and charts.
+const loadLeaderboardPenalties = async () => {
+    const message = document.getElementById('penalties-message');
+    const containers = document.querySelectorAll('.leaderboard-task');
+    if (!message || !containers.length) return;
+    message.textContent = 'Loading penalties to calculate final scores…';
+    message.hidden = false;
+    try {
+        const url = new URL(`${message.dataset.apiUrl.replace(/\/+$/, '')}/penalties`);
+        url.searchParams.set('assignment_name', message.dataset.assignment);
+        const response = await fetch(url, { credentials: 'omit', cache: 'no-store' });
+        if (!response.ok) throw new Error(`Penalties request failed (${response.status})`);
+        const payload = await response.json();
+        if (!Array.isArray(payload?.penalties)) throw new Error('Invalid penalties response');
+        const penalties = new Map();
+        for (const penalty of payload.penalties) {
+            if (typeof penalty.id !== 'string' || typeof penalty.task !== 'string' ||
+                !Number.isFinite(penalty.amount) || penalty.amount < 0 ||
+                (penalty.description !== null && typeof penalty.description !== 'string')) {
+                throw new Error('Invalid penalty');
+            }
+            const id = penalty.id.toLowerCase();
+            if (!penalties.has(id)) penalties.set(id, new Map());
+            penalties.get(id).set(penalty.task, penalty);
+        }
+        // Validate all totals before changing the displayed standings.
+        containers.forEach(container => {
+            container.querySelectorAll('tbody tr[data-status="graded"]').forEach(row => {
+                const penalty = penalties.get(row.dataset.submissionId?.toLowerCase())?.get(container.dataset.task);
+                if (!Number.isFinite(Number(row.dataset.baseScore) + (penalty?.amount ?? 0))) {
+                    throw new Error('Invalid adjusted score');
+                }
+            });
+        });
+        let missingIdentity = false;
+        containers.forEach(container => {
+            let hasPenalty = false;
+            container.querySelectorAll('tbody tr').forEach(row => {
+                const id = row.dataset.submissionId?.toLowerCase();
+                if (!id) missingIdentity = true;
+                const penalty = penalties.get(id)?.get(container.dataset.task);
+                row.querySelector('.leaderboard-penalty')?.remove();
+                if (row.dataset.status === 'graded') {
+                    const base = Number(row.dataset.baseScore);
+                    const total = base + (penalty?.amount ?? 0);
+                    row.dataset.score = String(total);
+                    const score = row.querySelector('td:last-child > span');
+                    score.textContent = `${total.toFixed(2)} ms`;
+                    score.title = penalty ? `Runtime: ${base} ms + penalty: ${penalty.amount} ms` : `Runtime: ${base} ms`;
+                }
+                if (!penalty) return;
+                hasPenalty = true;
+                const badge = document.createElement('button');
+                badge.type = 'button';
+                badge.className = 'leaderboard-penalty';
+                const icon = document.createElement('i');
+                icon.className = 'fa-solid fa-triangle-exclamation';
+                icon.setAttribute('aria-hidden', 'true');
+                badge.append(icon);
+                badge.setAttribute('aria-label', `Penalty: ${penalty.amount} ms. ${penalty.description || 'No description provided.'}`);
+                badge.dataset.description = `Penalty: +${penalty.amount} ms\n${penalty.description || 'No description provided.'}`;
+                badge.addEventListener('click', event => event.stopPropagation());
+                row.querySelector('.leaderboard-username').parentElement.append(badge);
+            });
+            const tbody = container.querySelector('tbody');
+            const rows = [...tbody.querySelectorAll('tr')];
+            rows.sort((a, b) => {
+                const aGraded = a.dataset.status === 'graded';
+                const bGraded = b.dataset.status === 'graded';
+                if (aGraded !== bGraded) return aGraded ? -1 : 1;
+                if (!aGraded) return 0; // Preserve the existing name order for unscored tasks.
+                return (Number(a.dataset.score) - Number(b.dataset.score)) * (message.dataset.order === 'desc' ? -1 : 1);
+            });
+            rows.forEach((row, index) => {
+                row.querySelector('.leaderboard-rank-value').textContent = `#${index + 1}`;
+                tbody.append(row);
+            });
+            container.dataset.runtimes = JSON.stringify(rows.filter(row => row.dataset.status === 'graded')
+                .map(row => Number(row.dataset.score)).filter(value => value >= 0));
+            const heading = container.querySelector('thead th:last-child');
+            heading.title = hasPenalty ? 'Runtime including task penalties (ms)' : '';
+        });
+        if (payload.penalties.length) {
+            message.textContent = missingIdentity
+                ? 'Scores include matched task penalties. Some entries have no submission UUID and cannot be matched, so their scores may exclude penalties.'
+                : '';
+            message.hidden = !missingIdentity;
+        } else {
+            message.hidden = true;
+        }
+    } catch (error) {
+        console.error('Could not load penalties:', error);
+        message.textContent = 'Penalty information is unavailable. Scores and rankings may exclude penalties. Please try reloading the page.';
+        message.hidden = false;
+    }
+};
+
+const setupPenaltyTooltip = () => {
+    const badges = document.querySelectorAll('.leaderboard-penalty');
+    if (!badges.length) return;
+    const tooltip = document.createElement('div');
+    tooltip.id = 'penalty-tooltip';
+    tooltip.className = 'penalty-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.hidden = true;
+    document.body.append(tooltip);
+    let active = null;
+    let hideTimer;
+    const hide = () => {
+        clearTimeout(hideTimer);
+        tooltip.hidden = true;
+        active?.removeAttribute('aria-describedby');
+        active = null;
+    };
+    const scheduleHide = () => { hideTimer = setTimeout(hide, 150); };
+    const show = (badge) => {
+        hide();
+        active = badge;
+        tooltip.textContent = badge.dataset.description;
+        tooltip.hidden = false;
+        badge.setAttribute('aria-describedby', tooltip.id);
+        const rect = badge.getBoundingClientRect();
+        tooltip.style.left = `${Math.max(12, Math.min(rect.left, window.innerWidth - tooltip.offsetWidth - 12))}px`;
+        tooltip.style.top = `${rect.bottom + tooltip.offsetHeight + 8 <= window.innerHeight - 12
+            ? rect.bottom + 8 : Math.max(12, rect.top - tooltip.offsetHeight - 8)}px`;
+    };
+    badges.forEach(badge => {
+        badge.addEventListener('mouseenter', () => show(badge));
+        badge.addEventListener('mouseleave', scheduleHide);
+        badge.addEventListener('focus', () => show(badge));
+        badge.addEventListener('blur', hide);
+        badge.addEventListener('click', () => show(badge));
+    });
+    tooltip.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    tooltip.addEventListener('mouseleave', scheduleHide);
+    document.addEventListener('click', hide);
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') hide(); });
+    document.addEventListener('scroll', event => { if (!tooltip.contains(event.target)) hide(); }, true);
+    window.addEventListener('resize', hide);
+};
+
 // Task dropdown handling
 document.addEventListener('DOMContentLoaded', async () => {
     await loadAPILeaderboard();
+    await loadLeaderboardPenalties();
     const select = document.getElementById('task-select');
     const containers = document.querySelectorAll('.leaderboard-task');
     containers.forEach(awardTaskMedals);
     setupMedalTooltip();
+    setupPenaltyTooltip();
 
     const showTask = (task) => {
         containers.forEach(c => c.classList.add('hidden'));

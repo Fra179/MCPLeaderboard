@@ -174,3 +174,52 @@
         animation: none;
     }
 }
+
+.penalties-message {
+    margin-bottom: 1rem;
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+    background: #fffbeb;
+    color: #92400e;
+    font-size: .875rem;
+}
+/* Small inline penalty marker; details float outside the scrolling table. */
+.leaderboard-penalty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: .375rem;
+    padding: .125rem;
+    color: #dc2626;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    vertical-align: middle;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.leaderboard-penalty:hover { color: #b91c1c; }
+.leaderboard-penalty:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+.penalty-tooltip {
+    position: fixed;
+    z-index: 60;
+    width: max-content;
+    max-width: min(20rem, calc(100vw - 24px));
+    max-height: min(24rem, calc(100vh - 24px));
+    overflow-y: auto;
+    padding: .625rem .75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: .5rem;
+    background: #fff;
+    color: #374151;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+    font-size: .8125rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}

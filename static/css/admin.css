@@ -28,9 +28,9 @@
 .grader-admin .hint { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
 .grader-admin label { display: flex; flex-wrap: wrap; align-content: start; gap: 6px 4px; color: #374151; font-size: 12px; font-weight: 600; }
 .grader-admin .optional { color: var(--muted); font-weight: 400; }
-.grader-admin input, .grader-admin select { width: 100%; min-height: 40px; padding: 8px 11px; border: 1px solid #d1d5db; border-radius: 7px; background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 400; transition: border-color .15s, box-shadow .15s; }
+.grader-admin input, .grader-admin select, .grader-admin textarea { width: 100%; min-height: 40px; padding: 8px 11px; border: 1px solid #d1d5db; border-radius: 7px; background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 400; transition: border-color .15s, box-shadow .15s; }
 .grader-admin input::placeholder { color: #9ca3af; }
-.grader-admin input:focus, .grader-admin select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px #dbeafe; }
+.grader-admin input:focus, .grader-admin select:focus, .grader-admin textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px #dbeafe; }
 .grader-admin .row { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
 .grader-admin .row > label { flex: 1 1 220px; }
 .grader-admin button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 40px; padding: 8px 14px; border: 1px solid var(--accent); border-radius: 7px; background: var(--accent); color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s, box-shadow .15s; }
@@ -99,3 +99,7 @@
     .grader-admin .section-title { gap: 9px; }
     .grader-admin .key-status { gap: 6px 10px; }
 }
+
+.grader-admin textarea { resize: vertical; }
+.grader-admin .penalty-description { min-width: 160px; max-width: 360px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.grader-admin #penalty-edit-identity { overflow-wrap: anywhere; margin-bottom: 12px; }

@@ -7,6 +7,7 @@
         {{ end }}
         {{ $isAPI := eq $source "api" }}
         {{ $apiURL := .Site.Params.grader_api_url | default "https://grader-api.francescodb.me" }}
+        <p id="penalties-message" class="penalties-message" data-api-url="{{ $apiURL }}" data-assignment="{{ $folderName }}" data-order="{{ .Params.leaderboard_order | default "asc" }}" role="status" hidden></p>
         {{ $data := slice }}
         {{ if not $isAPI }}
             {{ $data = index .Site.Data.leaderboard $folderName }}
@@ -72,7 +73,7 @@
                 {{ with $entry.reduction }}{{ with index . $task }}{{ $reduction = . }}{{ end }}{{ end }}
                 {{ $isGrading := false }}
                 {{ with $entry.is_grading }}{{ $isGrading = index . $task | default false }}{{ end }}
-                {{ $row := dict "is_grading" $isGrading "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
+                {{ $row := dict "submission_id" ($entry.submission_id | default $entry.id | default "") "is_grading" $isGrading "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
                 {{ $rows = $rows | append $row }}
                 {{ end }}
             {{ end }}

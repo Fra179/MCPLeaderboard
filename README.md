@@ -165,6 +165,19 @@ Set the worker's `ALLOWED_ORIGINS` to include the website's origin (for example,
 reload without rebuilding; changing the site configuration still requires a rebuild.
 API mode does not fall back to the local file if a request fails.
 
+Leaderboards also fetch public `GET /penalties?assignment_name=<exercise-folder>`.
+Each task shows a small warning icon beside the affected username, including
+penalties with amount zero. Hover, focus, or tap the icon to read the amount and
+description. A graded task’s score is its raw
+runtime plus the penalty amount (in milliseconds). Rankings, charts, and medals
+use this adjusted score; logs and raw grading results remain unchanged. Failed
+and pending tasks remain unscored. If the penalties request fails, raw standings
+remain available with a notice that scores exclude penalties.
+Penalties match each leaderboard entry's submission UUID (`id`, with
+`submission_id` also supported) and task against `/penalties`. Usernames are not
+used as a substitute. File-based entries also need this UUID to display live
+penalties. Entries without a UUID trigger a notice when penalties exist.
+
 ## Creating Exercises
 
 ### Exercise Structure
@@ -360,6 +373,16 @@ and use **Remove** to clear the saved key on a shared browser.
 The page supports listing and filtering by assignment or push time, sorting,
 copying deploy private keys, rotating webhook secrets,
 deleting individual submissions, and deleting all submissions for an assignment.
+The **Add penalty** section creates a penalty with a signed `POST /penalties`.
+Use **Add penalty** beside a submission to fill its UUID, or enter it manually,
+then enter the task, a finite nonnegative amount, and an optional public description.
+Duplicate submission/task penalties and other API errors are shown in the form.
+Reload the assignment leaderboard to retrieve newly created penalties.
+The **Manage penalties** section lists penalties publicly, with optional assignment
+and submission UUID filters. **Edit** updates only changed amounts or descriptions;
+clearing a description sends `null`. **Delete** asks for confirmation before removing
+the selected penalty. Both actions require signed admin requests. The list refreshes
+after successful additions, edits, and deletions once it has been loaded.
 Use the separate **Submit your project** page to create submissions.
 Deletion and secret rotation require confirmation. It deliberately omits the
 worker's consuming `GET /updates` action; use **Pushed after** to inspect recent

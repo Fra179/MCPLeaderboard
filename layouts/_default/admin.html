@@ -4,7 +4,7 @@
     <header class="admin-header">
         <p class="eyebrow">Administration</p>
         <h1>{{ .Title }}</h1>
-        <p class="intro">Manage submissions and repository access.</p>
+        <p class="intro">Manage submissions, penalties, and repository access.</p>
         <label class="api-setting">Grader API URL
             <input id="api-url" type="url" value="{{ site.Params.grader_api_url }}" placeholder="https://grader-api.example.com" spellcheck="false">
         </label>
@@ -65,6 +65,55 @@
         <div id="rotate-result" class="rotation-result" hidden>
             <h3 id="rotate-title"></h3>
             <div id="rotate-webhook"></div>
+        </div>
+    </section>
+
+    <section class="card" aria-labelledby="penalty-heading">
+        <div class="section-heading">
+            <div class="section-title"><span class="section-icon" aria-hidden="true"><i class="fa-solid fa-triangle-exclamation"></i></span><h2 id="penalty-heading">Add penalty</h2></div>
+            <span class="badge">Admin access</span>
+        </div>
+        <p class="hint">Choose “Add penalty” on a submission above or enter its submission UUID. Amounts and descriptions are public. The penalty amount is added to the task’s runtime score (in ms) and affects ranking. Only one penalty is allowed per submission and task.</p>
+        <form id="penalty-form" class="filter-form">
+            <label>Submission UUID<input id="penalty-id" name="id" required pattern="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" placeholder="550e8400-e29b-41d4-a716-446655440000" spellcheck="false"></label>
+            <label>Task<input id="penalty-task" name="task" required maxlength="512" placeholder="cpu"></label>
+            <label>Amount<input name="amount" type="number" min="0" step="any" required placeholder="2.5"></label>
+            <label>Description <span class="optional">(optional, public)</span><textarea name="description" maxlength="4096" rows="3" placeholder="Late submission"></textarea></label>
+            <button type="submit">Add penalty</button>
+        </form>
+        <p role="status" aria-live="polite" class="msg" id="penalty-msg"></p>
+    </section>
+
+    <section class="card" aria-labelledby="penalties-heading">
+        <div class="section-heading">
+            <div class="section-title"><span class="section-icon" aria-hidden="true"><i class="fa-solid fa-list"></i></span><h2 id="penalties-heading">Manage penalties</h2></div>
+            <span class="badge">Public list · Admin edits</span>
+        </div>
+        <p class="hint">Load all penalties or filter by assignment and submission UUID. Editing and deletion require an admin key.</p>
+        <form id="penalties-list-form" class="filter-form">
+            <label>Assignment <span class="optional">(optional)</span><input list="admin-assignments" name="assignment_name" maxlength="512" placeholder="All assignments"></label>
+            <label>Submission UUID <span class="optional">(optional)</span><input name="id" pattern="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" placeholder="All submissions" spellcheck="false"></label>
+            <button type="submit">Load penalties</button>
+        </form>
+        <p role="status" aria-live="polite" class="msg" id="penalties-list-msg"></p>
+        <div class="empty-state" id="penalties-empty"><p>Load penalties to view and manage them.</p></div>
+        <div class="table-wrap" id="penalties-wrap" hidden tabindex="0" role="region" aria-label="Penalties table">
+            <table>
+                <thead><tr><th>Submission UUID</th><th>Task</th><th>Amount</th><th>Description</th><th>Actions</th></tr></thead>
+                <tbody id="penalties-body"></tbody>
+            </table>
+        </div>
+        <div id="penalty-edit" class="rotation-result" hidden>
+            <h3>Edit penalty</h3>
+            <p id="penalty-edit-identity" class="mono"></p>
+            <p class="hint">Submission and task identify the penalty and cannot be changed. Clear the description to remove it.</p>
+            <form id="penalty-edit-form" class="filter-form">
+                <label>Amount<input id="penalty-edit-amount" name="amount" type="number" min="0" step="any" required></label>
+                <label>Description <span class="optional">(optional, public)</span><textarea id="penalty-edit-description" name="description" maxlength="4096" rows="3"></textarea></label>
+                <button type="submit">Save changes</button>
+                <button id="penalty-edit-cancel" type="button" class="secondary">Cancel</button>
+            </form>
+            <p role="status" aria-live="polite" class="msg" id="penalty-edit-msg"></p>
         </div>
     </section>
 
