@@ -1,0 +1,6 @@
+{{- if .Page.Fragments.Headings -}}
+<details class="wiki-toc not-prose" open>
+    <summary>{{ .Get "title" | default "Contents" }}</summary>
+    {{ .Page.TableOfContents }}
+</details>
+{{- end -}}

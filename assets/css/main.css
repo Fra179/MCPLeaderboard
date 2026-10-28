@@ -2,6 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+.wiki-toc {
+    width: fit-content;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid #a2a9b1;
+    background: #f8f9fa;
+    color: #202122;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.wiki-toc summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.wiki-toc ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: toc-section;
+}
+
+.wiki-toc nav > ul {
+    margin-top: 0.5rem;
+}
+
+.wiki-toc ul ul {
+    padding-left: 1.5rem;
+}
+
+.wiki-toc li {
+    margin: 0.25rem 0;
+    counter-increment: toc-section;
+}
+
+.wiki-toc li > a::before {
+    content: counters(toc-section, ".") " ";
+    margin-right: 0.25rem;
+    color: #54595d;
+}
+
+.wiki-toc a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.wiki-toc a:hover {
+    text-decoration: underline;
+}
+
+.wiki-toc a:focus-visible,
+.wiki-toc summary:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
 .mobile-sidebar-panel {
 	transform: translateX(-100%);
 	will-change: transform;

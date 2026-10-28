@@ -533,6 +533,12 @@ MCPLeaderboard/
 - **`layouts/exercises/single.html`**: Template that displays leaderboard tables
 - **`layouts/exercises/list.html`**: Template that groups exercises by technology
 
+## Page table of contents
+
+Add `{{< toc >}}` to a Markdown page to show a collapsible, numbered table of contents with links to its headings and subheadings. It updates automatically when headings change and starts expanded.
+
+Use `{{< toc title="On this page" >}}` to customize the label. Hugo's `[markup.tableOfContents]` configuration controls which heading levels appear (levels 2 and 3 by default).
+
 ## Troubleshooting
 
 **Issue: Leaderboard not showing on exercise page**

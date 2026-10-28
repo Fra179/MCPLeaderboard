@@ -6,6 +6,8 @@ author: "Daniele De Sensi"
 draft: false
 ---
 
+{{< toc >}}
+
 ## > I lost my Webhook secret or deploy key, how do I recover them?
 Recovering your keys is easy, just visit the [secret recovery page]({{< relref "recover-secrets.md" >}}). You will send an email and receive your credentials back, also via email. You will get everything back in less than 5 minutes. If it doesn't work look at the "[Still having problems?](#-still-having-problems)" section
 
