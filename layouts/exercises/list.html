@@ -20,6 +20,7 @@
                         </div>
                         {{ end }}
                         <h3 class="font-bold text-blue-600 m-0 no-underline">{{ .Title }}</h3>
+                        {{ partial "exercises/metadata.html" . }}
                         <!-- <p class="text-sm text-gray-600">{{ .Summary }}</p> -->
                     </a>
                     {{ end }}
@@ -30,4 +31,5 @@
             <p>No content found in this section.</p>
         {{ end }}
     </div>
+    <script src="{{ "js/exercise-deadlines.js" | relURL }}" defer></script>
 {{ end }}

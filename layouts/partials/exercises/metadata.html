@@ -1,0 +1,20 @@
+{{ if or .Params.graded .Params.deadline }}
+<div class="exercise-metadata not-prose">
+    {{ if .Params.graded }}
+    <div class="exercise-grading">
+        <span class="exercise-graded-badge" title="Awards a bonus"><i class="fa-solid fa-award" aria-hidden="true"></i> Graded<span class="sr-only"> — Awards a bonus</span></span>
+        <span class="exercise-bonus-note">Awards a bonus</span>
+    </div>
+    {{ end }}
+    {{ with .Params.deadline }}
+        {{ if not (findRE `^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})$` (printf "%v" .)) }}
+            {{ errorf "Exercise %s: deadline must include a time and UTC offset, e.g. 2026-11-15T23:59:00+01:00" $.File.Path }}
+        {{ end }}
+        {{ $deadline := time.AsTime . }}
+        <div class="exercise-deadline">
+            <span class="exercise-deadline-date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Deadline: <time data-local-deadline datetime="{{ $deadline.Format "2006-01-02T15:04:05Z07:00" }}">{{ $deadline.Format "2 Jan 2006, 15:04" }}</time></span>
+            <span class="exercise-countdown" data-exercise-deadline="{{ $deadline.Format "2006-01-02T15:04:05Z07:00" }}"{{ if not ($deadline.After now) }} data-state="expired"{{ end }}>{{ if $deadline.After now }}{{ $minutes := int (math.Ceil (div ($deadline.Sub now).Seconds 60)) }}{{ $days := div $minutes 1440 }}{{ $hours := mod (div $minutes 60) 24 }}{{ if $days }}{{ $days }}d {{ end }}{{ $hours }}h {{ mod $minutes 60 }}m left{{ else }}Deadline passed{{ end }}</span>
+        </div>
+    {{ end }}
+</div>
+{{ end }}

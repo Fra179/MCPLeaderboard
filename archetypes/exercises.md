@@ -3,6 +3,9 @@ title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 date: {{ .Date }}
 draft: true
 technology: "Sequential"
+graded: false
+# Optional deadline (include the UTC offset):
+# deadline: "2026-11-15T23:59:00+01:00"
 github_url: ""
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"

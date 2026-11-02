@@ -1,14 +1,16 @@
 {{ define "main" }}
 <div class="max-w-none mb-12">
 
-    <div class="flex flex-col items-center justify-center mb-8">
+    <div class="exercise-header flex flex-col items-center justify-center mb-8">
         {{ if .Params.technology }}
-        <h1 class="text-3xl font-bold text-gray-900 mb-6">[{{ .Params.technology | strings.ToUpper }}] {{ .Title }}</h1>
+        <h1 class="text-3xl font-bold text-gray-900 text-center">[{{ .Params.technology | strings.ToUpper }}] {{ .Title }}</h1>
         {{ else }}
-        <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ .Title }}</h1>
+        <h1 class="text-3xl font-bold text-gray-900 text-center">{{ .Title }}</h1>
         {{ end }}
 
-        <div class="bg-gray-100 p-1.5 rounded-lg inline-flex shadow-inner">
+        {{ partial "exercises/metadata.html" . }}
+
+        <div class="bg-gray-100 p-1.5 rounded-lg inline-flex shadow-inner mt-6">
             <div>
                 <button id="btn-description" onclick="switchTab('description')"
                     class="tab-btn flex items-center justify-center gap-2 px-5 py-2.5 rounded-md text-sm font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 ring-blue-400 whitespace-nowrap text-gray-500 hover:text-gray-900">
@@ -45,4 +47,5 @@
 </div>
 
 <script src="{{ "js/exercises.js" | relURL }}" defer></script>
+<script src="{{ "js/exercise-deadlines.js" | relURL }}" defer></script>
 {{ end }}

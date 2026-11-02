@@ -533,6 +533,34 @@ MCPLeaderboard/
 - **`layouts/exercises/single.html`**: Template that displays leaderboard tables
 - **`layouts/exercises/list.html`**: Template that groups exercises by technology
 
+## Exercise grading and deadlines
+
+Add either or both optional fields to an exercise's front matter:
+
+```yaml
+graded: true
+deadline: "2026-11-15T23:59:00+01:00"
+```
+
+`graded: true` displays a **Graded** badge with **Awards a bonus**. A deadline
+displays the exact date and a countdown on exercise cards and exercise pages.
+Include the time and UTC offset in the quoted deadline; use the offset applicable
+on that date (Rome uses `+01:00` in winter and `+02:00` in summer).
+Dates and times are displayed in each visitor's local timezone and browser locale,
+without a timezone label. On exercise pages, the badge, deadline, and countdown
+share a compact centered row that wraps on smaller screens.
+
+The countdown refreshes while the page is open, turns amber within 24 hours, and
+shows **Deadline passed** at expiry. Without JavaScript, the exact date and status
+at build time remain visible, using the deadline's authored date and time.
+These fields are informational; submission and bonus
+eligibility rules must be enforced by the grader.
+
+Four draft demo exercises cover graded exercises with upcoming/past/no deadlines
+and a practice exercise with a deadline. Preview them with `hugo server -D` and
+open the **Exercises** page under the **DEMO** group. Their fixed dates can be
+edited to try other countdown states. Draft demos are excluded from normal builds.
+
 ## Page table of contents
 
 Add `{{< toc >}}` to a Markdown page to show a collapsible, numbered table of contents with links to its headings and subheadings. It updates automatically when headings change and starts expanded.
