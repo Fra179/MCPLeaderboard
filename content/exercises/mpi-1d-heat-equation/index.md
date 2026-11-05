@@ -14,7 +14,7 @@ leaderboard_order: "asc"
 
 {{< faqlink >}}
 
-**Graded submission deadline: 13 November 2026 (13/11/2026).**
+**Graded submission deadline: 15 November 2026 (15/11/2026).**
 
 {{< githublink >}}
 
