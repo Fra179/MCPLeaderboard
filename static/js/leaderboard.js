@@ -596,6 +596,7 @@ const loadLeaderboardPenalties = async () => {
                 const id = row.dataset.submissionId?.toLowerCase();
                 if (!id) missingIdentity = true;
                 const penalty = penalties.get(id)?.get(container.dataset.task);
+                row.dataset.penaltyAmount = String(penalty?.amount ?? 0);
                 row.querySelector('.leaderboard-penalty')?.remove();
                 if (row.dataset.status === 'graded') {
                     const base = Number(row.dataset.baseScore);
@@ -714,6 +715,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.highlightUserRow?.();
             setupChartToggle(active);
             renderRuntimeChart(active);
+
+        }
+        const historyLink = document.getElementById('see-history');
+        if (historyLink) {
+            const url = new URL(historyLink.href);
+            url.searchParams.set('task', task);
+            historyLink.href = url;
         }
         const params = new URLSearchParams(window.location.search);
         params.set('task', task);

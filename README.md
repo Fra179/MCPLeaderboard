@@ -165,6 +165,34 @@ Set the worker's `ALLOWED_ORIGINS` to include the website's origin (for example,
 reload without rebuilding; changing the site configuration still requires a rebuild.
 API mode does not fall back to the local file if a request fails.
 
+The small **See history** link beside **Current Standings** opens a separate
+`/history/?assignment=<exercise>&task=<task>` page, preserving the selected task.
+This page loads the public `/leaderboard/history` endpoint and follows all its
+pagination. It plots every competitor across the full range of positions, with
+positions spaced by elapsed time. The time range defaults to **1 day**, ending at
+the latest recorded result; choose **1 hour**, **6 hours**, **7 days**, **30 days**,
+or **All history** to zoom. **Earlier / Later** moves through time, and **Latest**
+returns to the newest results. Diagonal lines connect recorded positions; quiet
+windows retain the last known positions. Hidden competitors stay hidden while zooming.
+Exercise and
+task selectors let you switch views, and **Current standings** takes you back to
+the selected exercise and task. Rank #1 is at the top; click a legend name to
+toggle its line, use **Show all / Hide all** to focus on a few competitors, and
+hover a point for its timestamp and rank. Errors and timeouts move the affected competitor below scored entries,
+ordered by name, until another successful result is recorded. Their line remains
+continuous, and every competitor has a position throughout the replay.
+
+History is partial: results before recording was enabled are not backfilled,
+and deleted submissions disappear from history. Each currently graded student's
+current runtime is used as an estimated starting value until their first recorded
+result, including competitors outside the top ten. Students with no events keep
+that runtime throughout the replay. Competitors without a successful starting
+score are placed below scored entries, ordered by name; these initial positions
+are estimates too. Current task penalties apply
+throughout the replay because penalty changes are not recorded. Consequently,
+reconstructed ranks can differ from past standings and from the current table.
+File-based leaderboards need submission UUIDs to use the graph too.
+
 Leaderboards also fetch public `GET /penalties?assignment_name=<exercise-folder>`.
 Each task shows a small warning icon beside the affected username, including
 penalties with amount zero. Hover, focus, or tap the icon to read the amount and

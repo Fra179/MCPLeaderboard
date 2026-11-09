@@ -41,6 +41,7 @@
             <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-0">
                 <div class="flex items-center gap-2">
                     <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
+                    <a id="see-history" href="{{ "history/" | relURL }}?assignment={{ $folderName | urlquery }}" class="text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline">See history</a>
                     <button id="scroll-to-user-btn" class="hidden text-blue-600 hover:text-blue-800 transition-colors" title="Scroll to your position" onclick="scrollToUserRow()">
                         <i class="fa-solid fa-arrow-down"></i>
                     </button>
