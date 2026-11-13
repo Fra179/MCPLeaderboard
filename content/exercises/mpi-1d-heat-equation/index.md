@@ -18,6 +18,8 @@ leaderboard_order: "asc"
 
 {{< githublink >}}
 
+[__How to update main.c__]({{< relref "/guides/how-to-update-main.md" >}})
+
 This exercise models how heat spreads along a one-dimensional object, such as a
 thin rod. Imagine that different points along the rod start at different
 temperatures: over time, heat flows from hotter regions toward colder ones.

@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+.markdown-alert {
+    --alert-color: #1d4ed8;
+    --alert-background: #eff6ff;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--alert-color);
+    border-radius: 0.5rem;
+    background: var(--alert-background);
+    overflow-wrap: anywhere;
+}
+
+.markdown-alert-tip {
+    --alert-color: #15803d;
+    --alert-background: #f0fdf4;
+}
+
+.markdown-alert-important {
+    --alert-color: #7e22ce;
+    --alert-background: #faf5ff;
+}
+
+.markdown-alert-warning {
+    --alert-color: #92400e;
+    --alert-background: #fffbeb;
+}
+
+.markdown-alert-caution {
+    --alert-color: #b91c1c;
+    --alert-background: #fef2f2;
+}
+
+.markdown-alert > .markdown-alert-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.5rem;
+    color: var(--alert-color);
+    font-weight: 600;
+}
+
+.markdown-alert > :last-child {
+    margin-bottom: 0;
+}
+
 .exercise-metadata {
     margin-top: 1rem;
     font-size: 0.8125rem;
