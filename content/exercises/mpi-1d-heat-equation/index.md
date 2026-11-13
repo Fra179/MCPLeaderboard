@@ -9,6 +9,12 @@ github_url: "frdb.me/mpi-1d-heat-equation"
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
 ---
+>[!WARNING]
+>If you see this error 
+>```
+>Assignment test failed: Hash mismatch for src/main.c: expected 1c41a9bf4c262f0bb5c010889a76b5182851c4532c777781740206b7c46b86fe, got 64acd4a4c05a1f93b078916ea2db156c5199a2261081409d22240cbc7cbd587c
+>```
+>just go ahead and follow [this guide]({{< relref "/guides/how-to-update-main.md" >}})
 
 # PlumJuice Heat Equation Challenge
 
