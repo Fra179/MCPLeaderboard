@@ -4,7 +4,7 @@ date: 2026-11-02T12:00:00+01:00
 draft: false
 technology: "MPI"
 graded: true
-deadline: "2026-11-15T23:59:00+01:00"
+deadline: "2026-11-22T23:59:00+01:00"
 github_url: "frdb.me/mpi-1d-heat-equation"
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
@@ -20,7 +20,7 @@ leaderboard_order: "asc"
 
 {{< faqlink >}}
 
-**Graded submission deadline: 15 November 2026 (15/11/2026).**
+**Graded submission deadline: 22 November 2026 (22/11/2026).**
 
 {{< githublink >}}
 
