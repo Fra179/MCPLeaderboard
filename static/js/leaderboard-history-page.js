@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.drawPositionHistory(page, series, taskEvents, { start, end, hiddenIds });
         controls.hidden = false;
         const visibleCount = taskEvents.filter(event => Date.parse(event.timestamp) >= start && Date.parse(event.timestamp) <= end).length;
-        status.textContent = `${visibleCount} of ${taskEvents.length} recorded results · ${series.length} competitors · ${new Date(start).toLocaleString()} – ${new Date(end).toLocaleString()}.${penaltyWarning}${missingIds ? ' Some current entries lack submission IDs and cannot supply starting values.' : ''}`;
+        status.textContent = 'Task history';
     };
 
     const load = async () => {

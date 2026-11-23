@@ -2,7 +2,6 @@
 <section id="history-page" data-api-url="{{ .Site.Params.grader_api_url | default "https://grader-api.francescodb.me" }}" data-source="{{ .Site.Params.leaderboard_source | default "file" }}">
     <a id="history-back" href="{{ "exercises/" | relURL }}" class="text-sm text-blue-600 hover:underline">← Current standings</a>
     <h1 class="text-3xl font-bold text-gray-900 mt-4">Leaderboard history</h1>
-    <p class="text-sm text-gray-500 mt-2">Every competitor, every recorded result. Follow how positions change over time.</p>
     <div class="history-page-controls">
         <label class="text-sm text-gray-600">Exercise
             <select id="history-assignment" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
