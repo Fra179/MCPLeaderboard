@@ -4,7 +4,7 @@ date: 2026-11-02T12:00:00+01:00
 draft: false
 technology: "OMP"
 graded: true
-deadline: "2026-11-27T23:59:00+01:00"
+deadline: "2026-12-04T23:59:00+01:00"
 github_url: "frdb.me/omp-nbody"
 leaderboard_metric: "Median Runtime"
 leaderboard_order: "asc"
