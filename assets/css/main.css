@@ -388,6 +388,21 @@
     cursor: pointer;
 }
 .leaderboard-penalty:hover { color: #b91c1c; }
+.history-page-controls { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+.history-page-controls label { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.history-page-controls select { max-width: 100%; }
+.history-time-navigation { display: flex; align-items: center; gap: 1rem; }
+.history-time-navigation button:disabled { color: #9ca3af; cursor: default; text-decoration: none; }
+.history-page-card { padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: .75rem; background: #fff; }
+.history-series-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: .75rem; }
+.history-series-controls[hidden] { display: none; }
+.history-graph { overflow-x: auto; margin: 1rem 0; }
+.history-graph svg { display: block; width: 100%; min-width: 560px; }
+.history-legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-bottom: .75rem; }
+.history-legend-item { font-size: .75rem; color: #374151; overflow-wrap: anywhere; }
+.history-legend-item::before { content: ''; display: inline-block; width: .65rem; height: .65rem; margin-right: .4rem; border-radius: 50%; background: var(--series-color); }
+.history-legend-item[aria-pressed="false"] { opacity: .4; text-decoration: line-through; }
+.history-legend-item:focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; }
 .leaderboard-penalty:focus-visible {
     outline: 2px solid #2563eb;
     outline-offset: 2px;

@@ -1,0 +1,52 @@
+{{ define "main" }}
+<section id="history-page" data-api-url="{{ .Site.Params.grader_api_url | default "https://grader-api.francescodb.me" }}" data-source="{{ .Site.Params.leaderboard_source | default "file" }}">
+    <a id="history-back" href="{{ "exercises/" | relURL }}" class="text-sm text-blue-600 hover:underline">← Current standings</a>
+    <h1 class="text-3xl font-bold text-gray-900 mt-4">Leaderboard history</h1>
+    <div class="history-page-controls">
+        <label class="text-sm text-gray-600">Exercise
+            <select id="history-assignment" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
+                {{ range where .Site.RegularPages "Section" "exercises" }}
+                {{ $assignment := path.Base (path.Dir .File.Path) }}
+                <option value="{{ $assignment }}" data-order="{{ .Params.leaderboard_order | default "asc" }}" data-url="{{ .RelPermalink }}">{{ .Title }}</option>
+                {{ end }}
+            </select>
+        </label>
+        <label class="text-sm text-gray-600">Time range
+            <select id="history-range" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
+                <option value="3600000">1 hour</option>
+                <option value="21600000">6 hours</option>
+                <option value="86400000" selected>1 day</option>
+                <option value="604800000">7 days</option>
+                <option value="2592000000">30 days</option>
+                <option value="all">All history</option>
+            </select>
+        </label>
+        <div class="history-time-navigation">
+            <button id="history-earlier" type="button" class="text-sm text-blue-600 hover:underline" disabled>← Earlier</button>
+            <button id="history-later" type="button" class="text-sm text-blue-600 hover:underline" disabled>Later →</button>
+            <button id="history-latest" type="button" class="text-sm text-blue-600 hover:underline" disabled>Latest</button>
+        </div>
+        <label class="text-sm text-gray-600">Task
+            <select id="history-task" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white" disabled></select>
+        </label>
+    </div>
+    <div class="history-page-card">
+        <p class="history-status text-sm text-gray-500" role="status">Loading history…</p>
+        <button id="history-retry" type="button" class="text-sm text-blue-600 hover:underline" hidden>Try again</button>
+        <div class="history-graph"></div>
+        <div id="history-series-controls" class="history-series-controls" hidden>
+            <span class="text-sm text-gray-600">Competitors</span>
+            <button id="history-show-all" type="button" class="text-xs text-blue-600 hover:underline">Show all</button>
+            <button id="history-hide-all" type="button" class="text-xs text-blue-600 hover:underline">Hide all</button>
+        </div>
+        <div class="history-legend" aria-label="Competitors; click a name to hide or show its line"></div>
+    </div>
+</section>
+{{ if ne (.Site.Params.leaderboard_source | default "file") "api" }}
+<script id="history-file-data" type="application/json">{{ .Site.Data.leaderboard | jsonify | safeJS }}</script>
+{{ end }}
+{{ $historyScript := resources.FromString "js/leaderboard-history.js" (readFile "static/js/leaderboard-history.js") | fingerprint }}
+<script src="{{ $historyScript.RelPermalink }}" defer></script>
+{{ $pageScript := resources.FromString "js/leaderboard-history-page.js" (readFile "static/js/leaderboard-history-page.js") | fingerprint }}
+<script src="{{ $pageScript.RelPermalink }}" defer></script>
+{{ end }}
