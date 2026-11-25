@@ -23,12 +23,15 @@
                 {{ partial "exercises/leaderboard-task.html" (dict "task" "" "metric" $metricName "runtimes" slice "rows" slice) }}
             </template>
             <template id="leaderboard-row-template">
-                <table><tbody>{{ partial "exercises/leaderboard-row.html" (dict "row" (dict "status" "" "name" "" "commit_hash" "" "stdout" "" "stderr" "") "index" 0) }}</tbody></table>
+                <table><tbody>{{ partial "exercises/leaderboard-row.html" (dict "row" (dict "status" "" "name" "" "commit_hash" "") "index" 0) }}</tbody></table>
             </template>
         </div>
         {{ end }}
 
         {{ if or $data $isAPI }}
+        {{ if not $isAPI }}
+        <script id="leaderboard-file-data" type="application/json">{{ $data | jsonify | safeJS }}</script>
+        {{ end }}
         {{ $tasks := slice }}
         {{ range $data }}
             {{ range .tasks }}
@@ -37,8 +40,8 @@
         {{ end }}
         {{ $tasks = uniq $tasks }}
 
-        <div id="leaderboard-standings" class="{{ if $isAPI }}hidden {{ end }}overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
-            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-0">
+        <div id="leaderboard-standings" data-assignment="{{ $folderName }}" class="{{ if $isAPI }}hidden {{ end }}overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-col md:flex-row items-center md:justify-between gap-4">
                 <div class="flex items-center gap-2">
                     <h3 class="text-lg font-semibold text-gray-700">Current Standings</h3>
                     <a id="see-history" href="{{ "history/" | relURL }}?assignment={{ $folderName | urlquery }}" class="text-xs font-medium text-blue-600 hover:text-blue-800 hover:underline">See history</a>
@@ -46,25 +49,24 @@
                         <i class="fa-solid fa-arrow-down"></i>
                     </button>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center justify-center gap-2">
                     <label for="task-select" class="text-sm text-gray-600">Task:</label>
                     <select id="task-select" class="px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
                         {{ range $tasks }}
                             <option value="{{ . }}">{{ . }}</option>
                         {{ end }}
                     </select>
+                    <button id="download-leaderboard-csv" type="button" class="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-blue-600 bg-white hover:bg-blue-50 disabled:opacity-50" disabled>Download CSV</button>
                 </div>
             </div>
 
             {{ range $tindex, $task := $tasks }}
             {{ $rows := slice }}
             {{ $reduction := "" }}
-            {{ range $entry := $data }}
+            {{ range $entryIndex, $entry := $data }}
                 {{ if in $entry.tasks $task }}
                 {{ $avg := index $entry.avg_runtime $task }}
                 {{ $status := index $entry.status $task }}
-                {{ $stdout := index $entry.stdout $task }}
-                {{ $stderr := index $entry.error $task }}
                 {{ $commit := "" }}
                 {{ if reflect.IsMap $entry.commit_hash }}
                     {{ $commit = index $entry.commit_hash $task }}
@@ -74,7 +76,7 @@
                 {{ with $entry.reduction }}{{ with index . $task }}{{ $reduction = . }}{{ end }}{{ end }}
                 {{ $isGrading := false }}
                 {{ with $entry.is_grading }}{{ $isGrading = index . $task | default false }}{{ end }}
-                {{ $row := dict "submission_id" ($entry.submission_id | default $entry.id | default "") "is_grading" $isGrading "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status "stdout" $stdout "stderr" $stderr }}
+                {{ $row := dict "entry_index" $entryIndex "submission_id" ($entry.submission_id | default $entry.id | default "") "is_grading" $isGrading "name" $entry.name "commit_hash" $commit "avg_runtime" $avg "status" $status }}
                 {{ $rows = $rows | append $row }}
                 {{ end }}
             {{ end }}
@@ -157,5 +159,7 @@
     </div>
 </div>
 
+{{ $csvScript := resources.FromString "js/csv-download.js" (readFile "static/js/csv-download.js") | fingerprint }}
+<script src="{{ $csvScript.RelPermalink }}" defer></script>
 {{ $leaderboardScript := resources.FromString "js/leaderboard.js" (readFile "static/js/leaderboard.js") | fingerprint }}
 <script src="{{ $leaderboardScript.RelPermalink }}" defer></script>

@@ -488,6 +488,7 @@ const loadAPILeaderboard = async () => {
             return;
         }
 
+        const entryIndexes = new Map(entries.map((entry, index) => [entry, index]));
         const select = document.getElementById('task-select');
         const standings = document.getElementById('leaderboard-standings');
         const taskTemplate = document.getElementById('leaderboard-task-template');
@@ -522,8 +523,7 @@ const loadAPILeaderboard = async () => {
 
             [...completed, ...other].forEach((entry, index) => {
                 const row = rowTemplate.content.querySelector('tr').cloneNode(true);
-                row.removeAttribute('onclick');
-                row.addEventListener('click', () => window.showLog(entry.stdout?.[task] || '', entry.error?.[task] || ''));
+                row.dataset.entryIndex = entryIndexes.get(entry);
                 const cells = row.querySelectorAll('td');
                 const status = entry.status?.[task];
                 row.dataset.status = status || '';
@@ -548,6 +548,7 @@ const loadAPILeaderboard = async () => {
         });
         message.classList.add('hidden');
         standings.classList.remove('hidden');
+        return entries;
     } catch (error) {
         console.error('Could not load leaderboard:', error);
         document.getElementById('leaderboard-standings').classList.add('hidden');
@@ -699,10 +700,21 @@ const setupPenaltyTooltip = () => {
 
 // Task dropdown handling
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadAPILeaderboard();
+    const fileData = document.getElementById('leaderboard-file-data');
+    const entries = fileData ? JSON.parse(fileData.textContent) : await loadAPILeaderboard();
     await loadLeaderboardPenalties();
     const select = document.getElementById('task-select');
     const containers = document.querySelectorAll('.leaderboard-task');
+    const standings = document.getElementById('leaderboard-standings');
+    standings?.addEventListener('click', event => {
+        const row = event.target.closest('tr[data-entry-index]');
+        if (!row) return;
+        const { task } = row.closest('.leaderboard-task').dataset;
+        const entry = entries[row.dataset.entryIndex];
+        const stdout = entry.stdout?.[task] ?? '';
+        const error = entry.error?.[task] ?? '';
+        window.showLog(fileData ? JSON.stringify(stdout) : stdout, fileData ? JSON.stringify(error) : error);
+    });
     containers.forEach(awardTaskMedals);
     setupMedalTooltip();
     setupPenaltyTooltip();
@@ -739,6 +751,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     select?.addEventListener('change', (e) => showTask(e.target.value));
+    setupLeaderboardCSV(standings, select, entries);
 
     // Highlight on initial load
     window.highlightUserRow?.();
